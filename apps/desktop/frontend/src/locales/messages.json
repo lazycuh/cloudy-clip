@@ -1,0 +1,27 @@
+{
+  "locale": "en",
+  "translations": {
+    "2159130950882492111": "Cancel",
+    "9178182467454450952": "Confirm",
+    "7819314041543176992": "Close",
+    "4871718921079092866": "Search clipboard history...",
+    "1734661473802845396": "Clear all",
+    "6592711856832563600": "Pin all",
+    "4323470180912194028": "Copy",
+    "7022070615528435141": "Delete",
+    "797801335145191419": "Are you sure you want to clear your clipboard history?",
+    "969162659595657718": "Copied to clipboard",
+    "6366226732488883423": "Failed to copy to clipboard",
+    "1501848016929088765": "Are you sure you want to delete this clipboard item?",
+    "5899864845007428149": "{$PH} is required",
+    "2740793005745065895": "{$PH} is not valid",
+    "4557928191581097932": "{$PH} must be greater than or equal to {$PH_1}",
+    "4569834219057882295": "{$PH} must contain at least {$PH_1} characters",
+    "2749003161676379207": "{$PH} must be less than or equal to {$PH_1}",
+    "8243117040566648472": "{$PH} must contain at most {$PH_1} characters",
+    "3809023892801524627": "Clear {$PH} form field",
+    "4696263445279917711": "Abort progress",
+    "4886927687928660917": "Abort",
+    "1744721856758638243": "Are you sure you want to abort?"
+  }
+}

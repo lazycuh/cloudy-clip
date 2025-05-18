@@ -1,0 +1,508 @@
+@if (_isDomReady()) {
+    <div class="text-editor__tool-strip">
+        <div class="text-editor__tool-strip__group">
+            <button
+                aria-label="Undo"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                mat-ripple
+                type="button"
+                [disabled]="!_editor.can().undo()"
+                [lcTooltip]="undoTooltipContent"
+                (click)="_editor.chain().focus().undo().run()">
+                <lc-icon>
+                    <svg:path
+                        d="M320-200q-17 0-28.5-11.5T280-240q0-17 11.5-28.5T320-280h244q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l76 76q11 11 11 28t-11 28q-11 11-28 11t-28-11L188-572q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l144-144q11-11 28-11t28 11q11 11 11 28t-11 28l-76 76h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H320Z" />
+                </lc-icon>
+            </button>
+            <ng-template #undoTooltipContent>
+                <div class="text-editor__tooltip-with-keyboard-shortcut">
+                    <span i18n>Undo</span>
+                    <lc-keyboard-shortcut [keys]="['Ctrl', 'Z']" />
+                </div>
+            </ng-template>
+
+            <button
+                aria-label="Redo"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                mat-ripple
+                type="button"
+                [disabled]="!_editor.can().redo()"
+                [lcTooltip]="redoTooltipContent"
+                (click)="_editor.chain().focus().redo().run()">
+                <lc-icon>
+                    <svg:path
+                        d="M648-560H396q-63 0-109.5 40T240-420q0 60 46.5 100T396-280h244q17 0 28.5 11.5T680-240q0 17-11.5 28.5T640-200H396q-97 0-166.5-63T160-420q0-94 69.5-157T396-640h252l-76-76q-11-11-11-28t11-28q11-11 28-11t28 11l144 144q6 6 8.5 13t2.5 15q0 8-2.5 15t-8.5 13L628-428q-11 11-28 11t-28-11q-11-11-11-28t11-28l76-76Z" />
+                </lc-icon>
+            </button>
+            <ng-template #redoTooltipContent>
+                <div class="text-editor__tooltip-with-keyboard-shortcut">
+                    <span i18n>Redo</span>
+                    <lc-keyboard-shortcut
+                        [apple]="['Ctrl', 'Shift', 'Z']"
+                        [windows]="['Ctrl', 'Y']" />
+                </div>
+            </ng-template>
+        </div>
+
+        <div class="text-editor__tool-strip__group">
+            <button
+                aria-label="Toggle heading level 1"
+                i18n-aria-label
+                class="lc-icon-button lc-accent heading-toggle"
+                lcTooltip="Heading level 1"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('heading', { level: 1 })"
+                (click)="_editor.chain().focus().toggleHeading({ level: 1 }).run()">
+                <lc-icon>
+                    <svg:path
+                        d="M240-280q-17 0-28.5-11.5T200-320v-320q0-17 11.5-28.5T240-680q17 0 28.5 11.5T280-640v120h160v-120q0-17 11.5-28.5T480-680q17 0 28.5 11.5T520-640v320q0 17-11.5 28.5T480-280q-17 0-28.5-11.5T440-320v-120H280v120q0 17-11.5 28.5T240-280Zm480 0q-17 0-28.5-11.5T680-320v-280h-40q-17 0-28.5-11.5T600-640q0-17 11.5-28.5T640-680h80q17 0 28.5 11.5T760-640v320q0 17-11.5 28.5T720-280Z" />
+                </lc-icon>
+            </button>
+
+            <button
+                aria-label="Toggle heading level 2"
+                i18n-aria-label
+                class="lc-icon-button lc-accent heading-toggle"
+                lcTooltip="Heading level 2"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('heading', { level: 2 })"
+                (click)="_editor.chain().focus().toggleHeading({ level: 2 }).run()">
+                <lc-icon>
+                    <svg:path
+                        d="M160-280q-17 0-28.5-11.5T120-320v-320q0-17 11.5-28.5T160-680q17 0 28.5 11.5T200-640v120h160v-120q0-17 11.5-28.5T400-680q17 0 28.5 11.5T440-640v320q0 17-11.5 28.5T400-280q-17 0-28.5-11.5T360-320v-120H200v120q0 17-11.5 28.5T160-280Zm400 0q-17 0-28.5-11.5T520-320v-120q0-33 23.5-56.5T600-520h160v-80H560q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h200q33 0 56.5 23.5T840-600v80q0 33-23.5 56.5T760-440H600v80h200q17 0 28.5 11.5T840-320q0 17-11.5 28.5T800-280H560Z" />
+                </lc-icon>
+            </button>
+
+            <button
+                aria-label="Toggle heading level 3"
+                i18n-aria-label
+                class="lc-icon-button lc-accent heading-toggle"
+                lcTooltip="Heading level 3"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('heading', { level: 3 })"
+                (click)="_editor.chain().focus().toggleHeading({ level: 3 }).run()">
+                <lc-icon>
+                    <svg:path
+                        d="M160-280q-17 0-28.5-11.5T120-320v-320q0-17 11.5-28.5T160-680q17 0 28.5 11.5T200-640v120h160v-120q0-17 11.5-28.5T400-680q17 0 28.5 11.5T440-640v320q0 17-11.5 28.5T400-280q-17 0-28.5-11.5T360-320v-120H200v120q0 17-11.5 28.5T160-280Zm400 0q-17 0-28.5-11.5T520-320q0-17 11.5-28.5T560-360h200v-80H640q-17 0-28.5-11.5T600-480q0-17 11.5-28.5T640-520h120v-80H560q-17 0-28.5-11.5T520-640q0-17 11.5-28.5T560-680h200q33 0 56.5 23.5T840-600v240q0 33-23.5 56.5T760-280H560Z" />
+                </lc-icon>
+            </button>
+        </div>
+
+        <div class="text-editor__tool-strip__group">
+            <button
+                aria-label="Change text size"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                lcTooltip="Text size"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                [lcTriggerFloatingBoxFor]="textSizeInput">
+                <lc-icon>
+                    <svg:path
+                        d="M560-680H420q-25 0-42.5-17.5T360-740q0-25 17.5-42.5T420-800h400q25 0 42.5 17.5T880-740q0 25-17.5 42.5T820-680H680v460q0 25-17.5 42.5T620-160q-25 0-42.5-17.5T560-220v-460ZM200-480h-60q-25 0-42.5-17.5T80-540q0-25 17.5-42.5T140-600h240q25 0 42.5 17.5T440-540q0 25-17.5 42.5T380-480h-60v260q0 25-17.5 42.5T260-160q-25 0-42.5-17.5T200-220v-260Z" />
+                </lc-icon>
+            </button>
+            <lc-anchored-floating-box
+                #textSizeInput
+                (beforeOpened)="_onBeforeTextSizeInputOpened()">
+                <lc-number-input
+                    style="margin-left: 16px; margin-right: 2px"
+                    [min]="1"
+                    [value]="_currentTextSizeInPx()"
+                    (valueChange)="_onTextSizeChange($event)" />
+                <button
+                    class="lc-button lc-accent"
+                    i18n
+                    mat-ripple
+                    (click)="_onResetFontSize()">
+                    Reset
+                </button>
+            </lc-anchored-floating-box>
+
+            <button
+                aria-label="Toggle bold text"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('bold')"
+                [lcTooltip]="boldTooltipContent"
+                (click)="_editor.chain().focus().toggleBold().run()">
+                <lc-icon>
+                    <svg:path
+                        d="M352-200q-33 0-56.5-23.5T272-280v-400q0-33 23.5-56.5T352-760h141q65 0 120 40t55 111q0 51-23 78.5T602-491q25 11 55.5 41t30.5 90q0 89-65 124.5T501-200H352Zm41-112h104q48 0 58.5-24.5T566-372q0-11-10.5-35.5T494-432H393v120Zm0-228h93q33 0 48-17t15-38q0-24-17-39t-44-15h-95v109Z" />
+                </lc-icon>
+            </button>
+            <ng-template #boldTooltipContent>
+                <div class="text-editor__tooltip-with-keyboard-shortcut">
+                    <span i18n>Bold</span>
+                    <lc-keyboard-shortcut [keys]="['Ctrl', 'B']" />
+                </div>
+            </ng-template>
+
+            <button
+                aria-label="Toggle italicized text"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('italic')"
+                [lcTooltip]="italicTooltipContent"
+                (click)="_editor.chain().focus().toggleItalic().run()">
+                <lc-icon>
+                    <svg:path
+                        d="M250-200q-21 0-35.5-14.5T200-250q0-21 14.5-35.5T250-300h110l120-360H370q-21 0-35.5-14.5T320-710q0-21 14.5-35.5T370-760h300q21 0 35.5 14.5T720-710q0 21-14.5 35.5T670-660h-90L460-300h90q21 0 35.5 14.5T600-250q0 21-14.5 35.5T550-200H250Z" />
+                </lc-icon>
+            </button>
+            <ng-template #italicTooltipContent>
+                <div class="text-editor__tooltip-with-keyboard-shortcut">
+                    <span i18n>Italic</span>
+                    <lc-keyboard-shortcut [keys]="['Ctrl', 'I']" />
+                </div>
+            </ng-template>
+
+            <button
+                #textAlignmentOptionsFloatingBox="floatingBoxRef"
+                aria-label="Set text alignment"
+                i18n-aria-label
+                class="lc-icon-button lc-accent text-alignment"
+                lcTooltip="Text alignment"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                [class.is-active]="_hasTextAlignment()"
+                [lcTriggerFloatingBoxFor]="textAlignmentOptions">
+                <lc-icon>
+                    <svg:path
+                        d="M200-200q-17 0-28.5-11.5T160-240q0-17 11.5-28.5T200-280h320q17 0 28.5 11.5T560-240q0 17-11.5 28.5T520-200H200Zm0-160q-17 0-28.5-11.5T160-400q0-17 11.5-28.5T200-440h560q17 0 28.5 11.5T800-400q0 17-11.5 28.5T760-360H200Zm0-160q-17 0-28.5-11.5T160-560q0-17 11.5-28.5T200-600h560q17 0 28.5 11.5T800-560q0 17-11.5 28.5T760-520H200Zm0-160q-17 0-28.5-11.5T160-720q0-17 11.5-28.5T200-760h560q17 0 28.5 11.5T800-720q0 17-11.5 28.5T760-680H200Z" />
+                </lc-icon>
+
+                <svg
+                    fill="currentColor"
+                    height="18"
+                    style="margin-left: -2px; margin-right: -4px"
+                    viewBox="0 -960 960 960"
+                    width="18">
+                    <path
+                        d="M459-381 314-526q-3-3-4.5-6.5T308-540q0-8 5.5-14t14.5-6h304q9 0 14.5 6t5.5 14q0 2-6 14L501-381q-5 5-10 7t-11 2q-6 0-11-2t-10-7Z" />
+                </svg>
+            </button>
+
+            <lc-anchored-floating-box #textAlignmentOptions>
+                <div class="text-editor__text-alignment-options">
+                    <button
+                        class="lc-button lc-accent"
+                        mat-ripple
+                        type="button"
+                        (click)="_onAlignText(textAlignmentOptionsFloatingBox, 'left')">
+                        <span
+                            class="lc-button__label"
+                            i18n>
+                            Left
+                        </span>
+                        <lc-keyboard-shortcut [keys]="['Ctrl', 'Shift', 'L']" />
+                    </button>
+
+                    <button
+                        class="lc-button lc-accent"
+                        mat-ripple
+                        type="button"
+                        [class.is-active]="_hasTextAlignment('center')"
+                        (click)="_onAlignText(textAlignmentOptionsFloatingBox, 'center')">
+                        <span
+                            class="lc-button__label"
+                            i18n>
+                            Center
+                        </span>
+                        <lc-keyboard-shortcut [keys]="['Ctrl', 'Shift', 'E']" />
+                    </button>
+
+                    <button
+                        class="lc-button lc-accent"
+                        mat-ripple
+                        type="button"
+                        [class.is-active]="_hasTextAlignment('justify')"
+                        (click)="_onAlignText(textAlignmentOptionsFloatingBox, 'justify')">
+                        <span
+                            class="lc-button__label"
+                            i18n>
+                            Justify
+                        </span>
+                        <lc-keyboard-shortcut [keys]="['Ctrl', 'Shift', 'J']" />
+                    </button>
+
+                    <button
+                        class="lc-button lc-accent"
+                        mat-ripple
+                        type="button"
+                        [class.is-active]="_hasTextAlignment('right')"
+                        (click)="_onAlignText(textAlignmentOptionsFloatingBox, 'right')">
+                        <span
+                            class="lc-button__label"
+                            i18n>
+                            Right
+                        </span>
+                        <lc-keyboard-shortcut [keys]="['Ctrl', 'Shift', 'R']" />
+                    </button>
+                </div>
+            </lc-anchored-floating-box>
+        </div>
+
+        <div class="text-editor__tool-strip__group">
+            <button
+                aria-label="Add image"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                lcTooltip="Image"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                (click)="_editor.chain().focus().openImageUploader($event.target!).run()">
+                <lc-icon>
+                    <svg:path
+                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Zm80-80h400q12 0 18-11t-2-21L586-459q-6-8-16-8t-16 8L450-320l-74-99q-6-8-16-8t-16 8l-80 107q-8 10-2 21t18 11Z" />
+                </lc-icon>
+            </button>
+
+            <button
+                aria-label="Toggle blockquote"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('blockquote')"
+                [lcTooltip]="blockquoteTooltipContent"
+                (click)="_onToggleBlockquote()">
+                <lc-icon>
+                    <svg:path
+                        d="m262-300 58-100q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T458-480L331-260q-5 9-14 14.5t-20 5.5q-23 0-34.5-20t-.5-40Zm360 0 58-100q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 23-5.5 42.5T818-480L691-260q-5 9-14 14.5t-20 5.5q-23 0-34.5-20t-.5-40ZM320-500q25 0 42.5-17.5T380-560q0-25-17.5-42.5T320-620q-25 0-42.5 17.5T260-560q0 25 17.5 42.5T320-500Zm360 0q25 0 42.5-17.5T740-560q0-25-17.5-42.5T680-620q-25 0-42.5 17.5T620-560q0 25 17.5 42.5T680-500Zm0-60Zm-360 0Z" />
+                </lc-icon>
+            </button>
+            <ng-template #blockquoteTooltipContent>
+                <div class="text-editor__tooltip-with-keyboard-shortcut">
+                    <span i18n>Blockquote</span>
+                    <lc-keyboard-shortcut [keys]="['Ctrl', 'Shift', 'B']" />
+                </div>
+            </ng-template>
+
+            <button
+                aria-label="Toggle link"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                lcTooltip="Link"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('link')"
+                (click)="_editor.chain().focus().executeLinkCommand().run()">
+                <lc-icon
+                    style="width: 16px; height: 16px"
+                    viewBox="0 0 16 16">
+                    <svg:path
+                        d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z" />
+                </lc-icon>
+            </button>
+
+            <button
+                aria-label="Toggle highlighted text"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('highlight')"
+                [lcTooltip]="highlightTooltipContent"
+                (click)="_editor.chain().focus().toggleHighlight().run()">
+                <lc-icon style="width: 17px; height: 17px">
+                    <svg:path
+                        d="M160 0q-33 0-56.5-23.5T80-80q0-33 23.5-56.5T160-160h640q33 0 56.5 23.5T880-80q0 33-23.5 56.5T800 0H160Zm424-480L480-584 320-424l103 104 161-160Zm-47-160 103 103 160-159-104-104-159 160Zm-84-29 216 216-189 190q-24 24-56.5 24T367-263l-5 4q-11 9-24 14t-27 5H189q-14 0-19.5-12t4.5-22l92-91q-24-24-25-57.5t23-57.5l189-189Zm0 0 187-187q24-24 56.5-24t56.5 24l104 103q24 24 24 56.5T857-640L669-453 453-669Z" />
+                </lc-icon>
+            </button>
+            <ng-template #highlightTooltipContent>
+                <div class="text-editor__tooltip-with-keyboard-shortcut">
+                    <span i18n>Highlight</span>
+                    <lc-keyboard-shortcut [keys]="['Ctrl', 'Shift', 'H']" />
+                </div>
+            </ng-template>
+
+            <button
+                aria-label="Add a hard break"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                lcTooltip="Hard break"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                (click)="_onAddHardBreak()">
+                <lc-icon>
+                    <svg:path
+                        d="m313-320 115 115q12 12 12.5 28T429-149q-12 12-28.5 12T372-149L188-332q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l185-185q12-12 28-11.5t28 12.5q11 12 11.5 28T429-516L313-400h367v-360q0-17 11.5-28.5T720-800q17 0 28.5 11.5T760-760v360q0 33-23.5 56.5T680-320H313Z" />
+                </lc-icon>
+            </button>
+        </div>
+
+        <div class="text-editor__tool-strip__group">
+            <button
+                aria-label="Toggle bullet list"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('bulletList')"
+                [lcTooltip]="bulletListTooltipContent"
+                (click)="_editor.chain().focus().toggleBulletList().run()">
+                <lc-icon>
+                    <svg:path
+                        d="M400-200q-17 0-28.5-11.5T360-240q0-17 11.5-28.5T400-280h400q17 0 28.5 11.5T840-240q0 17-11.5 28.5T800-200H400Zm0-240q-17 0-28.5-11.5T360-480q0-17 11.5-28.5T400-520h400q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440H400Zm0-240q-17 0-28.5-11.5T360-720q0-17 11.5-28.5T400-760h400q17 0 28.5 11.5T840-720q0 17-11.5 28.5T800-680H400ZM200-160q-33 0-56.5-23.5T120-240q0-33 23.5-56.5T200-320q33 0 56.5 23.5T280-240q0 33-23.5 56.5T200-160Zm0-240q-33 0-56.5-23.5T120-480q0-33 23.5-56.5T200-560q33 0 56.5 23.5T280-480q0 33-23.5 56.5T200-400Zm0-240q-33 0-56.5-23.5T120-720q0-33 23.5-56.5T200-800q33 0 56.5 23.5T280-720q0 33-23.5 56.5T200-640Z" />
+                </lc-icon>
+            </button>
+            <ng-template #bulletListTooltipContent>
+                <div class="text-editor__tooltip-with-keyboard-shortcut">
+                    <span i18n>Bullet list</span>
+                    <lc-keyboard-shortcut [keys]="['Ctrl', 'Shift', '8']" />
+                </div>
+            </ng-template>
+
+            <button
+                aria-label="Toggle numbered list"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('orderedList')"
+                [lcTooltip]="numberedListTooltipContent"
+                (click)="_editor.chain().focus().toggleOrderedList().run()">
+                <lc-icon>
+                    <svg:path
+                        d="M150-80q-13 0-21.5-8.5T120-110q0-13 8.5-21.5T150-140h70v-30h-30q-13 0-21.5-8.5T160-200q0-13 8.5-21.5T190-230h30v-30h-70q-13 0-21.5-8.5T120-290q0-13 8.5-21.5T150-320h90q17 0 28.5 11.5T280-280v40q0 17-11.5 28.5T240-200q17 0 28.5 11.5T280-160v40q0 17-11.5 28.5T240-80h-90Zm0-280q-13 0-21.5-8.5T120-390v-80q0-17 11.5-28.5T160-510h60v-30h-70q-13 0-21.5-8.5T120-570q0-13 8.5-21.5T150-600h90q17 0 28.5 11.5T280-560v70q0 17-11.5 28.5T240-450h-60v30h70q13 0 21.5 8.5T280-390q0 13-8.5 21.5T250-360H150Zm60-280q-13 0-21.5-8.5T180-670v-150h-30q-13 0-21.5-8.5T120-850q0-13 8.5-21.5T150-880h60q13 0 21.5 8.5T240-850v180q0 13-8.5 21.5T210-640Zm190 440q-17 0-28.5-11.5T360-240q0-17 11.5-28.5T400-280h400q17 0 28.5 11.5T840-240q0 17-11.5 28.5T800-200H400Zm0-240q-17 0-28.5-11.5T360-480q0-17 11.5-28.5T400-520h400q17 0 28.5 11.5T840-480q0 17-11.5 28.5T800-440H400Zm0-240q-17 0-28.5-11.5T360-720q0-17 11.5-28.5T400-760h400q17 0 28.5 11.5T840-720q0 17-11.5 28.5T800-680H400Z" />
+                </lc-icon>
+            </button>
+            <ng-template #numberedListTooltipContent>
+                <div class="text-editor__tooltip-with-keyboard-shortcut">
+                    <span i18n>Numbered list</span>
+                    <lc-keyboard-shortcut [keys]="['Ctrl', 'Shift', '7']" />
+                </div>
+            </ng-template>
+
+            <button
+                aria-label="Insert table"
+                i18n-aria-label
+                class="lc-icon-button lc-accent"
+                lcTooltip="Insert table"
+                i18n-lcTooltip
+                mat-ripple
+                type="button"
+                [class.is-active]="_editor.isActive('table')"
+                (click)="_editor.chain().focus().insertTable().run()">
+                <lc-icon>
+                    <svg:path
+                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm240-240H200v160h240v-160Zm80 0v160h240v-160H520Zm-80-80v-160H200v160h240Zm80 0h240v-160H520v160ZM200-680h560v-80H200v80Z" />
+                </lc-icon>
+            </button>
+        </div>
+    </div>
+
+    <div class="text-editor__tiptap-editor-container">
+        <tiptap-editor
+            #tiptapEditor
+            [editor]="_editor"
+            [formControl]="control()" />
+
+        <div class="text-editor__status-bar">
+            @let __autoSaveFailureReason = _autoSaveFailureReason();
+            @let __lastAutoSavedTimeStamp = _lastAutoSavedTimeStamp();
+
+            @if (__autoSaveFailureReason !== '') {
+                <div
+                    class="text-editor__status-bar__auto-save-result is-failure"
+                    [@auto-save-status]>
+                    <lc-icon>
+                        <svg:path
+                            d="M363-120q-16 0-30.5-6T307-143L143-307q-11-11-17-25.5t-6-30.5v-234q0-16 6-30.5t17-25.5l164-164q11-11 25.5-17t30.5-6h234q16 0 30.5 6t25.5 17l164 164q11 11 17 25.5t6 30.5v234q0 16-6 30.5T817-307L653-143q-11 11-25.5 17t-30.5 6H363Zm1-80h232l164-164v-232L596-760H364L200-596v232l164 164Zm116-224 86 86q11 11 28 11t28-11q11-11 11-28t-11-28l-86-86 86-86q11-11 11-28t-11-28q-11-11-28-11t-28 11l-86 86-86-86q-11-11-28-11t-28 11q-11 11-11 28t11 28l86 86-86 86q-11 11-11 28t11 28q11 11 28 11t28-11l86-86Zm0-56Z" />
+                    </lc-icon>
+                    <span i18n>Failed to save changes</span>
+
+                    <lc-info-tooltip style="transform: none">
+                        <strong i18n>Reason:</strong>
+                        {{ __autoSaveFailureReason }}
+                        <br />
+                        <a
+                            i18n
+                            target="_blank"
+                            [href]="_getContactUsLinkWhenAutoSaveFailed()">
+                            Contact us
+                        </a>
+                    </lc-info-tooltip>
+                </div>
+            } @else if (__lastAutoSavedTimeStamp) {
+                <div
+                    class="text-editor__status-bar__auto-save-result"
+                    [@auto-save-status]>
+                    <lc-icon>
+                        <svg:path
+                            d="m382-354 339-339q12-12 28.5-12t28.5 12q12 12 12 28.5T778-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z" />
+                    </lc-icon>
+                    <span i18n>All changes saved at {{ __lastAutoSavedTimeStamp | date: 'HH:mm:ss' }}</span>
+                </div>
+            }
+        </div>
+    </div>
+
+    <button
+        aria-hidden="true"
+        class="text-editor__resize-handle lc-icon-button lc-accent"
+        type="button"
+        (pointerdown)="_onBeginResizing($event, tiptapEditor)"
+        (touchstart)="$event.preventDefault()">
+        <lc-icon style="transform: scale(1.75)">
+            <svg:path
+                d="M200-360q-17 0-28.5-11.5T160-400q0-17 11.5-28.5T200-440h560q17 0 28.5 11.5T800-400q0 17-11.5 28.5T760-360H200Zm0-160q-17 0-28.5-11.5T160-560q0-17 11.5-28.5T200-600h560q17 0 28.5 11.5T800-560q0 17-11.5 28.5T760-520H200Z" />
+        </lc-icon>
+    </button>
+
+    <div class="text-editor__bubble-menu quick-actions">
+        <button
+            aria-label="Toggle bold text"
+            i18n-aria-label
+            class="lc-button lc-accent"
+            i18n
+            mat-ripple
+            type="button"
+            [class.is-active]="_editor.isActive('bold')"
+            (click)="_editor.chain().focus().toggleBold().run()">
+            Bold
+        </button>
+
+        <button
+            aria-label="Toggle italicized text"
+            i18n-aria-label
+            class="lc-button lc-accent"
+            i18n
+            mat-ripple
+            type="button"
+            [class.is-active]="_editor.isActive('italic')"
+            (click)="_editor.chain().focus().toggleItalic().run()">
+            Italic
+        </button>
+
+        <button
+            aria-label="Toggle link"
+            i18n-aria-label
+            class="lc-button lc-accent"
+            i18n
+            mat-ripple
+            type="button"
+            [class.is-active]="_editor.isActive('link')"
+            (click)="_editor.chain().focus().executeLinkCommand().run()">
+            Link
+        </button>
+    </div>
+}

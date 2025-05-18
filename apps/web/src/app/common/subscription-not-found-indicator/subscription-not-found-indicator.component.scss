@@ -1,0 +1,10 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+@media (max-width: 530px) {
+    .subscription-not-found-indicator {
+        .progress-complete-indicator {
+            padding-left: lc.length(5);
+            padding-right: lc.length(5);
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@lazycuh/cloudy-clip-api",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "./scripts/build.sh",
+    "lint": "golangci-lint run . cmd internal/... test/...",
+    "release": "./scripts/deploy.sh",
+    "render-coverage": "go tool cover -html=coverage.out",
+    "start": "scripts/start-pg.sh & TRADE_TIMELINE_EXECUTION_PROFILE=development air --build.exclude_dir \"database,test,node_modules,dist,scripts\"",
+    "start:stripe": "stripe listen --forward-to https://localhost:4300/api/v1/stripe --skip-verify",
+    "test:local:all": "TRADE_TIMELINE_EXECUTION_PROFILE=test go test $(go list ./test/... | grep -Ev \"(/test/debug|/test/utils|/test/subscription/helpers)\" | tail -n +2) -v",
+    "test:local": "TRADE_TIMELINE_EXECUTION_PROFILE=test go test -v",
+    "test:ci": "./scripts/test-ci.sh",
+    "test:ci:no-coverage": "./scripts/test-ci.sh -no-coverage"
+  },
+  "devDependencies": {
+    "liquibase": "^4.27.0"
+  }
+}

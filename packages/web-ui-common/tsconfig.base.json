@@ -1,0 +1,26 @@
+{
+  "compileOnSave": false,
+  "extends": "@lazycuh/tsconfig-base/base",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "declaration": false,
+    "esModuleInterop": true,
+    "importHelpers": true,
+    "isolatedModules": true,
+    "lib": ["ES2022", "dom", "DOM.Iterable"],
+    "module": "ES2022",
+    "moduleResolution": "bundler",
+    "outDir": "./dist/out-tsc",
+    "paths": {
+      "@lazycuh/*": ["../*"]
+    },
+    "types": ["node", "@angular/localize", "@lazycuh/types"]
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  },
+  "exclude": []
+}

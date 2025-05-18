@@ -1,0 +1,34 @@
+/*
+  Access-Control-Allow-Origin: https://cloudyclip.com
+  X-Frame-Options: DENY
+  Cache-Control: no-cache, no-store
+  Content-Security-Policy: default-src 'self' 'unsafe-inline' https://*.cloudflare.com https://*.googleapis.com https://*.google.com https://*.facebook.net https://*.facebook.com https://js.stripe.com; style-src 'self' 'unsafe-inline' https://*.google.com; media-src 'self' blob:; img-src 'self' blob:
+
+/*.ico
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000, must-revalidate
+
+/*.js
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000, must-revalidate
+
+/*.css
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000, must-revalidate
+
+/*.ttf
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000, must-revalidate
+
+/*.png
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000, must-revalidate
+
+/*.jpeg
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000, must-revalidate
+
+/*.jpg
+  ! Cache-Control
+  Cache-Control: public, max-age=2592000, must-revalidate
+

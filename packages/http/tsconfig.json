@@ -1,0 +1,9 @@
+{
+  "extends": "@lazycuh/tsconfig-base/base",
+  "compilerOptions": {
+    "types": ["@lazycuh/types", "node"],
+    "paths": {
+      "@lazycuh/*": ["../../packages/*"]
+    }
+  }
+}

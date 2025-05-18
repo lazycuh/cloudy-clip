@@ -1,0 +1,10 @@
+@use '../../index';
+
+.dot-dot-dot {
+    display: inline-flex;
+    width: 40px;
+    box-sizing: border-box;
+    text-align: left;
+    padding-left: 5px;
+    font-size: #{index.$default-font-size * 1.5};
+}

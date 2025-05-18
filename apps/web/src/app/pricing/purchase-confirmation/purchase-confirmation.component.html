@@ -1,0 +1,46 @@
+@if (!_isDoneCheckingSubscriptionStatus()) {
+    <div class="purchase-confirmation__pulse-loader-container">
+        <lc-pulse-loader
+            message="Checking your subscription status. Please wait."
+            i18n-message
+            [pulsing]="true" />
+    </div>
+} @else if (_isSuccess()) {
+    <lc-progress-complete-indicator [animated]="true">
+        <p
+            data-title
+            i18n>
+            Thank you for joining Cloudy Clip
+        </p>
+
+        <p
+            data-description
+            i18n>
+            Your subscription is now active.
+        </p>
+
+        <lc-action-container
+            data-action
+            layout="column">
+            <a
+                class="lc-filled-button lc-primary"
+                i18n
+                mat-ripple
+                routerLink="/my/account">
+                Go to dashboard
+            </a>
+
+            <a
+                class="lc-filled-button lc-primary"
+                i18n
+                mat-ripple
+                routerLink="/timeline">
+                Start journaling
+            </a>
+        </lc-action-container>
+    </lc-progress-complete-indicator>
+} @else {
+    @defer {
+        <lc-subscription-not-found-indicator />
+    }
+}

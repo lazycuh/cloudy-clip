@@ -1,0 +1,10 @@
+<button
+    class="lc-button lc-primary"
+    mat-ripple
+    role="radio"
+    type="button"
+    [attr.aria-checked]="selected()"
+    [attr.name]="_radioGroupName()"
+    (click)="_onSelect()">
+    <ng-content />
+</button>

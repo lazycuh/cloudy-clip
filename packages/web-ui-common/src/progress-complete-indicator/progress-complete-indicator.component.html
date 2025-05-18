@@ -1,0 +1,64 @@
+<svg
+    class="progress-complete-indicator__container"
+    viewBox="0 0 100 100"
+    [attr.stroke]="success() ? '#2dd314' : '#f00'">
+    <g transform="translate(10,10)">
+        <circle
+            class="progress-complete-indicator__ring"
+            cx="40"
+            cy="40"
+            r="40"
+            transform-origin="40 40" />
+        @if (success()) {
+            <path
+                class="progress-complete-indicator__check-mark"
+                d="M16.666666666666668,40 L33.333333333333336,50 L55,20"
+                transform="translate(5, 5)" />
+        } @else {
+            <foreignObject
+                height="100"
+                width="100">
+                <xhtml:div class="progress-complete-indicator__x-segment first-segment" />
+                <xhtml:div class="progress-complete-indicator__x-segment second-segment" />
+            </foreignObject>
+        }
+    </g>
+</svg>
+<!-- <svg
+    class="progress-complete-indicator__container"
+    [attr.stroke]="success() ? '#2dd314' : 'red'"
+    [attr.viewBox]="'0 0 ' + _diameter + ' ' + _diameter">
+    <g [attr.transform]="'translate(' + _margin + ',' + _margin + ')'">
+        <circle
+            class="progress-complete-indicator__ring"
+            [attr.cx]="_radius"
+            [attr.cy]="_radius"
+            [attr.r]="_radius"
+            [attr.transform-origin]="_radius + ' ' + _radius" />
+
+        @if (success()) {
+            <path
+                class="progress-complete-indicator__check-mark"
+                transform="translate(5, 5)"
+                [attr.d]="
+                    'M' +
+                    (_diameter / 6 + ',' + _radius) +
+                    ' L' +
+                    (_diameter / 3 + ',' + (3 * _diameter) / 6) +
+                    ' L' +
+                    ((2.75 * _diameter) / 5 + ',' + _diameter / 5)
+                " />
+        } @else {
+            <foreignObject
+                [attr.height]="_diameter"
+                [attr.width]="_diameter">
+                <xhtml:div class="progress-complete-indicator__x-segment first-segment" />
+                <xhtml:div class="progress-complete-indicator__x-segment second-segment" />
+            </foreignObject>
+        }
+    </g>
+</svg> -->
+
+<ng-content select="[data-title]" />
+<ng-content select="[data-description]" />
+<ng-content select="[data-action]" />

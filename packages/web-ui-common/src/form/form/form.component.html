@@ -1,0 +1,9 @@
+<h2 class="lc-form__title">{{ formTitle() }}</h2>
+
+<form
+    class="lc-form"
+    [formGroup]="form()"
+    [id]="_formId"
+    (ngSubmit)="_onSubmit()">
+    <ng-content />
+</form>

@@ -1,0 +1,44 @@
+<lc-portal-outlet>
+    <lc-backdrop
+        zIndex="999"
+        [visible]="_isOpen()"
+        (click)="menuOpener.closeMenu()" />
+</lc-portal-outlet>
+
+<button
+    #menuOpener="matMenuTrigger"
+    class="menu__trigger lc-button lc-accent number-display"
+    mat-ripple
+    [attr.aria-label]="ariaLabel()"
+    [class.open]="_isOpen()"
+    [disabled]="disabled()"
+    [matMenuTriggerFor]="menu"
+    [matRippleDisabled]="disabled()"
+    (menuClosed)="_isOpen.set(false)"
+    (menuOpened)="_isOpen.set(true)">
+    <ng-content />
+    <span class="menu__trigger__label lc-button__label">
+        <span
+            class="menu__trigger__label-wrapper"
+            [innerHTML]="_selectedOptionLabel()"></span>
+    </span>
+    <lc-icon class="menu__trigger__icon">
+        <svg:path
+            d="M459-381 314-526q-3-3-4.5-6.5T308-540q0-8 5.5-14t14.5-6h304q9 0 14.5 6t5.5 14q0 2-6 14L501-381q-5 5-10 7t-11 2q-6 0-11-2t-10-7Z" />
+    </lc-icon>
+</button>
+<mat-menu
+    #menu="matMenu"
+    hasBackdrop="false">
+    @for (option of options(); track option.value) {
+        <button
+            class="menu__option"
+            mat-menu-item
+            [class.is-selected]="_selectedOption() === option"
+            (click)="_onSelectionChange($event, option)"
+            (keyup.ArrowDown)="_onSelectionChange($event, option)"
+            (keyup.ArrowUp)="_onSelectionChange($event, option)">
+            <span [innerHTML]="_formatLabel(option)"></span>
+        </button>
+    }
+</mat-menu>

@@ -1,0 +1,14 @@
+.select-form-field {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.select-form-field__autocomplete-list {
+    border-radius: 8px;
+
+    .mat-mdc-menu-content {
+        max-height: 300px;
+    }
+}

@@ -1,0 +1,46 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.4
+      author: nhuy.van
+      changes:
+        - createTable:
+            tableName: tbl_task
+            columns:
+              - column:
+                  name: task_id
+                  type: CHAR(26)
+              - column:
+                  name: type
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: CHAR(26)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMPTZ
+                  constraints:
+                    nullable: false
+              - column:
+                  name: comment
+                  type: VARCHAR
+        - addPrimaryKey:
+            tableName: tbl_task
+            columnNames: task_id
+            constraintName: pk__task
+        - addForeignKeyConstraint:
+            baseTableName: tbl_task
+            baseColumnNames: user_id
+            referencedTableName: tbl_user
+            referencedColumnNames: user_id
+            constraintName: fk__task__user
+            onDelete: CASCADE

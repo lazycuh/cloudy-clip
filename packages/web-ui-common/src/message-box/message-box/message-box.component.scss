@@ -1,0 +1,50 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.message-box {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    border-radius: 8px;
+    padding: 24px 36px;
+    padding-top: 20px;
+    background-color: #232323;
+    color: #fff;
+    width: min(#{4px * 170}, 100%);
+    text-align: left;
+    box-sizing: border-box;
+
+    .action-container:not(:empty) {
+        margin-top: 28px;
+        width: 100%;
+        justify-content: flex-end !important;
+        margin-bottom: 0;
+
+        a,
+        button {
+            font-size: #{lc.$default-font-size - 2};
+            min-height: 32px;
+        }
+    }
+}
+
+.message-box__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.message-box__icon {
+    transform: scale(1.2, 1.2) translateY(-1px);
+    margin-right: 12px;
+}
+
+.message-box__title {
+    font-size: lc.$default-font-size;
+}
+
+.message-box__content:not(:empty) {
+    margin-top: 12px;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+}

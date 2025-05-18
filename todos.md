@@ -1,0 +1,11 @@
+- Pass request object to service methods
+- Login failure due to non-existing email should also trigger email blocking
+- Show different icons for entitlements based on whether there are any restrictions
+- Localize `(Required)` string
+- listen for payment past due event
+- add buttons to pay failed invoices
+- add a countdown on subscription page to when the data is purged for canceled subscription
+- implement using coupon
+  https://stackoverflow.com/questions/70397837/stripe-using-the-paymentelement-to-update-a-subscriptions-paymentmethod-mid-c
+- implement data and account removal and update terms of service #4 to state this
+- add a contact us page and link to it in emails

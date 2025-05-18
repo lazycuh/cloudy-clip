@@ -1,0 +1,26 @@
+<lc-info-box style="margin-top: 32px">
+    <ng-container
+        data-title
+        i18n>
+        You do not have an active subscription
+    </ng-container>
+
+    <ng-container i18n>If it is a mistake, please let us know.</ng-container>
+
+    <a
+        class="lc-filled-button lc-primary"
+        i18n
+        mat-ripple
+        routerLink="/pricing">
+        Explore plans
+    </a>
+
+    <a
+        class="lc-filled-button lc-primary"
+        i18n
+        mat-ripple
+        target="_blank"
+        [href]="_getSupportEmailLink()">
+        Contact us
+    </a>
+</lc-info-box>

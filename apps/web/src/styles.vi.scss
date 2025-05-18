@@ -1,0 +1,19 @@
+@use './styles.common';
+
+@media (max-width: 375px) {
+    .lc-confirmation-capture {
+        .lc-confirmation-capture__action-container {
+            flex-flow: column-reverse;
+            padding: 10px 15px;
+        }
+
+        .lc-confirmation-capture__action {
+            width: 100%;
+        }
+
+        .lc-confirmation-capture__action.confirm {
+            margin-left: 0;
+            margin-bottom: 7px;
+        }
+    }
+}

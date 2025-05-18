@@ -1,0 +1,14 @@
+{
+  "name": "@lazycuh/cloudy-clip-desktop",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "wails build -clean",
+    "lint": "golangci-lint run . cmd internal/... test/...",
+    "release": "./scripts/deploy.sh",
+    "render-coverage": "go tool cover -html=coverage.out",
+    "start": "wails dev",
+    "test:ci": "./scripts/test-ci.sh",
+    "test:ci:no-coverage": "./scripts/test-ci.sh -no-coverage"
+  }
+}

@@ -1,0 +1,46 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.number-input {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-bottom: 0;
+    box-sizing: border-box;
+
+    input {
+        background-color: transparent;
+        outline: none;
+        color: #fff;
+        border: none;
+        font-size: lc.$default-font-size;
+        text-align: center;
+        width: 100%;
+
+        &:focus + .number-input__ripple-bar {
+            transform: scaleX(1);
+        }
+    }
+
+    button:first-of-type {
+        margin-left: 0px;
+    }
+}
+
+.number-input__input-container {
+    display: flex;
+    width: 60px;
+    position: relative;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.number-input__ripple-bar {
+    width: 100%;
+    height: 2px;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    transform-origin: 50% 50%;
+    transition: lc.transition(transform);
+    background-color: #fff;
+    transform: scaleX(0);
+}

@@ -1,0 +1,64 @@
+@if (!_isSubscriptionReactivationRequestInProgress()) {
+    <button
+        i18n
+        (click)="_onReactivateSubscription()">
+        Reactivate subscription
+    </button>
+} @else {
+    <button>
+        <lc-pulse-loader
+            style="width: 40px"
+            [pulsing]="true" />
+    </button>
+}
+
+@let _subscription = subscription();
+
+<div class="my-subscription__detail-row status-row">
+    <div class="my-subscription__detail-row__label section-label">
+        <lc-icon>
+            <svg:path
+                d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z" />
+        </lc-icon>
+        <strong i18n>Status</strong>
+    </div>
+
+    <div class="my-subscription__detail-row__value">
+        <ng-container i18n>Canceled</ng-container>
+
+        <lc-info-tooltip class="info-list-tooltip">
+            <ul class="info-list">
+                <li>
+                    <span
+                        class="info-list__row-label"
+                        i18n>
+                        Canceled on:
+                    </span>
+                    {{ _subscription.canceledAt | date: 'longDate' }}
+                </li>
+                <li>
+                    <span
+                        class="info-list__row-label"
+                        i18n>
+                        Reason:
+                    </span>
+                    {{ _resolveCancellationReason() }}
+                </li>
+            </ul>
+        </lc-info-tooltip>
+    </div>
+</div>
+
+<div class="my-subscription__detail-row plan-name">
+    <div class="my-subscription__detail-row__label section-label">
+        <lc-icon>
+            <svg:path
+                d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z" />
+        </lc-icon>
+        <strong i18n>Plan</strong>
+    </div>
+
+    <div class="my-subscription__detail-row__value">
+        {{ _subscription.plan | subscriptionLabel }}
+    </div>
+</div>

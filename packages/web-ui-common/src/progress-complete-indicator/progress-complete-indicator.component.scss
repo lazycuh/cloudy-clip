@@ -1,0 +1,146 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+$ring-diameter: 150px;
+$stroke-width: 5px;
+
+.progress-complete-indicator {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
+    width: 100%;
+    height: 100%;
+    padding: 0 48px;
+    box-sizing: border-box;
+    text-align: center;
+    line-break: auto;
+    opacity: 0;
+    transition: opacity 0.75s 0.45s ease;
+
+    &.is-animated {
+        opacity: 1;
+
+        .progress-complete-indicator__ring {
+            animation-name: animate-ring;
+
+            @keyframes animate-ring {
+                to {
+                    opacity: 1;
+                    stroke-dashoffset: 1400px;
+                }
+            }
+        }
+
+        .progress-complete-indicator__check-mark {
+            animation-name: animate-check-mark;
+
+            @keyframes animate-check-mark {
+                to {
+                    stroke-dashoffset: 143px;
+                }
+            }
+        }
+
+        & > *:not(:first-child) {
+            animation-name: animate-content;
+
+            @keyframes animate-content {
+                to {
+                    opacity: 1;
+                }
+            }
+        }
+
+        .first-segment {
+            animation-name: animate-first-segment;
+
+            @keyframes animate-first-segment {
+                to {
+                    transform: rotate(45deg) scaleX(1);
+                }
+            }
+        }
+
+        .second-segment {
+            animation-name: animate-second-segment;
+
+            @keyframes animate-second-segment {
+                to {
+                    transform: rotate(-45deg) scaleX(1);
+                }
+            }
+        }
+    }
+
+    & > *:not(:first-child) {
+        animation: 0.75s 0.35s ease forwards;
+        opacity: 0;
+    }
+
+    [data-title] {
+        font-size: #{lc.$default-font-size + 6};
+        margin-bottom: 20px;
+        margin-top: 0;
+        line-height: 1.5rem;
+        color: #fff;
+        font-weight: bold;
+    }
+
+    [data-description] {
+        margin-top: 0;
+        margin-bottom: 0;
+        color: #fff;
+        font-size: #{lc.$default-font-size + 1};
+    }
+
+    [data-action] {
+        margin-top: 52px;
+    }
+}
+
+.progress-complete-indicator__container {
+    width: min(#{$ring-diameter}, min(#{$ring-diameter}, 95vw));
+    height: min(#{$ring-diameter}, min(#{$ring-diameter}, 95vw));
+    stroke-width: $stroke-width;
+    fill: none;
+    margin-bottom: 60px;
+    flex-shrink: 0;
+}
+
+.progress-complete-indicator__ring {
+    transition: stroke-dashoffset 0.25s linear;
+    stroke-dasharray: 350px;
+    stroke-dashoffset: 1054px;
+    opacity: 0;
+    transform: rotate3d(0, 0, 1, -90deg);
+    animation: 0.75s 0.45s ease forwards;
+}
+
+.progress-complete-indicator__check-mark {
+    stroke: #2dd314;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 195px;
+    stroke-dashoffset: 195px;
+    animation: 0.75s 0.45s ease forwards;
+}
+
+.progress-complete-indicator__x-segment {
+    width: 45%;
+    height: $stroke-width;
+    background-color: red;
+    border-radius: 50px;
+    position: absolute;
+    left: 18px;
+    top: 38px;
+    animation: 0.75s 0.45s ease forwards;
+
+    &.first-segment {
+        transform: rotate(45deg) scaleX(0);
+    }
+
+    &.second-segment {
+        transform: rotate(-45deg) scaleX(0);
+    }
+}

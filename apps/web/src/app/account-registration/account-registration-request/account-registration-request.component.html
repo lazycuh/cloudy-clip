@@ -1,0 +1,118 @@
+<lc-focus-box
+    class="account-registration-request__form-container"
+    [@focusBox]>
+    <lc-carousel>
+        <lc-carousel-item>
+            <lc-back-button
+                i18n
+                [shouldShowConfirmation]="_form.dirty">
+                Return to login
+            </lc-back-button>
+
+            <lc-form
+                formTitle="Register new account"
+                i18n-formTitle
+                [form]="_form"
+                (submitForm)="_onSubmit($event)">
+                <lc-short-text-form-field
+                    autocomplete="name"
+                    label="Display name"
+                    i18n-label
+                    type="text"
+                    [control]="_findFormControl('displayName')">
+                    <svg:path
+                        d="M720-440q17 0 28.5-11.5T760-480q0-17-11.5-28.5T720-520H600q-17 0-28.5 11.5T560-480q0 17 11.5 28.5T600-440h120Zm0-120q17 0 28.5-11.5T760-600q0-17-11.5-28.5T720-640H600q-17 0-28.5 11.5T560-600q0 17 11.5 28.5T600-560h120ZM360-440q-36 0-65 6.5T244-413q-21 13-32 29.5T201-348q0 12 9 20t22 8h256q13 0 22-8.5t9-21.5q0-17-11-33t-32-30q-22-14-51-20.5t-65-6.5Zm0-40q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z" />
+                </lc-short-text-form-field>
+
+                <lc-short-text-form-field
+                    autocomplete="email"
+                    label="Email"
+                    i18n-label
+                    type="email"
+                    [control]="_findFormControl('email')">
+                    <svg:path
+                        d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm640-480L501-453q-5 3-10.5 4.5T480-447q-5 0-10.5-1.5T459-453L160-640v400h640v-400ZM480-520l320-200H160l320 200ZM160-640v10-59 1-32 32-.5 58.5-10 400-400Z" />
+                </lc-short-text-form-field>
+
+                <lc-password-form-field
+                    autocomplete="new-password"
+                    label="Password"
+                    i18n-label
+                    [control]="_findFormControl('password')"
+                    [showPasswordRules]="true" />
+
+                <lc-turnstile-form-field
+                    action="account-registration-request"
+                    [control]="_findFormControl('turnstile')" />
+
+                <lc-consent-display i18n> By creating an account, you agree to </lc-consent-display>
+
+                <lc-action-container>
+                    <button
+                        aria-label="Clear new account registration form"
+                        i18n-aria-label
+                        class="lc-button lc-accent"
+                        i18n
+                        mat-ripple
+                        type="button"
+                        [disabled]="_shouldDisableClearButton()"
+                        (click)="_onClearForm()">
+                        Clear
+                    </button>
+
+                    <button
+                        aria-label="Submit form to create a new account"
+                        i18n-aria-label
+                        class="lc-filled-button lc-primary"
+                        mat-ripple
+                        type="submit"
+                        [disabled]="_shouldDisableSubmitButton()">
+                        <lc-pulse-loader
+                            i18n
+                            [pulsing]="_isRegistrationRequestInProgress()">
+                            Register
+                        </lc-pulse-loader>
+                    </button>
+                </lc-action-container>
+            </lc-form>
+        </lc-carousel-item>
+
+        <lc-carousel-item [lazy]="true">
+            <ng-template>
+                <lc-progress-complete-indicator [animated]="_isRegistrationRequestCreated()">
+                    <p
+                        data-title
+                        i18n>
+                        Your account registration request has been created
+                    </p>
+
+                    <p
+                        data-description
+                        i18n>
+                        Please check your email for further instructions.
+                    </p>
+
+                    <lc-action-container
+                        data-action
+                        layout="column">
+                        <a
+                            class="lc-filled-button lc-primary"
+                            i18n
+                            mat-ripple
+                            routerLink="/my/account">
+                            Go to dashboard
+                        </a>
+
+                        <a
+                            class="lc-filled-button lc-primary"
+                            i18n
+                            mat-ripple
+                            routerLink="/pricing">
+                            Explore plans
+                        </a>
+                    </lc-action-container>
+                </lc-progress-complete-indicator>
+            </ng-template>
+        </lc-carousel-item>
+    </lc-carousel>
+</lc-focus-box>

@@ -1,0 +1,27 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.lc-carousel {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.lc-carousel__body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.lc-carousel__body__slider {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+    transition: lc.transition(transform, 0.75s);
+    box-sizing: border-box;
+}

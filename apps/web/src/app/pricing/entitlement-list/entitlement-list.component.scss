@@ -1,0 +1,22 @@
+.entitlement-list {
+    margin: 0;
+    padding: 0;
+}
+
+.entitlement-list__item {
+    list-style-type: none;
+    display: flex;
+    align-items: flex-start;
+    padding: 5px 0;
+
+    &.is-disabled {
+        color: gray;
+    }
+
+    .lc-icon {
+        top: 1px;
+        margin-right: 3px;
+        position: relative;
+        transform: scale(0.8, 0.8);
+    }
+}

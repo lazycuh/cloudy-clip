@@ -1,0 +1,325 @@
+version: 2.1
+
+orbs:
+  browser-tools: circleci/browser-tools@1.4.8
+  codecov: codecov/codecov@5.2.1
+
+parameters:
+  node-image:
+    type: string
+    default: 'cimg/node:22.14.0'
+  go-image:
+    type: string
+    default: 'cimg/go:1.24.1'
+
+commands:
+  detect_changes:
+    description: 'Check if there was any changes in the given directory path, if so, it continues the pipeline job.'
+    parameters:
+      directory_path:
+        type: string
+    steps:
+      - run:
+          name: Detecting changes
+          command: |
+            .circleci/scripts/detect-changed-package.sh "<< parameters.directory_path >>"
+
+  install_node:
+    description: 'Install Node'
+    steps:
+      - run:
+          name: Installing Node
+          command: |
+            curl https://get.volta.sh | bash
+            echo 'export PATH=$PATH:$HOME/.volta/bin' >> $HOME/.profile
+            source $HOME/.profile
+
+            volta install node@22.14.0
+            volta install pnpm@9.15.9
+
+jobs:
+  api:
+    docker:
+      - image: << pipeline.parameters.go-image >>
+      - image: cimg/postgres:17.3
+        environment:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: cloudy-clip-db
+    steps:
+      - checkout
+      - detect_changes:
+          directory_path: '/api/'
+      - run: sudo apt-get update
+      - restore_cache:
+          name: Restoring Go module cache
+          keys:
+            - go-modules-{{ checksum "apps/api/go.sum" }}
+      - install_node
+      - run:
+          name: Linting
+          command: |
+            source $HOME/.profile
+
+            cd apps/api
+            pnpm install
+
+            curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sudo sh -s -- -b /usr/local/bin v2.0.2
+            golangci-lint --version
+
+            pnpm lint
+      - run:
+          name: Installing dockerize
+          command: |
+            wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+            sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+            rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.9.3
+      - run:
+          name: Waiting for Postgres
+          command: |
+            dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run:
+          name: Testing
+          command: |
+            source $HOME/.profile
+
+            cd apps/api
+            go mod tidy
+
+            curl -s "https://get.sdkman.io" | bash
+            source "$HOME/.sdkman/bin/sdkman-init.sh"
+            sdk version
+            sdk install java 21.0.6-tem
+            java -version
+
+            pnpm test:ci
+      - codecov/upload:
+          git_service: github
+          files: apps/api/coverage.out
+          verbose: true
+      - persist_to_workspace:
+          root: .
+          paths:
+            - './apps/api/coverage.html'
+
+  logging:
+    docker:
+      - image: << pipeline.parameters.node-image >>
+    steps:
+      - checkout
+      - detect_changes:
+          directory_path: '/logging/'
+      - run:
+          name: Linting
+          command: |
+            cd packages/logging
+            pnpm install
+
+            pnpm check-code-styles
+            pnpm lint
+      - run:
+          name: Testing
+          command: |
+            cd packages/logging
+            pnpm test:ci
+      - codecov/upload:
+          git_service: github
+          dir: packages/logging/coverage
+          verbose: true
+      - persist_to_workspace:
+          root: .
+          paths:
+            - './packages/logging/coverage/coverage-summary.json'
+
+  optional:
+    docker:
+      - image: << pipeline.parameters.node-image >>
+    steps:
+      - checkout
+      - detect_changes:
+          directory_path: '/optional/'
+      - run:
+          name: Linting
+          command: |
+            cd packages/optional
+            pnpm install
+
+            pnpm check-code-styles
+            pnpm lint
+      - run:
+          name: Testing
+          command: |
+            cd packages/optional
+            pnpm test:ci
+      - codecov/upload:
+          git_service: github
+          dir: packages/optional/coverage
+          verbose: true
+      - persist_to_workspace:
+          root: .
+          paths:
+            - './packages/optional/coverage/coverage-summary.json'
+
+  web:
+    docker:
+      - image: << pipeline.parameters.node-image >>
+    steps:
+      - checkout
+      - detect_changes:
+          directory_path: '/web/'
+      - run:
+          name: Linting
+          command: |
+            cd apps/web
+            pnpm install
+
+            pnpm check-code-styles
+            pnpm lint
+      - run:
+          name: Testing
+          command: |
+            cd apps/web
+            pnpm test:ci
+      - codecov/upload:
+          git_service: github
+          dir: apps/web/coverage
+          verbose: true
+      - persist_to_workspace:
+          root: .
+          paths:
+            - './apps/web/coverage/coverage-summary.json'
+
+  update-code-coverages:
+    docker:
+      - image: << pipeline.parameters.node-image >>
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Updating code coverages in README
+          command: |
+            pnpm install --filter .
+
+            git checkout staging
+            git pull
+
+            cp README.md README.md.bak
+            cp apps/api/README.md apps/api/README.md.bak
+
+            git checkout $CIRCLE_BRANCH
+
+            rm README.md apps/api/README.md
+
+            mv README.md.bak README.md
+            mv apps/api/README.md.bak apps/api/README.md
+
+            node .circleci/scripts/update-code-coverages.js
+
+            npx prettier --write README.md apps/api/README.md
+
+            git add README.md apps/api/README.md **/*.config.ts
+
+            git status
+
+            git config --local user.email "automation@circleci.com"
+            git config --local user.name "CircleCI"
+
+            if [[ $(git commit -m "[skip ci] Update code coverages in README files") == *"nothing to commit"* ]]
+            then
+              echo "No changes to commit"
+              exit 0
+            fi
+
+            git push origin HEAD
+
+  deploy:
+    docker:
+      - image: << pipeline.parameters.go-image >>
+    steps:
+      - checkout
+      - install_node
+      - restore_cache:
+          name: Restoring pnpm package cache
+          keys:
+            - pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+      - restore_cache:
+          name: Restoring Go module cache
+          keys:
+            - go-modules-{{ checksum "apps/api/go.sum" }}
+      - run:
+          name: Deploying apps
+          command: |
+            if [ -z "$CLOUDFLARE_ACCOUNT_ID" ]
+            then
+              echo "'CLOUDFLARE_ACCOUNT_ID' is missing"
+              exit 1
+            fi
+
+            if [ -z "$CLOUDFLARE_API_TOKEN" ]
+            then
+              echo "'CLOUDFLARE_API_TOKEN' is missing"
+              exit 1
+            fi
+
+            source $HOME/.profile
+
+            pnpm install
+            pnpm build
+
+            volta install wrangler
+            pnpm release
+      - save_cache:
+          name: Saving pnpm package cache
+          key: pnpm-packages-{{ checksum "pnpm-lock.yaml" }}
+          paths:
+            - node_modules
+      - save_cache:
+          name: Saving Go module cache
+          key: go-modules-{{ checksum "apps/api/go.sum" }}
+          paths:
+            - /home/circleci/go/pkg/mod
+
+workflows:
+  production:
+    when: pipeline.git.branch == "main"
+    jobs:
+      - deploy:
+          context:
+            - cf
+            - cloudy-clip-production
+
+  staging:
+    when: pipeline.git.branch == "staging"
+    jobs:
+      - deploy:
+          context:
+            - cf
+
+  merge-request:
+    when: pipeline.git.branch != "main" and pipeline.git.branch != "staging"
+    jobs:
+      - api:
+          context:
+            - codecov
+
+      - logging:
+          context:
+            - codecov
+
+      - optional:
+          context:
+            - codecov
+
+      - web:
+          context:
+            - codecov
+
+      - update-code-coverages:
+          requires:
+            - api
+            - logging
+            - optional
+            - web

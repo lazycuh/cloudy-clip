@@ -1,0 +1,5 @@
+name = "cloudy-clip-orchestrator"
+compatibility_date = "2023-10-30"
+compatibility_flags = ["nodejs_compat"]
+pages_build_output_dir="./dist"
+dev.port = 8787

@@ -1,0 +1,18 @@
+<div class="message-box__header">
+    <lc-icon class="message-box__icon">
+        <ng-content select="svg:path" />
+    </lc-icon>
+
+    <strong class="message-box__title">
+        <ng-content select="[data-title]" />
+    </strong>
+</div>
+
+<div class="message-box__content">
+    <ng-content />
+</div>
+
+<lc-action-container>
+    <ng-content select="a" />
+    <ng-content select="button" />
+</lc-action-container>

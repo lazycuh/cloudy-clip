@@ -1,0 +1,43 @@
+{
+  "name": "@lazycuh/logging",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "module": "./src/index.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "import": "./src/index.ts",
+      "require": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./formatter/console-log-entry-formatter": {
+      "import": "./src/formatter/console-log-entry-formatter.ts",
+      "require": "./src/formatter/console-log-entry-formatter.ts",
+      "default": "./src/formatter/console-log-entry-formatter.ts"
+    }
+  },
+  "scripts": {
+    "check-code-styles": "prettier --write --check \"**/(*.ts|*.json)\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test:local:all": "vitest run -c ./vitest/vite.config.ts",
+    "test:ci": "vitest run -c ./vitest/vite.config.ts --coverage",
+    "test:ci:no-coverage": "vitest run --config vitest/vite.config.ts"
+  },
+  "dependencies": {
+    "@lazycuh/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@lazycuh/tsconfig-base": "workspace:*",
+    "@types/node": "^18.19.39",
+    "@vitest/coverage-istanbul": "2.1.8",
+    "console-log-colors": "^0.5.0",
+    "rimraf": "^5.0.9",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
+    "vitest": "2.1.8"
+  }
+}

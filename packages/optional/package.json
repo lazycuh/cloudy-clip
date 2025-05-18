@@ -1,0 +1,22 @@
+{
+  "name": "@lazycuh/optional",
+  "version": "0.0.1",
+  "private": true,
+  "module": "./src",
+  "main": "./src",
+  "type": "module",
+  "scripts": {
+    "check-code-styles": "prettier --write --check \"**/(*.ts|*.json)\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "test:local:all": "vitest run -c ./vitest/vite.config.ts",
+    "test:ci": "vitest run -c ./vitest/vite.config.ts --coverage",
+    "test:ci:no-coverage": "vitest run --config vitest/vite.config.ts"
+  },
+  "devDependencies": {
+    "@lazycuh/tsconfig-base": "workspace:*",
+    "@vitest/coverage-istanbul": "2.1.8",
+    "typescript": "^5.5.3",
+    "vite": "^5.3.4",
+    "vitest": "^2.1.8"
+  }
+}

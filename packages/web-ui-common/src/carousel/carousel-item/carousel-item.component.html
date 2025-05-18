@@ -1,0 +1,7 @@
+<ng-content />
+
+@let templateRef = _carouselContentTemplateRef();
+
+@if (templateRef !== undefined && _isActive() && lazy()) {
+    <ng-container [ngTemplateOutlet]="templateRef" />
+}

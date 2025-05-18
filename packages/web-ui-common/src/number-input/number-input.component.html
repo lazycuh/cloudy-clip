@@ -1,0 +1,35 @@
+<div class="number-input__input-container">
+    <input
+        pattern="-?(?:\d+|\d+\.\d+)"
+        required
+        [value]="_currentValue()"
+        (blur)="_onBlur($event)"
+        (input)="_onValueChange($event)"
+        (keydown)="_onKeyDown($event)" />
+    <span class="number-input__ripple-bar"></span>
+</div>
+<button
+    aria-label="Decrement by one"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    mat-ripple
+    [disabled]="min() === _currentValue()"
+    [matRippleCentered]="true"
+    (pointerdown)="_onDecrement()">
+    <lc-icon>
+        <svg:path
+            d="M240-440q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h480q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H240Z" />
+    </lc-icon>
+</button>
+<button
+    aria-label="Increment by one"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    mat-ripple
+    [matRippleCentered]="true"
+    (pointerdown)="_onIncrement()">
+    <lc-icon>
+        <svg:path
+            d="M440-440H240q-17 0-28.5-11.5T200-480q0-17 11.5-28.5T240-520h200v-200q0-17 11.5-28.5T480-760q17 0 28.5 11.5T520-720v200h200q17 0 28.5 11.5T760-480q0 17-11.5 28.5T720-440H520v200q0 17-11.5 28.5T480-200q-17 0-28.5-11.5T440-240v-200Z" />
+    </lc-icon>
+</button>

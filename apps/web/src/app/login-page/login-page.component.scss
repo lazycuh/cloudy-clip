@@ -1,0 +1,157 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.login-page {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.login-page__content {
+    position: relative;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 0 16px;
+}
+
+.login-page__form-container {
+    padding: 32px 60px 72px;
+
+    &::after {
+        content: attr(data-or);
+    }
+
+    .lc-form-container {
+        margin-bottom: 24px;
+    }
+}
+
+.login-page__form__link {
+    align-self: flex-start;
+
+    &:last-of-type {
+        margin-top: 5px;
+    }
+}
+
+.login-page__form__alternative-login-methods {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    color: #fff;
+    margin-top: 24px;
+    margin-bottom: 8px;
+
+    &::before,
+    &::after {
+        content: '';
+        width: 50%;
+        height: 1px;
+        display: inline-block;
+        position: relative;
+        background-color: #fff;
+    }
+
+    &::before {
+        margin-right: 8px;
+    }
+
+    &::after {
+        margin-left: 8px;
+    }
+}
+
+.login-page__form__alternative-login-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-page__form__alternative-login {
+    width: 150px;
+    box-sizing: border-box;
+
+    &:not(:last-child) {
+        margin-right: 16px;
+    }
+
+    img {
+        margin-right: 7px;
+    }
+
+    &.discord-login img {
+        width: 25px;
+        margin-left: -2px;
+    }
+
+    &.facebook-login img {
+        width: 24px;
+    }
+
+    &.google-login img {
+        width: 22px;
+    }
+
+    &.google-login {
+        asl-google-signin-button {
+            position: absolute;
+            display: block;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+
+            iframe,
+            html,
+            body,
+            div {
+                position: relative;
+                margin: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                opacity: 0 !important;
+            }
+        }
+    }
+}
+
+@media (max-width: 560px) {
+    .login-page {
+        .login-page__form-container {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .login-page {
+        .login-page__form__alternative-login-container {
+            flex-flow: column;
+        }
+
+        .login-page__form__alternative-login {
+            margin: 0 !important;
+            margin-top: 12px !important;
+            width: 100%;
+
+            .pulse-loader__content {
+                justify-content: flex-start;
+                padding-left: 38%;
+            }
+        }
+
+        .lc-form-container {
+            margin-left: -20px;
+            width: calc(100% + 40px);
+        }
+    }
+}

@@ -1,0 +1,58 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.my-subscription__detail-row {
+    &.upcoming-payment .section-label .lc-icon {
+        transform: translateY(-1.5px);
+    }
+
+    &.payment-method {
+        .lc-icon {
+            transform: translateY(-1.25px);
+        }
+
+        .my-subscription__detail-row__value {
+            width: 325px;
+            box-sizing: border-box;
+            display: inline-flex;
+            border-radius: 8px;
+            border: 1px solid #212121;
+            padding: 8px 0 4px 14px;
+            margin-top: 12px;
+            background-color: #181818;
+        }
+    }
+
+    &.upcoming-payment .pulse-loader {
+        height: 24px;
+        width: 38px;
+    }
+}
+
+.payment-method__brand-logo {
+    margin-right: 18px;
+}
+
+.payment-method__info {
+    display: flex;
+    width: 100%;
+    flex-flow: column;
+}
+
+.payment-method__info__header {
+    display: flex;
+    flex-flow: column;
+    margin-right: 40px;
+    white-space: nowrap;
+}
+
+.payment-method__info__edit-action {
+    margin-left: auto;
+    color: lc.$link-text-color;
+}
+
+@media (max-width: 522px) {
+    .active-status.dialog-template .checkbox-form-field {
+        margin-top: 24px;
+        margin-bottom: 8px;
+    }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "cloudy-clip",
+  "outputfilename": "cloudy-clip",
+  "frontend:install": "pnpm install",
+  "frontend:build": "pnpm build:prod",
+  "frontend:dev:build": "pnpm build:dev",
+  "frontend:dev:watcher": "pnpm start",
+  "frontend:dev:serverUrl": "http://localhost:4200",
+  "author": {
+    "name": "Lazy Cuh",
+    "email": "tinkering.programmer@gmail.com"
+  },
+  "wailsjsdir": "frontend/js-bindings"
+}

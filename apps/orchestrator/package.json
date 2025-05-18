@@ -1,0 +1,32 @@
+{
+  "name": "@lazycuh/cloudy-clip-orchestrator",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "./scripts/build.sh",
+    "build:dev": "TRADE_TIMELINE_UPSTREAM='http://localhost:8282' TRADE_TIMELINE_ENVIRONMENT='development' TRADE_TIMELINE_ACCESS_CONTROL_ALLOW_ORIGIN='https://localhost:4300' node esbuild.config.js && cp dist/process-requests.js src/functions/[[api]].js",
+    "release": "./scripts/deploy.sh",
+    "check-code-styles": "prettier  --write --check \"**/(*.ts|*.json)\"",
+    "lint": "eslint \"src/**/*.ts\"",
+    "start": "pnpm build:dev && cd src && wrangler pages dev .",
+    "start:pages": "cd dist && wrangler pages dev .",
+    "test:local:all": "vitest run -c ./vitest/vitest.config.ts",
+    "test:ci": "vitest run -c ./vitest/vitest.config.ts",
+    "esbuild": "node esbuild.config.js"
+  },
+  "dependencies": {
+    "@lazycuh/http": "workspace:*"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "^0.6.16",
+    "@cloudflare/workers-types": "^4.20240614.0",
+    "@lazycuh/tsconfig-base": "workspace:*",
+    "@lazycuh/types": "workspace:*",
+    "esbuild": "^0.23.0",
+    "typescript": "^5.5.3",
+    "vitest": "2.1.8",
+    "whatwg-fetch": "^3.6.20",
+    "wrangler": "^3.65.0"
+  }
+}

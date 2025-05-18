@@ -1,0 +1,41 @@
+<div
+    class="form-field__wrapper"
+    [class.has-focus]="_hasFocus()">
+    <div class="form-field__prefix-icon">
+        <lc-icon>
+            <ng-content select="svg:path" />
+        </lc-icon>
+    </div>
+    <div class="form-field__input-wrapper">
+        <ng-content />
+        @if (label()) {
+            <label
+                class="form-field__label"
+                for="{{ _inputId }}">
+                {{ label() }}
+            </label>
+        }
+
+        <button
+            class="form-field__clear lc-icon-button lc-accent"
+            lcTooltip="Clear"
+            mat-ripple
+            type="button"
+            [attr.aria-label]="_clearButtonAriaLabel()"
+            [disabled]="_isDisabled()"
+            [style.display]="_shouldShowClearButton() ? 'inline-flex' : 'none'"
+            (click)="clear()">
+            <lc-icon>
+                <svg:path
+                    d="M480-424 284-228q-11 11-28 11t-28-11q-11-11-11-28t11-28l196-196-196-196q-11-11-11-28t11-28q11-11 28-11t28 11l196 196 196-196q11-11 28-11t28 11q11 11 11 28t-11 28L536-480l196 196q11 11 11 28t-11 28q-11 11-28 11t-28-11L480-424Z"
+                    data-icon-name="close-svg-icon" />
+            </lc-icon>
+        </button>
+
+        <ng-content select="[action]" />
+    </div>
+</div>
+
+<lc-error-indicator
+    [control]="control()"
+    [label]="label()" />

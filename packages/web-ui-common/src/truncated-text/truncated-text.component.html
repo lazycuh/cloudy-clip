@@ -1,0 +1,9 @@
+<div class="truncated-text__content-storage"></div>
+
+<div class="truncated-text__original-text">
+    {{ content() }}
+</div>
+
+@if (_isTextTooLong()) {
+    <lc-info-tooltip>{{ content() }}</lc-info-tooltip>
+}

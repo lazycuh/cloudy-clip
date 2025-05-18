@@ -1,0 +1,54 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.menu {
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+button.menu__trigger {
+    min-height: 35px;
+    border-radius: 4px;
+    padding: 5px 4px;
+
+    --lc-button-bg-color: #282727;
+
+    &.open {
+        background-color: var(--lc-button-bg-color--hover);
+
+        .menu__trigger__icon {
+            transform: scale(1.25) rotate(180deg);
+        }
+    }
+}
+
+.menu__trigger__icon {
+    width: 22px;
+    height: 22px;
+    transform: scale(1.25);
+    position: relative;
+    left: 3px;
+    transition: lc.transition(transform);
+}
+
+.menu__trigger__label {
+    display: inline-flex;
+}
+
+.menu__trigger__label-wrapper {
+    display: inline-block;
+    max-width: 105px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.menu__option {
+    transition: lc.transition(background-color);
+}
+
+.menu__option.is-selected,
+.menu__option:hover {
+    background-color: lc.$menu-item-bg-color-selected !important;
+}

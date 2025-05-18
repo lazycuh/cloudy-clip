@@ -1,0 +1,98 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.user-account {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    padding-bottom: 30px;
+    width: 100%;
+
+    .info-box,
+    .warning-box {
+        margin-bottom: 40px;
+        margin-top: 24px;
+    }
+
+    .lc-form-container {
+        align-items: flex-start;
+    }
+
+    .lc-form {
+        align-items: flex-start;
+    }
+
+    .lc-form__title {
+        margin-bottom: 0;
+    }
+
+    .short-text-form-field,
+    .turnstile-form-field {
+        justify-content: flex-start;
+    }
+
+    .password-form-field {
+        align-items: flex-start;
+    }
+
+    .password-form-field__rule-list {
+        padding-left: 40px;
+    }
+}
+
+.user-account__metadata-container {
+    margin-bottom: 55px;
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+}
+
+.user-account__metadata {
+    position: relative;
+    align-self: flex-start;
+    color: rgb(188, 188, 188);
+    display: flex;
+    align-items: center;
+}
+
+.user-account__metadata__unverified-email-status__verify-now {
+    text-decoration: underline;
+    color: lc.$link-text-color;
+}
+
+.user-account__email-sent-message {
+    display: flex;
+    align-items: center;
+    color: #0f0;
+    margin-top: 32px;
+    margin-left: auto;
+    margin-bottom: 6px;
+}
+
+@media (max-width: 744px) {
+    .user-account {
+        .form-field {
+            max-width: 100%;
+        }
+
+        .turnstile-form-field {
+            align-self: center;
+        }
+
+        .action-container {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: 493px) {
+    .user-account {
+        .user-account__email-sent-message {
+            align-items: flex-start;
+
+            .lc-icon {
+                transform: translateY(2px) !important;
+                margin-right: 8px !important;
+            }
+        }
+    }
+}

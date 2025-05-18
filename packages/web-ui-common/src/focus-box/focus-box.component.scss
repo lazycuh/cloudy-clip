@@ -1,0 +1,13 @@
+.focus-box {
+    position: relative;
+    width: 536px;
+    max-width: 95vw;
+    overflow-x: hidden;
+    border-radius: 12px;
+    background-color: #191919;
+    border: 1px solid #1b1b1b;
+    flex-grow: 0;
+    display: flex;
+    flex-flow: column;
+    box-sizing: border-box;
+}

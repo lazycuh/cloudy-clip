@@ -1,0 +1,97 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.site-footer {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    margin-top: auto;
+
+    footer {
+        min-height: 300px;
+        width: 100%;
+        background-color: rgb(26, 26, 26);
+        margin-top: 36vh;
+        display: flex;
+        flex-direction: column;
+        padding-top: #{lc.length(15)};
+    }
+}
+
+.site-footer__group-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    padding: 0 #{lc.length(10)};
+}
+
+.site-footer__group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: lc.length(15);
+
+    &:not(:last-of-type) {
+        margin-right: lc.length(25);
+    }
+}
+
+.site-footer__group__header {
+    font-weight: bold;
+    font-size: lc.font-size(1.15);
+    color: #fff;
+    margin-bottom: lc.length(3);
+}
+
+.site-footer__group__list {
+    margin: 0;
+    padding: 0;
+}
+
+.site-footer__group__list__item {
+    list-style-type: none;
+    margin-top: lc.length(3);
+}
+
+.site-footer__group__app-name {
+    font-size: lc.font-size(1.25);
+    margin-left: lc.length(3);
+    font-weight: bold;
+}
+
+.site-footer__copyright {
+    font-size: lc.font-size(0.9);
+    margin-top: auto;
+    margin-bottom: lc.length(2);
+    text-align: center;
+    border-top: 1px solid rgb(36, 36, 36);
+    // border-bottom: 1px solid rgb(36, 36, 36);
+    padding-top: lc.length(5);
+}
+
+.site-footer__disclaimer {
+    font-size: small;
+    margin: 0;
+    margin-top: auto;
+    // background-color: rgb(24, 24, 24);
+    padding: #{lc.length(5)} #{lc.length(3)};
+    text-align: center;
+    display: flex;
+    flex-flow: column;
+}
+
+@media (max-width: 540px) {
+    .site-footer {
+        .site-footer__group-container {
+            flex-direction: column;
+        }
+
+        .site-footer__group {
+            width: 100%;
+            margin-right: 0;
+        }
+
+        .site-footer__group:first-child {
+            align-items: center;
+        }
+    }
+}

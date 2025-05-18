@@ -1,0 +1,8 @@
+{
+  "name": "@lazycuh/tsconfig-base",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "check-code-styles": "prettier --write --check \"**/*.json\""
+  }
+}

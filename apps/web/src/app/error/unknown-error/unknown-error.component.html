@@ -1,0 +1,47 @@
+<div class="unknown-error__apology-container">
+    <p
+        class="unknown-error__apology"
+        i18n>
+        Our apologies for the inconvenience. Our system is currently experiencing a case of the Mondays.
+    </p>
+
+    <p
+        class="unknown-error__retry"
+        i18n>
+        Please try again later, or contact our support team for assistance.
+    </p>
+
+    @if (_requestId) {
+        <p
+            class="unknown-error__request-id"
+            i18n>
+            Request ID: {{ _requestId }}
+        </p>
+    }
+
+    <div class="unknown-error__action-container">
+        <a
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            target="_blank"
+            [href]="_getContactUsLink()">
+            Contact us
+        </a>
+
+        &nbsp;
+
+        <button
+            class="lc-filled-button lc-primary"
+            i18n
+            lc-reload-page
+            mat-ripple>
+            Reload page
+        </button>
+    </div>
+</div>
+
+<img
+    alt="Server error image"
+    class="unknown-error__image"
+    src="/images/server-error.png" />

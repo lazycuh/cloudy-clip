@@ -1,0 +1,107 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.0
+      author: nhuy.van
+      changes:
+        - createTable:
+            tableName: tbl_user
+            columns:
+              - column:
+                  name: user_id
+                  type: CHAR(26)
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk__user
+              - column:
+                  name: email
+                  type: VARCHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: password
+                  type: CHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: salt
+                  type: CHAR(64)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: display_name
+                  type: VARCHAR(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status_reason
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: provider
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_logged_in_at
+                  type: TIMESTAMPTZ
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMPTZ
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: updated_at
+                  type: TIMESTAMPTZ
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+        - createTable:
+            tableName: tbl_verification_code
+            columns:
+              - column:
+                  name: verification_code_id
+                  type: CHAR(26)
+                  constraints:
+                    primaryKey: true
+                    primaryKeyName: pk_verification_code
+              - column:
+                  name: verification_type
+                  type: TINYINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMPTZ
+                  defaultValueComputed: NOW()
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: CHAR(26)
+                  constraints:
+                    nullable: false
+                    deleteCascade: true
+                    foreignKeyName: fk__verification_code_user
+                    referencedTableName: tbl_user
+                    referencedColumnNames: user_id
+  - changeSet:
+      id: 1.0.4
+      author: nhuy.van
+      changes:
+        - createIndex:
+            tableName: tbl_user
+            indexName: idx__user_email
+            unique: true
+            columns:
+              - column:
+                  name: email

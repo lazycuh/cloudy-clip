@@ -1,0 +1,310 @@
+<header>
+    <h2
+        class="user-dashboard__section__title"
+        i18n>
+        Billing history
+    </h2>
+</header>
+
+@let __paymentQueryResult = _paymentQueryResult();
+
+@if (_paymentsResource.isLoading()) {
+    <lc-content-loading-indicator
+        appearance="line"
+        height="40px"
+        [fixedWidth]="true" />
+    <lc-content-loading-indicator
+        appearance="line"
+        width="100%"
+        [count]="6" />
+    <lc-content-loading-indicator
+        appearance="line"
+        height="40px"
+        [fixedWidth]="true" />
+} @else if (_paymentsResource.error()) {
+    <lc-warning-box>
+        <ng-container
+            data-title
+            i18n>
+            Something went wrong
+        </ng-container>
+
+        <ng-container
+            data-description
+            i18n>
+            We've encountered a problem while retrieving your billing history. Please try reloading your browser or
+            contact us if the issue persists.
+        </ng-container>
+
+        <button
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            (click)="_onReloadPage()">
+            Reload page
+        </button>
+
+        <a
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            target="_blank"
+            [href]="_getSupportEmailLinkForBillingHistoryRetrievalError()">
+            Contact us
+        </a>
+    </lc-warning-box>
+} @else if (__paymentQueryResult.total === 0) {
+    <lc-info-box style="margin-top: 32px">
+        <ng-container
+            data-title
+            i18n>
+            We have no records of your billing history
+        </ng-container>
+
+        <ng-container i18n>If it is a mistake, please let us know.</ng-container>
+
+        <a
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            routerLink="/pricing">
+            Explore plans
+        </a>
+
+        <a
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            target="_blank"
+            [href]="_getSupportEmailLinkForNoBillingHistoryRecords()">
+            Contact us
+        </a>
+    </lc-info-box>
+} @else {
+    <div
+        class="billing-history__table-wrapper"
+        [@fade-in]>
+        <table
+            mat-table
+            [dataSource]="__paymentQueryResult.page">
+            <ng-container matColumnDef="action">
+                <th
+                    *matHeaderCellDef
+                    mat-header-cell
+                    style="padding: 0"></th>
+                <td
+                    *matCellDef="let row"
+                    mat-cell
+                    style="padding: 0">
+                    @if (row.status === 'PAID' || row.status === 'REFUNDED') {
+                        <button
+                            aria-label="View receipt"
+                            i18n-aria-label
+                            class="lc-icon-button lc-accent"
+                            lcTooltip="View receipt"
+                            i18n-lcTooltip
+                            mat-ripple
+                            (click)="_onOpenPaymentReceiptPage(row)">
+                            <lc-icon>
+                                <svg:path
+                                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h240q17 0 28.5 11.5T480-800q0 17-11.5 28.5T440-760H200v560h560v-240q0-17 11.5-28.5T800-480q17 0 28.5 11.5T840-440v240q0 33-23.5 56.5T760-120H200Zm560-584L416-360q-11 11-28 11t-28-11q-11-11-11-28t11-28l344-344H600q-17 0-28.5-11.5T560-800q0-17 11.5-28.5T600-840h200q17 0 28.5 11.5T840-800v200q0 17-11.5 28.5T800-560q-17 0-28.5-11.5T760-600v-104Z" />
+                            </lc-icon>
+                        </button>
+                    }
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="paid-at">
+                <th
+                    *matHeaderCellDef
+                    i18n
+                    mat-header-cell>
+                    Date
+                </th>
+
+                <td
+                    *matCellDef="let row"
+                    mat-cell>
+                    {{ row.paidAt | date }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount-due">
+                <th
+                    *matHeaderCellDef
+                    i18n
+                    mat-header-cell>
+                    Total
+                </th>
+                <td
+                    *matCellDef="let row"
+                    class="number-display"
+                    mat-cell>
+                    {{ row.amountDue | parseCurrency | currency }}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th
+                    *matHeaderCellDef
+                    i18n
+                    mat-header-cell>
+                    Status
+                </th>
+                <td
+                    *matCellDef="let row"
+                    mat-cell>
+                    <div class="billing-history__table-cell-data-wrapper">
+                        @switch (row.status) {
+                            @case ('PAID') {
+                                @let paymentReason = _resolvePaymentReasonTooltipInfoText(row);
+
+                                @if (paymentReason) {
+                                    <lc-info-tooltip>{{ _resolvePaymentReasonTooltipInfoText(row) }}</lc-info-tooltip>
+                                }
+
+                                <div class="billing-history__payment-status-indicator payment-status--paid">
+                                    <lc-icon>
+                                        <svg:path
+                                            d="m382-354 339-339q12-12 28.5-12t28.5 12q12 12 12 28.5T778-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z" />
+                                    </lc-icon>
+
+                                    <ng-container i18n>Paid</ng-container>
+                                </div>
+                            }
+
+                            @case ('FAILED') {
+                                <lc-info-tooltip>{{ _resolvePaymentFailureReason(row) }}</lc-info-tooltip>
+
+                                <div class="billing-history__payment-status-indicator payment-status--failed">
+                                    <lc-icon>
+                                        <svg:path
+                                            d="M109-120q-11 0-20-5.5T75-140q-5-9-5.5-19.5T75-180l370-640q6-10 15.5-15t19.5-5q10 0 19.5 5t15.5 15l370 640q6 10 5.5 20.5T885-140q-5 9-14 14.5t-20 5.5H109Zm69-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm0-120q17 0 28.5-11.5T520-400v-120q0-17-11.5-28.5T480-560q-17 0-28.5 11.5T440-520v120q0 17 11.5 28.5T480-360Zm0-100Z" />
+                                    </lc-icon>
+
+                                    <ng-container i18n>Failed</ng-container>
+                                </div>
+                            }
+
+                            @case ('REFUND_IN_PROGRESS') {
+                                <lc-info-tooltip i18n>
+                                    <!-- -->Your refund is currently being processed. It will be issued back to the
+                                    original payment method used within 5-10 business days.<!-- -->
+                                </lc-info-tooltip>
+
+                                <div
+                                    class="billing-history__payment-status-indicator payment-status--refund-in-progress">
+                                    <lc-icon>
+                                        <svg:path
+                                            d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q64 0 123-24t104-69L480-480v-320q-134 0-227 93t-93 227q0 134 93 227t227 93Z" />
+                                    </lc-icon>
+                                    <ng-container i18n>Refund in progress</ng-container>
+                                </div>
+                            }
+
+                            @case ('REFUNDED') {
+                                <lc-info-tooltip>{{ _resolvePaymentReasonTooltipInfoText(row) }}</lc-info-tooltip>
+
+                                <div class="billing-history__payment-status-indicator payment-status--refunded">
+                                    <lc-icon>
+                                        <svg:path
+                                            d="M320-200q-17 0-28.5-11.5T280-240q0-17 11.5-28.5T320-280h244q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l76 76q11 11 11 28t-11 28q-11 11-28 11t-28-11L188-572q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l144-144q11-11 28-11t28 11q11 11 11 28t-11 28l-76 76h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H320Z" />
+                                    </lc-icon>
+                                    <ng-container i18n>Refunded</ng-container>
+                                </div>
+                            }
+
+                            @case ('FAILED_REFUND') {
+                                <lc-info-tooltip i18n>
+                                    <!-- -->Your refund was not successfully processed, please
+                                    <a
+                                        class="contact-us-link-for-failed-refund"
+                                        target="_blank"
+                                        [href]="_getSupportEmailLinkForFailedRefund(row)">
+                                        contact us
+                                    </a>
+                                    to request your refund.<!-- -->
+                                </lc-info-tooltip>
+
+                                <div class="billing-history__payment-status-indicator payment-status--failed-refund">
+                                    <lc-icon>
+                                        <svg:path
+                                            d="M109-120q-11 0-20-5.5T75-140q-5-9-5.5-19.5T75-180l370-640q6-10 15.5-15t19.5-5q10 0 19.5 5t15.5 15l370 640q6 10 5.5 20.5T885-140q-5 9-14 14.5t-20 5.5H109Zm69-80h604L480-720 178-200Zm302-40q17 0 28.5-11.5T520-280q0-17-11.5-28.5T480-320q-17 0-28.5 11.5T440-280q0 17 11.5 28.5T480-240Zm0-120q17 0 28.5-11.5T520-400v-120q0-17-11.5-28.5T480-560q-17 0-28.5 11.5T440-520v120q0 17 11.5 28.5T480-360Zm0-100Z" />
+                                    </lc-icon>
+
+                                    <ng-container i18n>Refund failed</ng-container>
+                                </div>
+                            }
+
+                            @case ('PAST_DUE') {
+                                <div class="billing-history__payment-status-indicator payment-status--past-due">
+                                    <lc-icon>
+                                        <svg:path
+                                            d="M721-80q-84 0-142.5-58T520-280q0-84 58.5-142T721-480q83 0 141 58.5T920-280q0 83-58 141.5T721-80ZM160-240v-320 13-173 480Zm0-400h640v-80H160v80Zm0 480q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v158q0 18-15.5 26.5t-32.5.5q-26-12-55.5-18.5T716-560q-57 0-107.5 21.5T520-480H160v240h263q17 0 28.5 11.5T463-200q0 17-11.5 28.5T423-160H160Zm580-128v-92q0-8-6-14t-14-6q-8 0-14 6t-6 14v91q0 8 3 15.5t9 13.5l61 61q6 6 14 6t14-6q6-6 6-14t-6-14l-61-61Z" />
+                                    </lc-icon>
+
+                                    <ng-container i18n>Past due</ng-container>
+                                </div>
+                            }
+
+                            @default {
+                                <div class="billing-history__payment-status-indicator payment-status--unknown">
+                                    <lc-icon>
+                                        <svg:path
+                                            d="M478-240q21 0 35.5-14.5T528-290q0-21-14.5-35.5T478-340q-21 0-35.5 14.5T428-290q0 21 14.5 35.5T478-240Zm2 160q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Zm4-172q25 0 43.5 16t18.5 40q0 22-13.5 39T502-525q-23 20-40.5 44T444-427q0 14 10.5 23.5T479-394q15 0 25.5-10t13.5-25q4-21 18-37.5t30-31.5q23-22 39.5-48t16.5-58q0-51-41.5-83.5T484-720q-38 0-72.5 16T359-655q-7 12-4.5 25.5T368-609q14 8 29 5t25-17q11-15 27.5-23t34.5-8Z" />
+                                    </lc-icon>
+
+                                    <ng-container i18n>Unknown</ng-container>
+                                </div>
+                            }
+                        }
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="payment-method">
+                <th
+                    *matHeaderCellDef
+                    i18n
+                    mat-header-cell>
+                    Payment method
+                </th>
+                <td
+                    *matCellDef="let row"
+                    mat-cell>
+                    @if (row.paymentMethodBrand) {
+                        <div class="billing-history__table-cell-data-wrapper">
+                            <img
+                                height="35"
+                                width="35"
+                                [alt]="row.paymentMethodBrand + '\'s logo'"
+                                [src]="'/images/' + row.paymentMethodBrand + '.png'" />
+
+                            <span class="billing-history__payment-method__last4">
+                                &times;&times;&times;&times;-{{ row.paymentMethodLast4 }}
+                            </span>
+                        </div>
+                    }
+                </td>
+            </ng-container>
+
+            @let columns = ['action', 'paid-at', 'amount-due', 'status', 'payment-method'];
+
+            <tr
+                *matHeaderRowDef="columns"
+                mat-header-row></tr>
+            <tr
+                *matRowDef="let row; columns: columns"
+                mat-row></tr>
+        </table>
+    </div>
+
+    <mat-paginator
+        aria-label="Select page of payments"
+        [disabled]="__paymentQueryResult.page.length === __paymentQueryResult.total"
+        [length]="__paymentQueryResult.total"
+        [pageSize]="_limit()"
+        [pageSizeOptions]="[10, 25, 50]"
+        [showFirstLastButtons]="true"
+        (page)="_onPaginationChanged($event)" />
+}

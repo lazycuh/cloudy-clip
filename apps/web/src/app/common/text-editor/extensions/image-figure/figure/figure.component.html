@@ -1,0 +1,41 @@
+<!-- eslint-disable @angular-eslint/template/elements-content -->
+<figure>
+    <div
+        class="figure__image-container"
+        [class.is-image-selected]="_isImageSelected()"
+        [style.height]="_width()"
+        [style.width]="_height()">
+        <img
+            [alt]="node().attrs.alt"
+            [src]="node().attrs.src"
+            (pointerup)="_onImagePressed($event)" />
+
+        <button
+            class="figure__image-resizer-anchor anchor--top-left"
+            type="button"
+            (pointerdown)="_onStartResizing($event)"
+            (touchstart)="$event.preventDefault()"></button>
+
+        <button
+            class="figure__image-resizer-anchor anchor--top-right"
+            type="button"
+            (pointerdown)="_onStartResizing($event)"
+            (touchstart)="$event.preventDefault()"></button>
+
+        <button
+            class="figure__image-resizer-anchor anchor--bottom-right"
+            type="button"
+            (pointerdown)="_onStartResizing($event)"
+            (touchstart)="$event.preventDefault()"></button>
+
+        <button
+            class="figure__image-resizer-anchor anchor--bottom-left"
+            type="button"
+            (pointerdown)="_onStartResizing($event)"
+            (touchstart)="$event.preventDefault()"></button>
+    </div>
+
+    <figcaption
+        class="figure__caption"
+        tiptapNodeViewContent></figcaption>
+</figure>

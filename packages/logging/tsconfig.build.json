@@ -1,0 +1,7 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": ["@lazycuh/types", "node"]
+  },
+  "exclude": ["**/*.test.ts", "dist", "build", "**/*.spec.ts"]
+}

@@ -1,0 +1,187 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "cli": {
+    "packageManager": "pnpm"
+  },
+  "newProjectRoot": "projects",
+  "projects": {
+    "web": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "changeDetection": "OnPush",
+          "style": "scss",
+          "viewEncapsulation": "None"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "lc",
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {
+          "vi": {
+            "subPath": "vi",
+            "translation": "src/locales/messages.vi.json"
+          },
+          "es": {
+            "subPath": "es",
+            "translation": "src/locales/messages.es.json"
+          }
+        }
+      },
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "build",
+            "define": {
+              "__IS_TEST__": "false",
+              "__ORCHESTRATOR_URL__": "'/api'",
+              "__ORIGIN__": "'http://localhost:4200'"
+            },
+            "i18nDuplicateTranslation": "error",
+            "i18nMissingTranslation": "error",
+            "localize": true,
+            "index": "src/index.html",
+            "browser": "src/main.ts",
+            "polyfills": ["@angular/localize/init"],
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "public"
+              }
+            ],
+            "aot": true,
+            "scripts": [],
+            "allowedCommonJsDependencies": ["bezier-easing"],
+            "prerender": false,
+            "ssr": false,
+            "optimization": true,
+            "webWorkerTsConfig": "tsconfig.worker.json"
+          },
+          "configurations": {
+            "production": {
+              "namedChunks": true,
+              "define": {
+                "__IS_TEST__": "false",
+                "__ORCHESTRATOR_URL__": "'/api'",
+                "__ORIGIN__": "'https://cloudyclip.com'"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "5kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "staging": {
+              "namedChunks": true,
+              "define": {
+                "__IS_TEST__": "false",
+                "__ORCHESTRATOR_URL__": "'/api'",
+                "__ORIGIN__": "'https://staging.cloudyclip.com'"
+              },
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "5kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "en": {
+              "styles": ["src/styles.en.scss"],
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "src/app/common/downloader/locales/en",
+                  "src/app/common/global-app-bar/locales/en",
+                  "src/assets/scss/en"
+                ]
+              }
+            },
+            "es": {
+              "localize": ["es"],
+              "styles": ["src/styles.es.scss"],
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "src/app/common/downloader/locales/es",
+                  "src/app/common/global-app-bar/locales/es",
+                  "src/assets/scss/es"
+                ]
+              }
+            },
+            "vi": {
+              "localize": ["vi"],
+              "styles": ["src/styles.vi.scss"],
+              "stylePreprocessorOptions": {
+                "includePaths": [
+                  "src/app/common/downloader/locales/vi",
+                  "src/app/common/global-app-bar/locales/vi",
+                  "src/assets/scss/vi"
+                ]
+              }
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "web:build:production"
+            },
+            "en": {
+              "buildTarget": "web:build:development,en",
+              "port": 4200
+            },
+            "vi": {
+              "buildTarget": "web:build:development,vi",
+              "port": 4200
+            },
+            "es": {
+              "buildTarget": "web:build:development,es",
+              "port": 4200
+            }
+          },
+          "defaultConfiguration": "development",
+          "options": {
+            "proxyConfig": "./proxy.conf.json"
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "web:build:en",
+            "format": "json",
+            "outputPath": "src/locales"
+          }
+        },
+        "test": {
+          "builder": "@analogjs/vitest-angular:test"
+        }
+      }
+    }
+  }
+}

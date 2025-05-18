@@ -1,0 +1,22 @@
+@use '../../index';
+
+.content-loading-indicator {
+    position: relative;
+    display: block;
+    margin-bottom: 8px;
+
+    ngx-skeleton-loader {
+        position: relative;
+        display: block;
+        width: 100%;
+
+        .skeleton-loader {
+            transition: index.transition(width, 1s);
+        }
+    }
+}
+
+.content-loading-indicator__list-wrapper ngx-skeleton-loader:first-child {
+    width: initial;
+    margin: 0 5px;
+}

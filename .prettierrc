@@ -1,0 +1,21 @@
+{
+  "arrowParens": "avoid",
+  "bracketSameLine": true,
+  "printWidth": 120,
+  "semi": true,
+  "singleAttributePerLine": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "singleQuote": true,
+  "tabWidth": 2,
+  "trailingComma": "none",
+  "useTabs": false,
+  "plugins": ["prettier-plugin-go-template"],
+  "overrides": [
+    {
+      "files": "*.{html,scss}",
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
+}

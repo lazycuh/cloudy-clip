@@ -1,0 +1,64 @@
+@let _editor = editor();
+
+<ng-template>
+    <lc-form
+        formTitle=""
+        [form]="_linkEditorForm"
+        (keyup.Enter)="_onSaveLinkUpdate()">
+        <lc-short-text-form-field
+            autocomplete="off"
+            label="Display text"
+            i18n-label
+            type="text"
+            [control]="_linkEditorForm.controls.displayText">
+            <svg:path
+                d="M360-240h240q17 0 28.5-11.5T640-280q0-17-11.5-28.5T600-320H360q-17 0-28.5 11.5T320-280q0 17 11.5 28.5T360-240Zm0-160h240q17 0 28.5-11.5T640-440q0-17-11.5-28.5T600-480H360q-17 0-28.5 11.5T320-440q0 17 11.5 28.5T360-400ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h287q16 0 30.5 6t25.5 17l194 194q11 11 17 25.5t6 30.5v447q0 33-23.5 56.5T720-80H240Zm280-560v-160H240v640h480v-440H560q-17 0-28.5-11.5T520-640ZM240-800v200-200 640-640Z" />
+        </lc-short-text-form-field>
+
+        <lc-short-text-form-field
+            autocomplete="off"
+            label="Link"
+            i18n-label
+            type="text"
+            [control]="_linkEditorForm.controls.link">
+            <svg:path
+                d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"
+                style="transform: scale(55) translate(1px, -16px)" />
+        </lc-short-text-form-field>
+    </lc-form>
+</ng-template>
+
+<div class="long-text-form-field__bubble-menu link-action-bubble-menu">
+    <button
+        aria-label="Open link in new tab"
+        i18n-aria-label
+        class="lc-button lc-accent"
+        i18n
+        mat-ripple
+        type="button"
+        (click)="_onOpenLinkInNewTab()">
+        Open
+    </button>
+
+    <button
+        aria-label="Unset link"
+        i18n-aria-label
+        class="lc-button lc-accent"
+        i18n
+        mat-ripple
+        type="button"
+        (click)="_editor.chain().focus().unsetLink().run()">
+        Unlink
+    </button>
+
+    <button
+        aria-label="Open link editor"
+        i18n-aria-label
+        class="lc-button lc-accent"
+        i18n
+        mat-ripple
+        type="button"
+        (click)="_editor.chain().focus().executeLinkCommand().run()">
+        Edit
+    </button>
+</div>

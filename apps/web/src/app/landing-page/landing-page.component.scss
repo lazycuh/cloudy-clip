@@ -1,0 +1,227 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.landing-page {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 0px 0px 50px;
+    font-size: #{lc.$default-font-size * 1.25};
+    text-align: center;
+}
+
+.landing-page__tag-line {
+    font-size: #{lc.$default-font-size * 3.25};
+    background-image: linear-gradient(45deg, #ff0, #63b6ff);
+    color: #ffa500;
+    position: relative;
+    margin-top: 0;
+    margin-bottom: lc.length(10);
+    white-space: nowrap;
+    animation-duration: 1s;
+    overflow: hidden;
+    white-space: wrap;
+    min-height: 200px;
+
+    p {
+        padding: 0 #{lc.length(10)};
+        box-sizing: border-box;
+        margin: 0;
+        line-height: 4rem;
+        width: min(800px, 95vw);
+    }
+
+    strong {
+        background-image: none;
+        color: #ff0;
+    }
+}
+
+.landing-page__tag-line__fan {
+    visibility: hidden;
+}
+
+.landing-page__financial-success {
+    margin-bottom: 0px;
+
+    img {
+        width: min(400px, 80vw);
+    }
+}
+
+.landing-page__understand-your-past {
+    color: #ff0;
+    margin-top: 50px;
+    margin-bottom: 80px;
+    padding: #{lc.length(12)} #{lc.length(5)};
+    font-size: #{lc.$default-font-size * 2};
+    position: relative;
+
+    &::before,
+    &::after {
+        position: absolute;
+        display: block;
+        content: '';
+        width: 60%;
+        height: 2px;
+        background-color: #ffa500;
+        left: 50%;
+        transform: translate(-50%);
+        border-radius: 50%;
+    }
+
+    &::before {
+        top: 0;
+    }
+
+    &::after {
+        bottom: 0;
+    }
+
+    span {
+        line-height: 2.5rem;
+        display: inline-block;
+
+        &:first-child {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.landing-page__trading-improvement {
+    display: flex;
+    padding: 0 #{lc.length(5)};
+
+    img {
+        width: 400px;
+    }
+
+    div {
+        text-align: left;
+        padding-left: lc.length(20);
+        padding-right: lc.length(20);
+        padding-top: 100px;
+    }
+
+    h2 {
+        font-size: #{lc.$default-font-size * 1.5};
+    }
+
+    .margin-magnet {
+        margin-right: -8px;
+        display: inline-block;
+    }
+
+    .curved-underline {
+        margin-left: 0;
+    }
+}
+
+.landing-page__come-join-us {
+    display: flex;
+    flex-flow: row-reverse;
+
+    img {
+        width: 400px;
+    }
+
+    a {
+        font-size: lc.$default-font-size;
+        margin-top: 10px;
+    }
+
+    p:nth-child(2) {
+        text-align: left;
+        padding-left: lc.length(10);
+        padding-right: lc.length(50);
+        padding-top: 100px;
+    }
+}
+
+@media (max-width: 1000px) {
+    .landing-page {
+        .landing-page__trading-improvement {
+            margin-bottom: lc.length(10);
+
+            div {
+                padding-left: lc.length(10);
+                padding-right: lc.length(10);
+            }
+        }
+    }
+}
+
+@media (max-width: 900px) {
+    .landing-page {
+        .landing-page__understand-your-past {
+            margin-bottom: lc.length(6);
+        }
+
+        .landing-page__trading-improvement {
+            flex-flow: column;
+
+            img {
+                width: min(300px, 90vw);
+            }
+
+            div {
+                padding-left: lc.length(5);
+                padding-right: lc.length(5);
+                padding-top: 0;
+            }
+        }
+
+        .landing-page__come-join-us {
+            img {
+                width: 300px;
+            }
+
+            p:nth-child(2) {
+                padding-right: lc.length(30);
+            }
+        }
+    }
+}
+
+@media (max-width: 800px) {
+    .landing-page {
+        .landing-page__trading-improvement {
+            margin-bottom: lc.length(0);
+        }
+
+        .landing-page__come-join-us {
+            flex-flow: column;
+
+            img {
+                width: 250px;
+            }
+
+            p:nth-child(2) {
+                padding-left: lc.length(10);
+                padding-right: lc.length(10);
+                padding-top: lc.length(5);
+            }
+        }
+    }
+}
+
+@media (max-width: 757px) {
+    .landing-page .landing-page__trading-improvement .curved-underline {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 535px) {
+    .landing-page {
+        .landing-page__tag-line p {
+            font-size: #{lc.$default-font-size * 2.5};
+            padding: 0 #{lc.length(5)};
+        }
+    }
+}
+
+@media (max-width: 460px) {
+    .landing-page .landing-page__understand-your-past {
+        font-size: lc.length(7);
+    }
+}

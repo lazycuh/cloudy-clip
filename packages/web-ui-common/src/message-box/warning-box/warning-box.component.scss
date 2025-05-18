@@ -1,0 +1,15 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.warning-box {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    .message-box__icon {
+        fill: lc.$text-color--warning;
+    }
+
+    .message-box__title {
+        color: lc.$text-color--warning;
+    }
+}

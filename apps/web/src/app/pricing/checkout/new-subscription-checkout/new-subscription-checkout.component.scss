@@ -1,0 +1,101 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.lc-checkout__payment {
+    background-color: rgb(27, 27, 27);
+
+    .carousel-item {
+        padding: 90px 36px 60px;
+    }
+}
+
+.lc-checkout__payment__billing-address__title {
+    h2 {
+        font-size: #{lc.$default-font-size + 4};
+        margin: 0;
+    }
+
+    margin-bottom: 20px;
+}
+
+.lc-checkout__payment__billing-address__subtitle {
+    color: lc.$text-color--subtitle;
+    font-size: #{lc.$default-font-size - 1};
+}
+
+.lc-checkout__payment__collection {
+    margin-bottom: 40px;
+    margin-top: 4px;
+}
+
+.lc-checkout__summary__row.payment-method-selection {
+    margin-bottom: 64px;
+    border-top: 1px solid #464646;
+    padding-top: 20px;
+}
+
+@media (max-width: 1005px) {
+    .new-subscription-checkout {
+        .lc-checkout__summary,
+        .lc-checkout__payment {
+            width: 400px;
+        }
+    }
+}
+
+@media (max-width: 895px) {
+    .new-subscription-checkout {
+        .focus-box {
+            flex-flow: column;
+            width: 70vw;
+        }
+
+        .lc-checkout__summary,
+        .lc-checkout__payment {
+            width: 100%;
+            flex-shrink: initial;
+        }
+
+        .lc-checkout__payment .carousel-item {
+            padding-top: 44px;
+        }
+    }
+}
+
+@media (max-width: 625px) {
+    .new-subscription-checkout {
+        .focus-box {
+            width: 90vw;
+        }
+    }
+}
+
+@media (max-width: 430px) and (min-width: 356px) {
+    .new-subscription-checkout {
+        .lc-checkout__summary,
+        .carousel-item {
+            padding-right: 24px;
+            padding-left: 24px;
+        }
+    }
+}
+
+@media (max-width: 420px) {
+    .new-subscription-checkout {
+        .form-field__label {
+            font-size: 12px;
+            transform: translateY(-32px);
+            padding-left: 12px;
+            padding-right: 12px;
+        }
+    }
+}
+
+@media (max-width: 355px) {
+    .new-subscription-checkout {
+        .lc-checkout__summary,
+        .carousel-item {
+            padding-right: 16px;
+            padding-left: 16px;
+        }
+    }
+}

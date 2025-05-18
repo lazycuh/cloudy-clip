@@ -1,0 +1,4 @@
+dist
+build
+.terser-cache.json
+.mangled-selectors.json

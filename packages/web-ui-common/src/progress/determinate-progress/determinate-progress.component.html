@@ -1,0 +1,33 @@
+<div class="determinate-progress__description">
+    {{ _description() }}
+    <lc-dot-dot-dot />
+</div>
+
+<div class="determinate-progress__value">{{ _currentProgress() }}%</div>
+
+<div class="determinate-progress__ring-container">
+    <svg
+        class="determinate-progress__ring"
+        [attr.viewBox]="'0 0 ' + _diameter + ' ' + _diameter">
+        <g [attr.transform]="'translate(' + _margin + ',' + _margin + ')'">
+            <circle
+                class="determinate-progress__ring__fill"
+                [attr.cx]="_radius"
+                [attr.cy]="_radius"
+                [attr.r]="_radius"
+                [attr.transform-origin]="_radius + ' ' + _radius"
+                [style.stroke-dasharray]="_totalRingLength"
+                [style.stroke-dashoffset]="_calculateCurrentRingLength()" />
+        </g>
+    </svg>
+</div>
+
+<button
+    aria-label="Abort progress"
+    i18n-aria-label
+    class="determinate-progress__abort lc-filled-button lc-warn"
+    i18n
+    mat-ripple
+    (click)="_onAbort()">
+    Abort
+</button>

@@ -1,0 +1,63 @@
+<header>
+    <h2
+        class="user-dashboard__section__title"
+        i18n>
+        Subscription
+    </h2>
+</header>
+
+@if (_failedRenewalPayment() !== null) {
+    @defer {
+        <lc-warning-box
+            style="margin-bottom: 64px"
+            [@failed-payment]>
+            <ng-container
+                data-title
+                i18n>
+                Attention
+            </ng-container>
+
+            <ng-container data-description>
+                <div i18n>
+                    <!-- -->Your last subscription renewal payment failed. Please update your payment method to avoid
+                    any service interruptions.<!-- -->
+                </div>
+
+                <div
+                    i18n
+                    style="margin-top: 12px">
+                    Please visit your <a routerLink="/my/billing">billing history</a> page for more details.
+                </div>
+            </ng-container>
+        </lc-warning-box>
+    } @placeholder {
+        <lc-pulse-loader [pulsing]="true" />
+    }
+}
+
+@let __activeSubscription = _activeSubscription();
+
+@if (__activeSubscription === null) {
+    @defer {
+        <lc-status-no-subscription [userEmail]="_user.email" />
+    } @placeholder {
+        <lc-pulse-loader [pulsing]="true" />
+    }
+} @else if (__activeSubscription.canceledAt === null) {
+    @defer {
+        <lc-active-status
+            [subscription]="__activeSubscription"
+            [user]="_user"
+            (subscriptionCanceled)="_onSubscriptionCanceled()" />
+    } @placeholder {
+        <lc-pulse-loader [pulsing]="true" />
+    }
+} @else {
+    @defer {
+        <lc-canceled-status
+            [subscription]="__activeSubscription"
+            (reactivate)="_onReactivateSubscription($event)" />
+    } @placeholder {
+        <lc-pulse-loader [pulsing]="true" />
+    }
+}

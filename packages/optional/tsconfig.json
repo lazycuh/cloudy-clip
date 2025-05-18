@@ -1,0 +1,6 @@
+{
+  "extends": "@lazycuh/tsconfig-base/base",
+  "compilerOptions": {
+    "types": ["vitest"]
+  }
+}

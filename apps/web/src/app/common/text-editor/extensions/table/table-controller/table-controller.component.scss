@@ -1,0 +1,26 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.table-controller {
+    position: fixed;
+    bottom: 20px;
+    z-index: 99;
+    left: 50%;
+    transform: translate(-50%, 0);
+    padding: #{lc.length(2)};
+    background-color: rgb(45, 45, 45);
+    border-radius: 8px;
+    visibility: hidden;
+    box-shadow:
+        0px 0.5rem 0.75rem rgba(0, 0, 0, 0.15),
+        0px 0.25rem 3rem rgba(0, 0, 0, 0.15);
+
+    button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .lc-icon {
+        width: 20px;
+        height: 20px;
+    }
+}

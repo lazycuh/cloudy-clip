@@ -1,0 +1,67 @@
+.is-mobile .keyboard-shortcut {
+    display: none;
+}
+
+.keyboard-shortcut {
+    --keyboard-shortcut-key-bg-color: rgb(0, 0, 0);
+    --keyboard-shortcut-key-border-color: #6e6e6e8a;
+    --keyboard-shortcut-key-box-shadow:
+        rgba(16, 17, 26, 0.16) 0px 1px 1px 0px, rgb(21, 22, 22) 0px 0px 0px 1px, rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+        rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ddd;
+    opacity: 0.7;
+    margin-left: 32px;
+
+    &.os--apple {
+        code {
+            font-size: calc(var(--default-font-size) - 5px);
+        }
+
+        .key--ctrl code span {
+            transform: scale(1.4) translateY(0.5px);
+            font-weight: normal;
+        }
+
+        .key--shift code span {
+            font-weight: normal;
+            transform: scale(1.5) translateY(-1px);
+        }
+    }
+
+    &.os--windows {
+        code {
+            font-size: calc(var(--default-font-size) - 6px);
+        }
+
+        .key--ctrl code,
+        .key--shift code {
+            font-size: calc(var(--default-font-size) - 7px);
+        }
+    }
+}
+
+.keyboard-shortcut__key {
+    display: inline-flex;
+    align-items: center;
+
+    code {
+        min-width: 20px;
+        height: 20px;
+        box-sizing: border-box;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 4px;
+        margin: 0 2px;
+        border-radius: 4px;
+        background-color: var(--keyboard-shortcut-key-bg-color);
+        text-transform: uppercase;
+        border: 1px solid var(--keyboard-shortcut-key-border-color);
+        box-shadow: var(--keyboard-shortcut-key-box-shadow);
+    }
+}

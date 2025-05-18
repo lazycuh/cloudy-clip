@@ -1,0 +1,10 @@
+{
+  "extends": "@lazycuh/tsconfig-base/base",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers", "@lazycuh/types"],
+    "paths": {
+      "@common/*": ["./src/common/*"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.refund-policy {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    padding: 0 30px 50px;
+    box-sizing: border-box;
+
+    h3 {
+        margin-bottom: 0px;
+    }
+
+    strong {
+        margin-right: 4px;
+    }
+}

@@ -1,0 +1,13 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.1
+      author: nhuy.van
+      changes:
+        - sqlFile:
+            dbms: 'postgresql'
+            splitStatements: true
+            path: ./sql/1.0.1-tables-for-entitlements.sql
+            stripComments: true
+            encoding: 'utf8'
+            relativeToChangelogFile: true

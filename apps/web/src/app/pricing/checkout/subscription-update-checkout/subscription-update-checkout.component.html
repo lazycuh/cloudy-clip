@@ -1,0 +1,310 @@
+@if (_isFetchingCheckoutPreview()) {
+    <div class="fetching-checkout-preview-loader">
+        <lc-pulse-loader
+            message="Please wait while we're preparing your order summary"
+            i18n-message
+            [pulsing]="true" />
+    </div>
+} @else {
+    @let _selectedPlan = selectedPlan();
+    @let _renewalIntervalLabel = _selectedPlan.renewedIn | renewalInterval;
+    @let __discount = _discount();
+    @let __tax = _tax();
+    @let __amountDueToday = _amountDueToday() | currency;
+    @let __amountDueRecurring = _amountDueRecurring() | currency;
+    @let _checkoutType = checkoutType();
+
+    <lc-focus-box [@fade-in]>
+        <div class="lc-checkout__summary">
+            <header>
+                <h2 class="lc-checkout__summary__title">
+                    <lc-back-button
+                        i18n
+                        [shouldShowConfirmation]="true">
+                        Order summary
+                    </lc-back-button>
+                </h2>
+            </header>
+            <div class="lc-checkout__summary__row plan-name-and-price">
+                <div class="lc-checkout__summary__row__label plan-name">
+                    {{ _selectedPlan.displayName }}
+                </div>
+
+                <div class="lc-checkout__summary__row__value price-preview number-display">
+                    {{ __amountDueToday }}
+                </div>
+            </div>
+
+            <div class="lc-checkout__summary__row monthly-price">
+                <div
+                    class="lc-checkout__summary__row__value__monthly-price__renewal-interval number-display"
+                    i18n>
+                    then
+                    {{ __amountDueRecurring }}
+                    per
+                    {{ _renewalIntervalLabel }}
+
+                    @if (_amountDueRecurring() !== '0.00') {
+                        <lc-info-tooltip>
+                            <!-- -->This is the estimated recurring total as of today. This price may change if your tax
+                            rates or applied discounts change in the future.<!-- -->
+                        </lc-info-tooltip>
+                    }
+                </div>
+            </div>
+
+            <div
+                class="lc-checkout__summary__row what-you-will-get"
+                i18n>
+                What you'll get:
+            </div>
+
+            <div class="lc-checkout__summary__row plan-entitlement-list">
+                <lc-entitlement-list [entitlements]="_selectedPlan.entitlements" />
+            </div>
+
+            <div class="lc-checkout__summary__row">
+                <div
+                    class="lc-checkout__summary__row__label"
+                    i18n>
+                    Subtotal
+                </div>
+
+                <div class="lc-checkout__summary__row__value number-display">
+                    {{ _selectedPlan.discountedPrice | parseCurrency | currency }}
+                </div>
+            </div>
+
+            @if (_refund() !== '0.00') {
+                <div class="lc-checkout__summary__row">
+                    <div class="lc-checkout__summary__row__label">
+                        <ng-container i18n>Refund</ng-container>
+
+                        <lc-info-tooltip i18n>
+                            <!-- -->We're refunding the unused portion of your current subscription.<!-- -->
+                        </lc-info-tooltip>
+                    </div>
+
+                    <div class="lc-checkout__summary__row__value number-display">-{{ _refund() | currency }}</div>
+                </div>
+            }
+
+            <!-- @let hasCoupon = _couponCodeValue().length > 0;
+            @let couponFormControl = _getCouponCodeFormControl();
+
+            <div
+                class="lc-checkout__summary__row coupon-redemption"
+                [class.has-coupon]="hasCoupon">
+                <div class="lc-checkout__summary__row__label">
+                    <button
+                        #couponCodeFormAnchor
+                        i18n
+                        class="lc-checkout__summary__row__add-coupon lc-button lc-primary"
+                        mat-ripple
+                        (click)="_onShowCouponCodeInput(couponCodeFormAnchor, couponCodeFormTemplate)">
+                        Redeem coupon
+                    </button>
+                </div>
+
+                <div class="lc-checkout__summary__row__value">
+                    <lc-truncated-text [content]="_couponCodeValue()" />
+
+                    @if (hasCoupon) {
+                        <button
+                            i18n
+                            class="remove-coupon"
+                            (click)="_onRemoveCoupon()">
+                            Remove coupon
+                        </button>
+                    }
+                </div>
+
+                <ng-template #couponCodeFormTemplate>
+                    <lc-form
+                        formTitle=""
+                        [form]="_couponCodeForm">
+                        <lc-short-text-form-field
+                            autocomplete="billing one-time-code"
+                            label="Coupon code"
+                            type="text"
+                            [control]="couponFormControl">
+                            <svg:path
+                                d="M160-280v80h640v-80H160Zm0-440h88q-5-9-6.5-19t-1.5-21q0-50 35-85t85-35q30 0 55.5 15.5T460-826l20 26 20-26q18-24 44-39t56-15q50 0 85 35t35 85q0 11-1.5 21t-6.5 19h88q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720Zm0 320h640v-240H596l60 82q10 14 8 29.5T648-503q-14 10-29.5 7.5T593-511L480-664 367-511q-10 13-25.5 15.5T312-503q-14-10-16.5-25.5T303-558l59-82H160v240Zm200-320q17 0 28.5-11.5T400-760q0-17-11.5-28.5T360-800q-17 0-28.5 11.5T320-760q0 17 11.5 28.5T360-720Zm240 0q17 0 28.5-11.5T640-760q0-17-11.5-28.5T600-800q-17 0-28.5 11.5T560-760q0 17 11.5 28.5T600-720Z" />
+                        </lc-short-text-form-field>
+
+                        <lc-action-container>
+                            <button
+                                i18n
+                                class="lc-filled-button lc-primary"
+                                mat-ripple
+                                [disabled]="couponFormControl.value.length === 0"
+                                (click)="_onApplyCouponCode()">
+                                Apply
+                            </button>
+                        </lc-action-container>
+                    </lc-form>
+                </ng-template>
+            </div> -->
+
+            @if (__discount !== '0.00') {
+                <div
+                    class="lc-checkout__summary__row discounted-value"
+                    [@discount]>
+                    <div
+                        class="lc-checkout__summary__row__label"
+                        i18n>
+                        Discount
+                    </div>
+
+                    <div class="lc-checkout__summary__row__value number-display">-{{ __discount | currency }}</div>
+                </div>
+            }
+
+            <div class="lc-checkout__summary__row sales-tax">
+                <div
+                    class="lc-checkout__summary__row__label"
+                    i18n>
+                    Tax
+                </div>
+
+                <div class="lc-checkout__summary__row__value number-display">
+                    @if (__tax === undefined) {
+                        <span
+                            class="tax-not-available-yet"
+                            i18n>
+                            Calculated at next step
+                        </span>
+                    } @else {
+                        {{ __tax | currency }}
+
+                        @if (__tax !== '0.00') {
+                            ({{ _taxPercentage() }}%)
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="lc-checkout__summary__row amount-due">
+                <div
+                    class="lc-checkout__summary__row__label"
+                    i18n>
+                    Due today
+
+                    @let _messageAboutRefund = _formatMessageAboutRefund();
+
+                    @if (_messageAboutRefund !== '') {
+                        <lc-info-tooltip class="refund-tooltip">{{ _messageAboutRefund }}</lc-info-tooltip>
+                    }
+                </div>
+
+                <div class="lc-checkout__summary__row__value number-display">
+                    {{ __amountDueToday }}
+                </div>
+            </div>
+
+            <div class="lc-checkout__summary__row payment-method-selection">
+                <div
+                    class="lc-checkout__summary__row__label"
+                    i18n>
+                    Payment method
+                </div>
+
+                <div class="lc-checkout__summary__row__value">
+                    <lc-menu
+                        [control]="_selectedPaymentMethodControl"
+                        [options]="_storedPaymentMethodOptions()"
+                        [selectedOptionIndex]="0" />
+
+                    <button
+                        class="add-payment-method"
+                        i18n
+                        (click)="_onAddPaymentMethod()">
+                        Add payment method
+                    </button>
+                </div>
+            </div>
+
+            <div class="lc-checkout__summary__row consent-checkbox">
+                <lc-checkbox-form-field [control]="_paymentConsentFormControl">
+                    @switch (_checkoutType) {
+                        @case ('UPGRADE') {
+                            <ng-container i18n>
+                                By upgrading your subscription to {{ _selectedPlan | subscriptionLabel }}, you authorize
+                                Cloudy Clip to charge <strong>{{ _selectedPaymentMethodLabel() }}</strong> for the
+                                additional fees associated with the upgraded plan. You acknowledge and agree to the
+                                terms and conditions of the upgraded plan, including any changes to features, pricing,
+                                and billing cycles.
+                            </ng-container>
+                        }
+
+                        @case ('DOWNGRADE') {
+                            <ng-container i18n>
+                                By downgrading your subscription to {{ _selectedPlan | subscriptionLabel }}, you
+                                acknowledge and agree to the terms and conditions of the reduced plan, including any
+                                changes to features, pricing, and billing cycles.
+                                @if (!_isAmountDueTodayARefund()) {
+                                    You also authorize Cloudy Clip to charge
+                                    <strong>{{ _selectedPaymentMethodLabel() }}</strong> for the amount due today.
+                                }
+                            </ng-container>
+                        }
+
+                        @case ('RENEWAL_INTERVAL_CHANGE') {
+                            @if (_selectedPlan.renewedIn === '1m') {
+                                <ng-container i18n>
+                                    By changing your subscription to a monthly plan, you authorize Cloudy Clip to
+                                    charge <strong>{{ _selectedPaymentMethodLabel() }}</strong> for the monthly amount
+                                    stated above. You also authorize Cloudy Clip to adjust your billing cycle and
+                                    payment amount accordingly.
+                                </ng-container>
+                            } @else {
+                                <ng-container i18n>
+                                    By changing your subscription to a yearly plan, you authorize Cloudy Clip to
+                                    charge <strong>{{ _selectedPaymentMethodLabel() }}</strong> for the yearly amount
+                                    stated above. You also authorize Cloudy Clip to adjust your billing cycle and
+                                    payment amount accordingly.
+                                </ng-container>
+                            }
+                        }
+
+                        @case ('REACTIVATION') {
+                            <ng-container i18n>
+                                By reactivating your {{ _selectedPlan | subscriptionLabel }} subscription, you authorize
+                                Cloudy Clip to charge <strong>{{ _selectedPaymentMethodLabel() }}</strong> for the
+                                recurring subscription fee stated above. You acknowledge and agree to the terms and
+                                conditions of the subscription, including any applicable fees, taxes, and billing
+                                cycles.
+                            </ng-container>
+                        }
+                    }
+                </lc-checkbox-form-field>
+            </div>
+
+            <lc-action-container>
+                <button
+                    aria-label="Submit"
+                    i18n-aria-label
+                    class="lc-filled-button lc-primary"
+                    mat-ripple
+                    type="submit"
+                    [disabled]="_shouldDisableSubmitButton()"
+                    (click)="_onSubmit()">
+                    <lc-pulse-loader
+                        i18n
+                        [pulsing]="_isSubmitRequestInProgress()">
+                        Submit
+                    </lc-pulse-loader>
+                </button>
+            </lc-action-container>
+
+            <p style="margin-top: 52px">
+                <a
+                    href="/policies/refund-policy"
+                    i18n
+                    target="_blank">
+                    Refund policy
+                </a>
+            </p>
+        </div>
+    </lc-focus-box>
+}

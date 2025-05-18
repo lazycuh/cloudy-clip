@@ -1,0 +1,9 @@
+<div class="lc-carousel__body">
+    <div
+        class="lc-carousel__body__slider"
+        [style.transform]="'translateX(' + -_activeCarouselItemIndex() * 100 + '%)'">
+        <ng-content select="lc-carousel-item" />
+    </div>
+</div>
+
+<ng-content />

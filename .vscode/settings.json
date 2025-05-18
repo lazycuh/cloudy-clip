@@ -1,0 +1,13 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  },
+  "go.testEnvVars": {
+    "TRADE_TIMELINE_EXECUTION_PROFILE": "test"
+  },
+  "go.testFlags": ["-timeout=300s"]
+}

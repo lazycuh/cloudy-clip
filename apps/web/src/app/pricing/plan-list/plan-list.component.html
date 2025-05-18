@@ -1,0 +1,64 @@
+@let plans = _plans();
+
+<p class="plan-list__tag-line">
+    <button
+        class="lc-button plan-list__tag-line__start-for-free"
+        i18n
+        (click)="_onSubscribeToPlan(_freePlan())">
+        Start for free
+    </button>
+    <br />
+    <span
+        i18n
+        style="display: inline-block; margin-top: 20px">
+        or
+    </span>
+    <br />
+    <span
+        i18n
+        style="display: flex; margin-top: 20px">
+        Try one of our &nbsp;<lc-curved-underline>most affordable</lc-curved-underline>&nbsp;plans
+    </span>
+</p>
+
+<lc-button-toggle-group
+    aria-label="Renewal interval"
+    id="plan-selection">
+    <lc-button-toggle
+        i18n
+        [selected]="_selectedRenewalInterval() === '1m'"
+        (activate)="_onShowMonthlyPlan()">
+        Monthly
+    </lc-button-toggle>
+    <lc-button-toggle
+        i18n
+        [selected]="_selectedRenewalInterval() === '1y'"
+        (activate)="_onShowYearlyPlan()">
+        Yearly
+    </lc-button-toggle>
+</lc-button-toggle-group>
+
+<ul class="plan-list__list">
+    @if (plans.length === 0) {
+        <li class="plan-list__list-item">
+            <lc-pulse-loader [pulsing]="true" />
+        </li>
+        <li class="plan-list__list-item">
+            <lc-pulse-loader [pulsing]="true" />
+        </li>
+        <li class="plan-list__list-item">
+            <lc-pulse-loader [pulsing]="true" />
+        </li>
+    } @else {
+        @for (plan of _plans(); track plan.planId) {
+            <li class="plan-list__list-item">
+                <lc-plan-item
+                    [plan]="plan"
+                    (changeRenewalInterval)="_onChangeRenewalInterval($event)"
+                    (downgrade)="_onDowngrade($event)"
+                    (subscribe)="_onSubscribeToPlan($event)"
+                    (upgrade)="_onUpgrade($event)" />
+            </li>
+        }
+    }
+</ul>

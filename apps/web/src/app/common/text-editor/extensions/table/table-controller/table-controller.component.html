@@ -1,0 +1,177 @@
+@let _editor = editor();
+
+<button
+    aria-label="Insert row above"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Insert row above"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    (click)="_editor.chain().focus().addRowBefore().run()">
+    <lc-icon>
+        <svg:path
+            d="M200-400v240h560v-240H200Zm0 320q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40q17 0 28.5 11.5T280-760q0 17-11.5 28.5T240-720h-40v240h560v-240h-40q-17 0-28.5-11.5T680-760q0-17 11.5-28.5T720-800h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm240-640h-40q-17 0-28.5-11.5T360-760q0-17 11.5-28.5T400-800h40v-40q0-17 11.5-28.5T480-880q17 0 28.5 11.5T520-840v40h40q17 0 28.5 11.5T600-760q0 17-11.5 28.5T560-720h-40v40q0 17-11.5 28.5T480-640q-17 0-28.5-11.5T440-680v-40Zm40 240Zm0 80v-80 80Zm0 0Z" />
+    </lc-icon>
+</button>
+
+<button
+    aria-label="Insert row below"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Insert row below"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    (click)="_editor.chain().focus().addRowAfter().run()">
+    <lc-icon style="transform: translateY(1px)">
+        <svg:path
+            d="M760-560v-240H200v240h560ZM200-160q-33 0-56.5-23.5T120-240v-560q0-33 23.5-56.5T200-880h560q33 0 56.5 23.5T840-800v560q0 33-23.5 56.5T760-160h-40q-17 0-28.5-11.5T680-200q0-17 11.5-28.5T720-240h40v-240H200v240h40q17 0 28.5 11.5T280-200q0 17-11.5 28.5T240-160h-40Zm280 80q-17 0-28.5-11.5T440-120v-40h-40q-17 0-28.5-11.5T360-200q0-17 11.5-28.5T400-240h40v-40q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280v40h40q17 0 28.5 11.5T600-200q0 17-11.5 28.5T560-160h-40v40q0 17-11.5 28.5T480-80Zm0-400Zm0-80v80-80Zm0 0Z" />
+    </lc-icon>
+</button>
+
+<button
+    aria-label="Insert column left"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Insert column left"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    (click)="_editor.chain().focus().addColumnBefore().run()">
+    <lc-icon>
+        <svg:path
+            d="M560-200h240v-560H560v560Zm-320 80q-33 0-56.5-23.5T160-200v-40q0-17 11.5-28.5T200-280q17 0 28.5 11.5T240-240v40h240v-560H240v40q0 17-11.5 28.5T200-680q-17 0-28.5-11.5T160-720v-40q0-33 23.5-56.5T240-840h560q33 0 56.5 23.5T880-760v560q0 33-23.5 56.5T800-120H240Zm-40-240q-17 0-28.5-11.5T160-400v-40h-40q-17 0-28.5-11.5T80-480q0-17 11.5-28.5T120-520h40v-40q0-17 11.5-28.5T200-600q17 0 28.5 11.5T240-560v40h40q17 0 28.5 11.5T320-480q0 17-11.5 28.5T280-440h-40v40q0 17-11.5 28.5T200-360Zm280-120Zm80 0h-80 80Zm0 0Z" />
+    </lc-icon>
+</button>
+
+<button
+    aria-label="Insert column right"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Insert column right"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    (click)="_editor.chain().focus().addColumnAfter().run()">
+    <lc-icon>
+        <svg:path
+            d="M400-760H160v560h240v-560ZM160-120q-33 0-56.5-23.5T80-200v-560q0-33 23.5-56.5T160-840h560q33 0 56.5 23.5T800-760v40q0 17-11.5 28.5T760-680q-17 0-28.5-11.5T720-720v-40H480v560h240v-40q0-17 11.5-28.5T760-280q17 0 28.5 11.5T800-240v40q0 33-23.5 56.5T720-120H160Zm600-240q-17 0-28.5-11.5T720-400v-40h-40q-17 0-28.5-11.5T640-480q0-17 11.5-28.5T680-520h40v-40q0-17 11.5-28.5T760-600q17 0 28.5 11.5T800-560v40h40q17 0 28.5 11.5T880-480q0 17-11.5 28.5T840-440h-40v40q0 17-11.5 28.5T760-360ZM480-480Zm-80 0h80-80Zm0 0Z" />
+    </lc-icon>
+</button>
+
+<button
+    aria-label="Merge cells"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Merge cells"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    (click)="_editor.chain().focus().mergeCells().run()">
+    <lc-icon>
+        <svg:path
+            d="M160-600q-17 0-28.5-11.5T120-640v-120q0-33 23.5-56.5T200-840h120q17 0 28.5 11.5T360-800q0 17-11.5 28.5T320-760H200v120q0 17-11.5 28.5T160-600Zm640 0q-17 0-28.5-11.5T760-640v-120H640q-17 0-28.5-11.5T600-800q0-17 11.5-28.5T640-840h120q33 0 56.5 23.5T840-760v120q0 17-11.5 28.5T800-600ZM645-355l-97-97q-12-12-12-28t12-28l97-97q12-12 28.5-12t28.5 12q12 12 12 28.5T702-548l-29 28h167q17 0 28.5 11.5T880-480q0 17-11.5 28.5T840-440H673l29 28q12 12 12 28.5T702-355q-12 12-28.5 12T645-355Zm-386 0q-12-12-12.5-28.5T258-412l29-28H120q-17 0-28.5-11.5T80-480q0-17 11.5-28.5T120-520h167l-29-28q-12-12-11.5-28.5T259-605q12-12 28-12t28 12l97 97q12 12 12 28t-12 28l-97 97q-12 12-28 12t-28-12Zm-59 235q-33 0-56.5-23.5T120-200v-120q0-17 11.5-28.5T160-360q17 0 28.5 11.5T200-320v120h120q17 0 28.5 11.5T360-160q0 17-11.5 28.5T320-120H200Zm440 0q-17 0-28.5-11.5T600-160q0-17 11.5-28.5T640-200h120v-120q0-17 11.5-28.5T800-360q17 0 28.5 11.5T840-320v120q0 33-23.5 56.5T760-120H640Z" />
+    </lc-icon>
+</button>
+
+<button
+    aria-label="Split cell"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Split cell"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    (click)="_editor.chain().focus().splitCell().run()">
+    <lc-icon>
+        <svg:path
+            d="M240-664v64q0 17-11.5 28.5T200-560q-17 0-28.5-11.5T160-600v-160q0-17 11.5-28.5T200-800h160q17 0 28.5 11.5T400-760q0 17-11.5 28.5T360-720h-64l201 201q11 11 17 25.5t6 30.5v263q0 17-11.5 28.5T480-160q-17 0-28.5-11.5T440-200v-264L240-664Zm480 0-98 99q-12 12-28.5 12T565-565q-12-12-12-29t12-29l99-97h-64q-17 0-28.5-11.5T560-760q0-17 11.5-28.5T600-800h160q17 0 28.5 11.5T800-760v160q0 17-11.5 28.5T760-560q-17 0-28.5-11.5T720-600v-64Z" />
+    </lc-icon>
+</button>
+
+<button
+    aria-label="Toggle table header"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Toggle table header"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    (click)="_editor.chain().focus().toggleHeaderRow().run()">
+    <lc-icon>
+        <svg:path
+            d="M420-680H260q-25 0-42.5-17.5T200-740q0-25 17.5-42.5T260-800h440q25 0 42.5 17.5T760-740q0 25-17.5 42.5T700-680H540v460q0 25-17.5 42.5T480-160q-25 0-42.5-17.5T420-220v-460Z" />
+    </lc-icon>
+</button>
+
+<button
+    aria-label="Duplicate row"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Duplicate row"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    (click)="_onDuplicateRow()">
+    <lc-icon>
+        <svg:path
+            d="M680-121q-17 0-28.5-11.5T640-161v-80h-80q-17 0-28.5-11.5T520-281q0-17 11.5-28.5T560-321h80v-80q0-17 11.5-28.5T680-441q17 0 28.5 11.5T720-401v80h80q17 0 28.5 11.5T840-281q0 17-11.5 28.5T800-241h-80v80q0 17-11.5 28.5T680-121ZM200-240q-17 0-28.5-11.5T160-280q0-17 11.5-28.5T200-320h243q-3 21-2.5 40t3.5 40H200Zm0-160q-17 0-28.5-11.5T160-440q0-17 11.5-28.5T200-480h346q-23 16-41.5 36T472-400H200Zm0-160q-17 0-28.5-11.5T160-600q0-17 11.5-28.5T200-640h520q17 0 28.5 11.5T760-600q0 17-11.5 28.5T720-560H200Zm0-160q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h520q17 0 28.5 11.5T760-760q0 17-11.5 28.5T720-720H200Z" />
+    </lc-icon>
+</button>
+
+<button
+    #floatingBoxRef="floatingBoxRef"
+    aria-label="Table removal options"
+    i18n-aria-label
+    class="lc-icon-button lc-accent"
+    lcTooltip="Table removal options"
+    i18n-lcTooltip
+    mat-ripple
+    type="button"
+    [lcTriggerFloatingBoxFor]="tableRemovalOptions">
+    <lc-icon>
+        <svg:path
+            d="M363-120q-16 0-30.5-6T307-143L143-307q-11-11-17-25.5t-6-30.5v-234q0-16 6-30.5t17-25.5l164-164q11-11 25.5-17t30.5-6h234q16 0 30.5 6t25.5 17l164 164q11 11 17 25.5t6 30.5v234q0 16-6 30.5T817-307L653-143q-11 11-25.5 17t-30.5 6H363Zm1-80h232l164-164v-232L596-760H364L200-596v232l164 164Zm116-224 86 86q11 11 28 11t28-11q11-11 11-28t-11-28l-86-86 86-86q11-11 11-28t-11-28q-11-11-28-11t-28 11l-86 86-86-86q-11-11-28-11t-28 11q-11 11-11 28t11 28l86 86-86 86q-11 11-11 28t11 28q11 11 28 11t28-11l86-86Zm0-56Z" />
+    </lc-icon>
+    <svg
+        fill="currentColor"
+        height="18"
+        style="margin-left: -2px; margin-right: -4px"
+        viewBox="0 -960 960 960"
+        width="18">
+        <path
+            d="M328-400q-9 0-14.5-6t-5.5-14q0-2 6-14l145-145q5-5 10-7t11-2q6 0 11 2t10 7l145 145q3 3 4.5 6.5t1.5 7.5q0 8-5.5 14t-14.5 6H328Z" />
+    </svg>
+</button>
+
+<lc-anchored-floating-box #tableRemovalOptions>
+    <div class="table-controller__removal-options">
+        <button
+            class="lc-button lc-accent"
+            i18n
+            mat-ripple
+            type="button"
+            (click)="_editor.chain().focus().deleteTable().run(); floatingBoxRef.close()">
+            Delete table
+        </button>
+
+        <button
+            class="lc-button lc-accent"
+            i18n
+            mat-ripple
+            type="button"
+            (click)="_editor.chain().focus().deleteRow().run()">
+            Delete row
+        </button>
+
+        <button
+            class="lc-button lc-accent"
+            i18n
+            mat-ripple
+            type="button"
+            (click)="_editor.chain().focus().deleteColumn().run()">
+            Delete column
+        </button>
+    </div>
+</lc-anchored-floating-box>

@@ -1,0 +1,191 @@
+@use 'sass:color';
+@use '@lazycuh/web-ui-common' as lc;
+
+.number-display {
+    font-variant: tabular-nums;
+}
+
+.lc-button {
+    --lc-button-bg-color: transparent;
+    // --lc-button-bg-color--hover: #6c6c6c;
+    --lc-button-bg-color--hover: rgba(255, 255, 255, 0.1);
+    --lc-button-text-color: #d7e3ff;
+
+    padding: 0 16px;
+    border-radius: 0.5rem;
+    min-height: 40px;
+    color: var(--lc-button-text-color);
+    font-size: 15px;
+    font-weight: 500;
+    min-width: 80px;
+    vertical-align: middle;
+    user-select: none;
+    appearance: none;
+    background-color: var(--lc-button-bg-color);
+    transition:
+        lc.transition(opacity), lc.transition(visibility), lc.transition(background-color), lc.transition(color);
+    flex-shrink: 0;
+
+    &:hover {
+        text-decoration: none;
+    }
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active,
+    &:not(:disabled):focus {
+        background-color: var(--lc-button-bg-color--hover);
+    }
+
+    &:disabled {
+        opacity: 0.35;
+        cursor: default;
+    }
+
+    .lc-icon + .lc-button__label {
+        margin-left: 2px;
+        margin-right: 3px;
+    }
+
+    .lc-button__label + .lc-icon {
+        margin-left: 10px;
+    }
+}
+
+.lc-button__label {
+    pointer-events: none;
+}
+
+.lc-filled-button {
+    @extend .lc-button;
+
+    // box-shadow:
+    //     #0003 0px 3px 1px -2px,
+    //     #00000024 0px 2px 2px 0px,
+    //     #0000001f 0px 1px 5px 0px;
+
+    &.lc-primary {
+        --lc-button-bg-color: #a4bfff;
+        --lc-button-text-color: #000;
+        --lc-button-bg-color--hover: #{color.adjust(#a4bfff, $lightness: -5%, $space: hsl)};
+    }
+
+    &.lc-accent {
+        --lc-button-bg-color: #1e293b;
+        --lc-button-text-color: lc.$text-color--default;
+        --lc-button-bg-color--hover: #334155;
+
+        border: 1px solid #232c3a;
+    }
+
+    // &.lc-warn {
+    //     --lc-button-bg-color: rgb(244, 67, 54);
+    //     --lc-button-text-color: #fff;
+    //     --lc-button-bg-color--hover: rgb(216, 57, 45);
+    // }
+
+    &.lc-warn {
+        --lc-button-bg-color: #ff5c57;
+        --lc-button-text-color: #000;
+        --lc-button-bg-color--hover: #db4d48;
+    }
+
+    .lc-icon:first-child {
+        margin-left: -3px;
+    }
+
+    .lc-icon + .lc-button__label {
+        margin-left: 8px;
+    }
+}
+
+.lc-fab-button {
+    @extend .lc-button;
+
+    padding: 0;
+    min-width: initial;
+    min-height: initial;
+    flex-shrink: 0;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 0;
+
+    &::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 100%;
+        top: 0;
+        left: 0;
+        transition: lc.transition(transform, 100ms);
+        transform: scale(0, 0);
+        transform-origin: 50% 50%;
+        background-color: var(--lc-fab-button-hover-bg-color);
+    }
+
+    &:not(:disabled):hover::before,
+    &:not(:disabled):focus::before {
+        transform: scale(1, 1);
+    }
+
+    &.lc-primary {
+        --lc-button-bg-color: #a4bfff;
+        --lc-button-text-color: #000;
+        --lc-button-bg-color--hover: #{color.adjust(#a4bfff, $lightness: -5%, $space: hsl)};
+    }
+
+    &.lc-accent {
+        --lc-button-bg-color: #fff;
+        --lc-button-bg-color--hover: #e6e6e6;
+        --lc-button-text-color: #6b7280;
+        --lc-fab-button-hover-bg-color: rgba(0, 0, 0, 0.1);
+
+        &:not(:disabled):hover {
+            --lc-button-text-color: #fff;
+        }
+
+        &:disabled {
+            opacity: 1;
+            --lc-button-bg-color: #8c8c8c;
+            --lc-button-text-color: #eaeaea46;
+        }
+    }
+
+    &.lc-warn {
+        --lc-button-bg-color: #ff5c57;
+        --lc-button-text-color: #000;
+        --lc-button-bg-color--hover: #db4d48;
+    }
+}
+
+.lc-mini-fab-button {
+    @extend .lc-fab-button;
+
+    width: 35px;
+    height: 35px;
+}
+
+.lc-icon-button {
+    @extend .lc-fab-button;
+
+    box-shadow: none;
+    background-color: transparent !important;
+
+    --lc-fab-button-hover-bg-color: rgba(255, 255, 255, 0.1) !important;
+
+    &.lc-warn {
+        --lc-button-text-color: #ff5c57;
+    }
+}
+
+.text-with-gradient-background {
+    background-image: linear-gradient(45deg, #90ee90, #ffa500);
+    background-size: 100%;
+    font-weight: bold;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -moz-text-fill-color: transparent;
+}

@@ -1,0 +1,49 @@
+.lc-form-container {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.lc-form {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.lc-form__title {
+    color: #fff;
+    margin-bottom: 50px;
+    text-align: center;
+    margin-top: 0;
+
+    &:empty {
+        display: none;
+    }
+}
+
+.lc-form__action-container {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    margin-top: 10px;
+
+    .lc-form__action {
+        border-radius: 50px;
+
+        &:not(:last-child) {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+@media (max-height: 620px) {
+    .lc-form__title {
+        margin-bottom: 30px;
+    }
+}

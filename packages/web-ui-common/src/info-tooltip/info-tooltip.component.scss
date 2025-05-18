@@ -1,0 +1,20 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.info-tooltip {
+    position: relative;
+    display: inline-block;
+    transform: translateY(-1px);
+    margin-left: -8px;
+    margin-right: -12px;
+
+    .lc-icon {
+        transition: lc.transition(fill);
+    }
+
+    button:active,
+    button:focus {
+        .lc-icon {
+            fill: #add8e6;
+        }
+    }
+}

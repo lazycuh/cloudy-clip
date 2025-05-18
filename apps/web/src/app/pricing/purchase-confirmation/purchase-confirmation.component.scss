@@ -1,0 +1,30 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.purchase-confirmation {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.purchase-confirmation__pulse-loader-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - #{lc.$global-app-bar-height} - 200px);
+    width: 100%;
+    font-size: 24px;
+    color: #fff;
+}
+
+@media (max-width: 475px) {
+    .purchase-confirmation {
+        .progress-complete-indicator {
+            padding-left: lc.length(5);
+            padding-right: lc.length(5);
+        }
+
+        p[data-title] {
+            width: 280px;
+        }
+    }
+}

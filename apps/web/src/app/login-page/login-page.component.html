@@ -1,0 +1,122 @@
+<div class="login-page__content">
+    <lc-focus-box
+        class="login-page__form-container"
+        [@focusBox]>
+        <lc-form
+            formTitle="Log into your account"
+            i18n-formTitle
+            [form]="_form"
+            (submitForm)="_onSubmit($event)">
+            <lc-short-text-form-field
+                autocomplete="email"
+                label="Email"
+                i18n-label
+                type="email"
+                [control]="_findFormControl('email')">
+                <svg:path
+                    d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm640-480L501-453q-5 3-10.5 4.5T480-447q-5 0-10.5-1.5T459-453L160-640v400h640v-400ZM480-520l320-200H160l320 200ZM160-640v10-59 1-32 32-.5 58.5-10 400-400Z" />
+            </lc-short-text-form-field>
+
+            <lc-password-form-field
+                autocomplete="current-password"
+                label="Password"
+                i18n-label
+                [control]="_findFormControl('password')" />
+
+            <lc-turnstile-form-field
+                action="Testing"
+                [control]="_findFormControl('turnstile')" />
+
+            <lc-consent-display i18n>By logging in, you agree to</lc-consent-display>
+
+            <lc-action-container>
+                <button
+                    aria-label="Clear login form"
+                    i18n-aria-label
+                    class="lc-button lc-accent"
+                    i18n
+                    mat-ripple
+                    type="button"
+                    [disabled]="_shouldDisableClearButton()"
+                    (click)="_onClearForm()">
+                    Clear
+                </button>
+
+                <button
+                    aria-label="Submit form to log in"
+                    i18n-aria-label
+                    class="lc-filled-button lc-primary"
+                    mat-ripple
+                    type="submit"
+                    [disabled]="_shouldDisableSubmitButton() || _isLoginRequestInProgress()">
+                    <lc-pulse-loader
+                        i18n
+                        [pulsing]="_isLoginRequestInProgress()">
+                        Log in
+                    </lc-pulse-loader>
+                </button>
+            </lc-action-container>
+        </lc-form>
+        <a
+            class="login-page__form__link"
+            i18n
+            routerLink="/account/registration">
+            Register new account
+        </a>
+        <a
+            class="login-page__form__link"
+            i18n
+            routerLink="/account/reset">
+            Reset password
+        </a>
+
+        <div class="login-page__form__alternative-login-methods">Or log in with</div>
+        <div class="login-page__form__alternative-login-container">
+            <button
+                aria-label="Log in with Discord"
+                i18n-aria-label
+                class="login-page__form__alternative-login lc-filled-button lc-accent discord-login"
+                mat-ripple
+                [disabled]="!_isTurnstileTokenReady() || _isDiscordLoginRequestInProgress()"
+                (click)="_openDiscordConsentPage()">
+                <lc-pulse-loader [pulsing]="_isDiscordLoginRequestInProgress()">
+                    <img
+                        alt="Discord's logo"
+                        src="/images/discord.svg" />
+                    Discord
+                </lc-pulse-loader>
+            </button>
+
+            <button
+                aria-label="Log in with Facebook"
+                i18n-aria-label
+                class="login-page__form__alternative-login lc-filled-button lc-accent facebook-login"
+                mat-ripple
+                [disabled]="!_isTurnstileTokenReady() || _isFacebookLoginRequestInProgress()"
+                (click)="_openFacebookConsentPage()">
+                <lc-pulse-loader [pulsing]="_isFacebookLoginRequestInProgress()">
+                    <img
+                        alt="Facebook's logo"
+                        src="/images/facebook.svg" />
+                    Facebook
+                </lc-pulse-loader>
+            </button>
+
+            <button
+                aria-label="Log in with Google"
+                i18n-aria-label
+                i18n-aria-roledescription="Button for Google log-in"
+                class="login-page__form__alternative-login lc-filled-button lc-accent google-login"
+                mat-ripple
+                [disabled]="!_isTurnstileTokenReady() || _isGoogleLoginRequestInProgress()"
+                (click)="_openGoogleConsentPage()">
+                <lc-pulse-loader [pulsing]="_isGoogleLoginRequestInProgress()">
+                    <img
+                        alt="Google's logo"
+                        src="/images/google.svg" />
+                    Google
+                </lc-pulse-loader>
+            </button>
+        </div>
+    </lc-focus-box>
+</div>

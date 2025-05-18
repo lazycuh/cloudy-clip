@@ -1,0 +1,20 @@
+import { AuthenticatedUser, UserStatusReason } from '../../src/auth';
+import { Plan } from '../../src/entitlement';
+
+export function generateAuthenticatedUser(plan?: Plan): AuthenticatedUser {
+  const now = new Date();
+
+  return Object.freeze({
+    createdAt: now.toISOString(),
+    displayName: 'Hello World',
+    email: 'helloworld@gmail.com',
+    lastLoggedInAt: now.toISOString(),
+    provider: '',
+    status: 'ACTIVE',
+    statusReason: UserStatusReason.NONE,
+    subscription: plan
+      ? Object.freeze({ canceledAt: null, cancellationReason: null, plan: Object.freeze(plan) })
+      : null,
+    updatedAt: now.toISOString()
+  });
+}

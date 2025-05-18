@@ -1,0 +1,140 @@
+@let authenticatedUser = _authenticatedUser();
+
+<lc-form
+    formTitle="Account info"
+    i18n-formTitle
+    [@fade-in]
+    [form]="_form"
+    (submitForm)="_onSubmit($event)">
+    <div class="user-account__metadata-container">
+        @if (!_hasLoginProvider()) {
+            <div class="user-account__metadata">
+                <ng-container i18n>Updated on:</ng-container>
+                {{ authenticatedUser.updatedAt | date: 'medium' }}
+            </div>
+        } @else {
+            <lc-info-box>
+                <ng-container
+                    data-title
+                    i18n>
+                    Note
+                </ng-container>
+
+                <span i18n>
+                    Editing has been disabled because your account is managed by
+                    {{ authenticatedUser.provider | capitalize }}.
+                </span>
+            </lc-info-box>
+        }
+        @if (_isEmailUnverified()) {
+            <div class="user-account__metadata">
+                <ng-container i18n>Status: Unverified</ng-container>
+            </div>
+
+            <lc-warning-box>
+                <ng-container
+                    data-title
+                    i18n>
+                    Attention
+                </ng-container>
+
+                <ng-container i18n>
+                    Your account will be blocked on {{ _getBlockDateIfEmailIsNotVerified() | date: 'medium' }} if not
+                    verified.
+                </ng-container>
+
+                @if (!_isAccountVerificationEmailSentSuccessfully()) {
+                    <button
+                        class="lc-filled-button lc-primary"
+                        mat-ripple
+                        type="button"
+                        (click)="_sendAccountVerificationEmail()">
+                        <lc-pulse-loader
+                            i18n
+                            [pulsing]="_isSendingAccountVerificationEmailRequestInProgress()">
+                            Verify now
+                        </lc-pulse-loader>
+                    </button>
+                } @else {
+                    <div
+                        class="user-account__email-sent-message"
+                        [@fade-in]>
+                        <lc-icon style="margin-right: 4px; transform: translateY(-1px)">
+                            <svg:path
+                                d="m382-354 339-339q12-12 28.5-12t28.5 12q12 12 12 28.5T778-636L410-268q-12 12-28 12t-28-12L182-440q-12-12-11.5-28.5T183-497q12-12 28.5-12t28.5 12l142 143Z"
+                                data-icon-name="done-svg-icon" />
+                        </lc-icon>
+                        <ng-container i18n>Please check your email for further instructions</ng-container>
+                    </div>
+                }
+            </lc-warning-box>
+        }
+    </div>
+
+    <lc-short-text-form-field
+        autocomplete="name"
+        label="Display name"
+        i18n-label
+        type="text"
+        [control]="_findFormControl('displayName')">
+        <svg:path
+            d="M720-440q17 0 28.5-11.5T760-480q0-17-11.5-28.5T720-520H600q-17 0-28.5 11.5T560-480q0 17 11.5 28.5T600-440h120Zm0-120q17 0 28.5-11.5T760-600q0-17-11.5-28.5T720-640H600q-17 0-28.5 11.5T560-600q0 17 11.5 28.5T600-560h120ZM360-440q-36 0-65 6.5T244-413q-21 13-32 29.5T201-348q0 12 9 20t22 8h256q13 0 22-8.5t9-21.5q0-17-11-33t-32-30q-22-14-51-20.5t-65-6.5Zm0-40q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z" />
+    </lc-short-text-form-field>
+
+    <lc-short-text-form-field
+        autocomplete="email"
+        label="Email"
+        i18n-label
+        type="email"
+        [control]="_findFormControl('email')">
+        <svg:path
+            d="M160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm640-480L501-453q-5 3-10.5 4.5T480-447q-5 0-10.5-1.5T459-453L160-640v400h640v-400ZM480-520l320-200H160l320 200ZM160-640v10-59 1-32 32-.5 58.5-10 400-400Z" />
+    </lc-short-text-form-field>
+
+    @if (!_hasLoginProvider()) {
+        <lc-password-form-field
+            autocomplete="new-password"
+            label="New password"
+            i18n-label
+            [control]="_findFormControl('newPassword')"
+            [showPasswordRules]="true" />
+
+        <lc-password-form-field
+            autocomplete="current-password"
+            label="Current password"
+            i18n-label
+            [control]="_findFormControl('currentPassword')" />
+
+        <lc-turnstile-form-field
+            action="account-registration-request"
+            [control]="_findFormControl('turnstile')" />
+
+        <lc-action-container>
+            <button
+                aria-label="Clear new account registration form"
+                i18n-aria-label
+                class="lc-button lc-accent"
+                i18n
+                mat-ripple
+                type="button"
+                [disabled]="_shouldDisableClearButton()"
+                (click)="_onClearForm()">
+                Clear
+            </button>
+
+            <button
+                aria-label="Submit form to update account"
+                i18n-aria-label
+                class="lc-filled-button lc-primary"
+                mat-ripple
+                type="submit"
+                [disabled]="_shouldDisableSubmitButton()">
+                <lc-pulse-loader
+                    i18n
+                    [pulsing]="_isAccountUpdateRequestInProgress()">
+                    Update
+                </lc-pulse-loader>
+            </button>
+        </lc-action-container>
+    }
+</lc-form>

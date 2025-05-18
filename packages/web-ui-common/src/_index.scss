@@ -1,0 +1,74 @@
+@use 'sass:math';
+
+$action-bar-bg-color: #434343;
+$action-bar-height: 45px;
+$app-background-color: #0e1820;
+$default-font-size: 16px;
+$text-color--default: #e5e7eb;
+// $text-color--default: #bfbfbf;
+// $text-color--default: rgba(240, 240, 240, 0.9);
+$text-color--label: #fff;
+$text-color--subtitle: #bfbfbf;
+$text-color--warning: #ff8a8a;
+$easing-function: cubic-bezier(0.04, 0.54, 0.25, 1);
+$form-field-status-color--invalid: #ff4747;
+$hint-text-color: #c9c3c3;
+$link-text-color: #4f9cff;
+$menu-item-bg-color-selected: #424040;
+// $menu-item-bg-color-selected: #3c3a3a;
+// $menu-item-bg-color-selected: #333030;
+$navigation-bar-color: #494949;
+$global-app-bar-height: 100px;
+$panel-header-bg-color: #434343;
+$panel-header-text-color: #fff;
+$colors: #00daff #7db0b5;
+$box-shadow:
+    rgba(16, 17, 26, 0.16) 0px 1px 1px 0px,
+    rgb(213, 219, 225) 0px 0px 0px 1px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px,
+    rgba(0, 0, 0, 0) 0px 0px 0px 0px;
+
+@function transition($property, $duration: 0.25s) {
+    @return $property $duration $easing-function;
+}
+
+@function length($multiple) {
+    @return #{4px * $multiple};
+}
+
+@function pxToRem($lengthInPx) {
+    @return math.div(1rem * $lengthInPx, 16);
+}
+
+@function font-size($multiple) {
+    @return calc(var(--default-font-size) * #{$multiple});
+}
+
+/// Convenient mixin to hide an action in the action bar, and show it in the overflow menu.
+@mixin enable-overflow-action($parent-class, $action-class) {
+    .#{$parent-class}__action-bar .#{$action-class} {
+        display: none;
+    }
+
+    .#{$parent-class}__overflow-menu .#{$action-class} {
+        display: inline-flex;
+    }
+}
+
+@mixin style-mdc-checkbox($color, $font-size: #{$default-font-size}, $multiline-label: false) {
+    .mdc-label {
+        font-size: $font-size;
+        color: #{$color};
+    }
+
+    .mdc-checkbox__background {
+        border-color: #{$color};
+    }
+
+    @if $multiline-label {
+        .mdc-checkbox {
+            align-self: flex-start;
+            top: -8px;
+        }
+    }
+}

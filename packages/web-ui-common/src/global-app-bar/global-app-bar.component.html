@@ -1,0 +1,88 @@
+<header class="global-app-bar__app-name">
+    <a routerLink="/">
+        <img
+            alt="Cloudy Clip App Logo"
+            class="global-app-bar__app-logo"
+            src="/images/cloudy-clip-logo-snug.png" />
+        <h1 class="text-with-gradient-background">Cloudy Clip</h1>
+    </a>
+</header>
+
+<div class="global-app-bar__action-container">
+    <a
+        class="lc-button lc-primary global-app-bar__action view-pricing-action"
+        lcTooltip="View pricing"
+        i18n-lcTooltip
+        mat-ripple
+        routerLink="/pricing">
+        <lc-icon>
+            <svg:path
+                d="M856-390 570-104q-12 12-27 18t-30 6q-15 0-30-6t-27-18L103-457q-11-11-17-25.5T80-513v-287q0-33 23.5-56.5T160-880h287q16 0 31 6.5t26 17.5l352 353q12 12 17.5 27t5.5 30q0 15-5.5 29.5T856-390ZM513-160l286-286-353-354H160v286l353 354ZM260-640q25 0 42.5-17.5T320-700q0-25-17.5-42.5T260-760q-25 0-42.5 17.5T200-700q0 25 17.5 42.5T260-640Zm220 160Z" />
+        </lc-icon>
+
+        <span
+            class="lc-button__label"
+            i18n>
+            Pricing
+        </span>
+    </a>
+
+    @if (_isUserLoggedIn()) {
+        <a
+            class="lc-button lc-primary global-app-bar__action go-to-dashboard-action"
+            lcTooltip="Go to dashboard"
+            i18n-lcTooltip
+            mat-ripple
+            routerLink="/my/account">
+            <lc-icon>
+                <svg:path
+                    d="M580-40q-25 0-42.5-17.5T520-100v-280q0-25 17.5-42.5T580-440h280q25 0 42.5 17.5T920-380v280q0 25-17.5 42.5T860-40H580ZM440-263v183h-17q-27 0-41.5-18T363-142l-9-66q-13-5-24.5-12T307-235l-62 26q-25 11-50 2t-39-32l-47-82q-14-23-8-49t27-43l53-40q-1-7-1-13.5v-27q0-6.5 1-13.5l-53-40q-21-17-27-43t8-49l47-82q14-23 39-32t50 2l62 26q11-8 23-15t24-12l9-66q4-26 23.5-44t46.5-18h94q27 0 46.5 18t23.5 44l9 66q13 5 24.5 12t22.5 15l62-26q25-11 50-2t39 32l47 82q14 23 8 49.5T832-547l-24 18q-14 10-29.5 8T752-536q-11-13-9-29t15-27l19-14-39-68-99 42q-22-23-48.5-38.5T533-694l-13-106h-79l-14 106q-31 8-57.5 23.5T321-633l-99-41-39 68 86 64q-5 15-7 30t-2 32q0 16 2 31t7 30l-86 65 39 68 99-42q24 25 54.5 41.5T440-263Zm42-217Zm0-140q-58 0-99 40.5T342-480q0 21 6 41t18 38q11 15 28.5 19t31.5-7q14-10 16.5-26.5T434-444q-6-8-9-16.5t-3-19.5q0-25 17.5-42.5T482-540q10 0 19.5 3.5T519-527q12 9 27 6.5t25-16.5q10-14 6.5-31T560-596q-14-12-34-18t-44-6Zm0 140Zm238 280q-25 0-49 6.5T626-173q-13 8-19.5 17t-6.5 19q0 7 5 12t12 5h210q5 0 9-5t4-12q0-10-6.5-19T814-173q-21-14-45-20.5t-49-6.5Zm0-40q25 0 42.5-17.5T780-300q0-25-17.5-42.5T720-360q-25 0-42.5 17.5T660-300q0 25 17.5 42.5T720-240Z" />
+            </lc-icon>
+
+            <span
+                class="lc-button__label"
+                i18n>
+                Dashboard
+            </span>
+        </a>
+
+        <button
+            class="lc-button lc-primary global-app-bar__action"
+            lcTooltip="Log out"
+            i18n-lcTooltip
+            mat-ripple
+            type="button"
+            (click)="_logout()">
+            <lc-icon>
+                <svg:path
+                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h240q17 0 28.5 11.5T480-800q0 17-11.5 28.5T440-760H200v560h240q17 0 28.5 11.5T480-160q0 17-11.5 28.5T440-120H200Zm487-320H400q-17 0-28.5-11.5T360-480q0-17 11.5-28.5T400-520h287l-75-75q-11-11-11-27t11-28q11-12 28-12.5t29 11.5l143 143q12 12 12 28t-12 28L669-309q-12 12-28.5 11.5T612-310q-11-12-10.5-28.5T613-366l74-74Z" />
+            </lc-icon>
+
+            <span
+                class="lc-button__label"
+                i18n>
+                Log out
+            </span>
+        </button>
+    } @else {
+        <a
+            class="lc-button lc-primary global-app-bar__action log-in-action"
+            lcTooltip="Log in"
+            i18n-lcTooltip
+            mat-ripple
+            routerLink="/login">
+            <lc-icon>
+                <svg:path
+                    d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z" />
+            </lc-icon>
+
+            <span
+                class="lc-button__label"
+                i18n>
+                Log in
+            </span>
+        </a>
+    }
+
+    <ng-content />
+</div>

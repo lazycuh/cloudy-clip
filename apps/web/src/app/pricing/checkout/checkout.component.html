@@ -1,0 +1,57 @@
+@let __selectedPlan = _selectedPlan();
+@let __checkoutSessionType = _checkoutSessionType();
+
+@if (_noStripeInstance()) {
+    <lc-progress-complete-indicator
+        [animated]="true"
+        [success]="false">
+        <p
+            data-title
+            i18n>
+            Unable to establish your checkout session
+        </p>
+        <p
+            data-description
+            i18n>
+            We were not able to determine what went wrong.
+        </p>
+
+        <lc-action-container
+            data-action
+            layout="column">
+            <button
+                class="lc-filled-button lc-primary"
+                i18n
+                mat-ripple
+                (click)="_onReloadPage()">
+                Reload page
+            </button>
+            <a
+                class="lc-filled-button lc-primary"
+                i18n
+                mat-ripple
+                target="_blank"
+                [href]="_getSupportEmailLinkForNoStripeInstance()">
+                Contact us
+            </a>
+        </lc-action-container>
+    </lc-progress-complete-indicator>
+} @else if (__selectedPlan !== null) {
+    @switch (__checkoutSessionType) {
+        @case ('NEW_SUBSCRIPTION') {
+            @defer {
+                <lc-new-subscription-checkout
+                    [selectedPlan]="__selectedPlan"
+                    (paymentFailure)="_onPaymentFailure($event)" />
+            }
+        }
+        @default {
+            @defer {
+                <lc-subscription-update-checkout
+                    [checkoutType]="__checkoutSessionType!"
+                    [selectedPlan]="__selectedPlan"
+                    (paymentFailure)="_onPaymentFailure($event)" />
+            }
+        }
+    }
+}

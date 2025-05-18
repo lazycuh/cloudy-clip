@@ -1,0 +1,19 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.carousel-item {
+    display: block;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: lc.transition(opacity, 0.5s);
+
+    &.is-active {
+        opacity: 1;
+    }
+
+    &.is-inactive {
+        opacity: 0;
+    }
+}

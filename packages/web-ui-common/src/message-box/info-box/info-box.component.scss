@@ -1,0 +1,16 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.info-box {
+    position: relative;
+    display: block;
+    width: 100%;
+
+    .message-box__icon {
+        fill: #00c0ff;
+        margin-left: -2px;
+    }
+
+    .message-box__title {
+        color: #00c0ff;
+    }
+}

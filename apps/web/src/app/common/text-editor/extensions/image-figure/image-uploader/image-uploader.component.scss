@@ -1,0 +1,21 @@
+.image-uploader {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    padding: 0px 24px 24px;
+    margin-top: -12px;
+    align-items: center;
+
+    .lc-form-container {
+        min-width: 320px;
+    }
+
+    .form-field {
+        margin-bottom: 12px;
+    }
+}
+
+.image-uploader__or {
+    font-weight: bold;
+    margin: 20px 0;
+}

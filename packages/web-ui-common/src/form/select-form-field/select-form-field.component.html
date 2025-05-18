@@ -1,0 +1,27 @@
+<lc-form-field
+    #formField
+    [control]="_controlForOptionLabelInput"
+    [hasPlaceholder]="placeholder().length > 0"
+    [label]="label()">
+    <ng-content
+        select="svg:path"
+        ngProjectAs="svg:path" />
+
+    <input
+        #inputElement
+        class="form-field__input"
+        type="text"
+        [formControl]="_controlForOptionLabelInput"
+        [matAutocomplete]="auto"
+        [placeholder]="placeholder()"
+        (blur)="formField.blur(); _selectOptionOnUserBehalf($event)"
+        (focus)="formField.focus()" />
+</lc-form-field>
+
+<mat-autocomplete
+    #auto="matAutocomplete"
+    (optionSelected)="_onSelectionChange($event)">
+    @for (option of _filteredOptions(); track option.value) {
+        <mat-option [value]="option.value">{{ option.label }}</mat-option>
+    }
+</mat-autocomplete>

@@ -1,0 +1,14 @@
+@use '../../index';
+
+.active-toggle-indicator {
+    position: absolute;
+    background-color: #fff;
+    height: calc(100% - 10px);
+    transition: index.transition(transform, 0.25s);
+    top: 5px;
+    left: 0px;
+    width: 125px;
+    border-radius: 50px;
+    padding: 5px;
+    box-sizing: border-box;
+}

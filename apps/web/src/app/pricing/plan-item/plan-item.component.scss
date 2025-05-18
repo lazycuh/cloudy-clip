@@ -1,0 +1,93 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.plan-item {
+    display: flex;
+    flex-flow: column;
+    position: relative;
+    overflow: hidden;
+    padding: #{lc.length(5)} #{lc.length(8)};
+
+    .entitlement-list__item {
+        padding-left: #{lc.length(2)};
+        padding-right: #{lc.length(2)};
+    }
+
+    &.active-plan::before {
+        content: 'Current plan';
+        position: absolute;
+        display: block;
+        width: 200px;
+        padding: 5px 10px;
+        background-color: #fff;
+        color: #000;
+        text-align: center;
+        transform: rotate(48deg);
+        right: -75px;
+        animation: fade-in 1s lc.$easing-function forwards;
+    }
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .lc-filled-button {
+        max-width: 340px;
+        align-self: center;
+        width: 100%;
+    }
+}
+
+.plan-item__plan-name {
+    font-size: lc.font-size(2);
+    display: flex;
+    align-items: center;
+}
+
+.plan-item__price {
+    font-size: lc.font-size(1.75);
+    margin-bottom: 52px;
+    position: relative;
+    display: flex;
+    flex-flow: column;
+}
+
+.plan-item__price__original-price {
+    color: gray;
+    margin-right: 10px;
+    font-size: #{lc.$default-font-size + 4};
+
+    &::after {
+        content: '2 months free';
+        position: absolute;
+        left: 0;
+        top: 100%;
+        white-space: nowrap;
+        display: inline-block;
+        font-size: #{lc.$default-font-size * 1};
+        color: #ffa500;
+    }
+}
+
+.plan-item__price__renewal-interval {
+    font-size: #{lc.$default-font-size * 1};
+    color: #c0c0c0;
+    transform: translateY(-4px);
+}
+
+.plan-item__no-cc-required {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    color: #c0c0c0;
+}
+
+.plan-item__entitlement-list-container__message {
+    font-weight: bold;
+    margin-bottom: 5px;
+}

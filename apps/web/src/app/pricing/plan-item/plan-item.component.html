@@ -1,0 +1,93 @@
+@let _plan = plan();
+
+<div class="plan-item__plan-name">
+    <span>{{ _plan.displayName }}</span>
+</div>
+
+<div class="plan-item__price number-display">
+    @if (_plan.discountedPrice === _plan.price) {
+        <span [@priceChange]="_plan.discountedPrice">
+            {{ _plan.price | parseCurrency | currency }}
+        </span>
+    } @else {
+        <span [@priceChange]="_plan.renewedIn">
+            <s class="plan-item__price__original-price">{{ _plan.price | parseCurrency | currency }}</s>
+            {{ _plan.discountedPrice | parseCurrency | currency }}
+        </span>
+    }
+    <span
+        class="plan-item__price__renewal-interval"
+        i18n>
+        per
+        <span [@priceChange]="_plan.renewedIn">
+            {{ _plan.renewedIn | renewalInterval }}
+        </span>
+    </span>
+</div>
+
+@if (!_hasActiveSubscription()) {
+    <button
+        class="lc-filled-button lc-primary"
+        mat-ripple
+        type="button"
+        (click)="_onSubscribe()">
+        @if (_plan.isFreePlan) {
+            <ng-container i18n>Start for free</ng-container>
+        } @else {
+            <ng-container i18n>Start now</ng-container>
+        }
+    </button>
+} @else if (_isActivePlan()) {
+    @if (_shouldShowManageButton()) {
+        <a
+            aria-label="Go to subscription manage page"
+            i18n-aria-label
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            routerLink="/my/subscription"
+            type="button">
+            Manage
+        </a>
+    } @else {
+        <button
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            type="button"
+            (click)="_onChangeRenewalInterval()">
+            {{ _resolvePlanSwitchButtonLabel() }}
+        </button>
+    }
+} @else if (_isCheaperThanActivePlan()) {
+    <button
+        class="lc-filled-button lc-primary"
+        i18n
+        mat-ripple
+        type="button"
+        (click)="_onDowngrade()">
+        Downgrade
+    </button>
+} @else {
+    <button
+        class="lc-filled-button lc-primary"
+        i18n
+        mat-ripple
+        type="button"
+        (click)="_onUpgrade()">
+        Upgrade
+    </button>
+}
+
+<div
+    class="plan-item__no-cc-required"
+    [style.opacity]="_plan.isFreePlan ? '1' : '0'">
+    <ng-container i18n>No credit card required</ng-container>
+</div>
+
+<div class="plan-item__entitlement-list-container">
+    <div class="plan-item__entitlement-list-container__message">
+        <ng-container i18n>{{ _plan.displayName }} includes:</ng-container>
+    </div>
+    <lc-entitlement-list [entitlements]="_plan.entitlements" />
+</div>

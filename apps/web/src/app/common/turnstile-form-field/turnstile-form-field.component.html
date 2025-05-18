@@ -1,0 +1,60 @@
+@if (_isSettingUpTurnstile()) {
+    <lc-info-box>
+        <ng-container
+            data-title
+            i18n>
+            Verifying browser's authenticity
+        </ng-container>
+
+        <ng-container i18n>This may take a few seconds.</ng-container>
+    </lc-info-box>
+} @else if (_didTurnstileWidgetCrash()) {
+    <lc-warning-box>
+        <ng-container
+            data-title
+            i18n>
+            Browser verification has failed
+        </ng-container>
+
+        <ng-container i18n>We were not able to confirm that you are not a robot.</ng-container>
+
+        <button
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            (click)="_onRetry()">
+            Retry
+        </button>
+    </lc-warning-box>
+} @else if (_isTurnstileStuck()) {
+    <lc-info-box>
+        <ng-container
+            data-title
+            i18n>
+            It's taking longer than expected to verify your browser's authenticity
+        </ng-container>
+
+        <ng-container i18n>Please continue to wait or retry.</ng-container>
+
+        <button
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            (click)="_onRetry()">
+            Retry
+        </button>
+    </lc-info-box>
+}
+
+<div
+    #turnstileMount
+    class="turnstile-form-field__turnstile-mount">
+    @if (_didTurnstileWidgetCrash()) {
+        <div class="turnstile-form-field__turnstile-mount__loader">
+            <lc-pulse-loader
+                message="Verifying browser's authenticity"
+                i18n-message
+                [pulsing]="true" />
+        </div>
+    }
+</div>

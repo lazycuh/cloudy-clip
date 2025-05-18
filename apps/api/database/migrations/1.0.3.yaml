@@ -1,0 +1,191 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.3-1
+      author: nhuy.van
+      changes:
+        - createTable:
+            tableName: tbl_billing_info
+            columns:
+              - column:
+                  name: user_id
+                  type: CHAR(26)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: billing_customer_id
+                  type: VARCHAR
+              - column:
+                  name: stripe_subscription_id
+                  type: VARCHAR
+              - column:
+                  name: country_code
+                  type: VARCHAR
+              - column:
+                  name: postal_code
+                  type: VARCHAR
+        - addPrimaryKey:
+            tableName: tbl_billing_info
+            columnNames: user_id
+            constraintName: pk__billing_info
+        - addForeignKeyConstraint:
+            baseTableName: tbl_billing_info
+            baseColumnNames: user_id
+            referencedTableName: tbl_user
+            referencedColumnNames: user_id
+            constraintName: fk__billing_info__user
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 1.0.3-2
+      author: nhuy.van
+      changes:
+        - createTable:
+            tableName: tbl_payment_method
+            columns:
+              - column:
+                  name: payment_method_id
+                  type: VARCHAR
+                  remarks: Will be stripe's payment method ID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exp_month
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: exp_year
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last4
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: brand
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_default
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: BOOLEAN
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: CHAR(26)
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: tbl_payment_method
+            columnNames: payment_method_id
+            constraintName: pk__payment_method
+        - addForeignKeyConstraint:
+            baseTableName: tbl_payment_method
+            baseColumnNames: user_id
+            referencedTableName: tbl_user
+            referencedColumnNames: user_id
+            constraintName: fk__payment_method__user
+            onDelete: CASCADE
+
+  - changeSet:
+      id: 1.0.3-3
+      author: nhuy.van
+      changes:
+        - createTable:
+            tableName: tbl_payment
+            columns:
+              - column:
+                  name: payment_id
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: charge_id
+                  type: VARCHAR
+                  remarks: Stripe's charge ID, null for refunds
+              - column:
+                  name: subtotal
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: discount
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tax
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount_due
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: currency_code
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: paid_at
+                  type: TIMESTAMPTZ
+                  constraints:
+                    nullable: false
+              - column:
+                  name: status
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: failure_reason
+                  type: VARCHAR
+              - column:
+                  name: payment_reason
+                  type: SMALLINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: CHAR(26)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: payment_method_id
+                  type: VARCHAR
+        - addPrimaryKey:
+            tableName: tbl_payment
+            columnNames: payment_id
+            constraintName: pk__payment
+        - addForeignKeyConstraint:
+            baseTableName: tbl_payment
+            baseColumnNames: payment_method_id
+            referencedTableName: tbl_payment_method
+            referencedColumnNames: payment_method_id
+            constraintName: fk__payment__payment_method
+        - addForeignKeyConstraint:
+            baseTableName: tbl_payment
+            baseColumnNames: user_id
+            referencedTableName: tbl_user
+            referencedColumnNames: user_id
+            constraintName: fk__payment__user
+            onDelete: CASCADE
+        - createIndex:
+            indexName: idx__payment__user_id__paid_at_desc
+            tableName: tbl_payment
+            columns:
+              - column:
+                  name: user_id
+              - column:
+                  descending: true
+                  name: paid_at

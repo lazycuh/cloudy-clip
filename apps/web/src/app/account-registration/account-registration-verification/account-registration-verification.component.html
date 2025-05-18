@@ -1,0 +1,150 @@
+<lc-focus-box [@focusBox]>
+    <lc-carousel>
+        <lc-carousel-item>
+            @let turnstileFormFieldStatus = _turnstileFormControl.statusChanges | async;
+            @if (turnstileFormFieldStatus !== 'INVALID') {
+                <p
+                    class="account-registration__wait-message"
+                    i18n>
+                    Please wait while we're processing your request<lc-dot-dot-dot />
+                </p>
+            }
+            <lc-turnstile-form-field
+                action="email-verification"
+                [control]="_turnstileFormControl" />
+        </lc-carousel-item>
+
+        <lc-carousel-item>
+            @switch (_verificationResultMessage()) {
+                @case ('') {
+                    <lc-progress-complete-indicator
+                        [animated]="true"
+                        [success]="true">
+                        <p
+                            data-title
+                            i18n>
+                            Your account has been verified
+                        </p>
+
+                        <a
+                            class="lc-filled-button lc-primary"
+                            data-action
+                            i18n
+                            mat-ripple
+                            routerLink="/login">
+                            Continue to login
+                        </a>
+                    </lc-progress-complete-indicator>
+                }
+
+                @case ('verification code is not valid') {
+                    <lc-progress-complete-indicator
+                        [animated]="true"
+                        [success]="false">
+                        <p
+                            data-title
+                            i18n>
+                            Account verification code is not valid
+                        </p>
+
+                        <p
+                            data-description
+                            i18n>
+                            Please ensure that your verification link has not expired.
+                        </p>
+
+                        <a
+                            class="lc-filled-button lc-primary"
+                            data-action
+                            i18n
+                            mat-ripple
+                            routerLink="/login">
+                            Return to login
+                        </a>
+                    </lc-progress-complete-indicator>
+                }
+
+                @case ('verification code does not exist') {
+                    <lc-progress-complete-indicator
+                        [animated]="true"
+                        [success]="false">
+                        <p
+                            data-title
+                            i18n>
+                            Account verification code is not valid
+                        </p>
+
+                        <p
+                            data-description
+                            i18n>
+                            Please ensure that your verification link has not expired.
+                        </p>
+
+                        <a
+                            class="lc-filled-button lc-primary"
+                            data-action
+                            i18n
+                            mat-ripple
+                            routerLink="/login">
+                            Return to login
+                        </a>
+                    </lc-progress-complete-indicator>
+                }
+
+                @case ('verification code is required') {
+                    <lc-progress-complete-indicator
+                        [animated]="true"
+                        [success]="false">
+                        <p
+                            data-title
+                            i18n>
+                            Account verification code is missing or empty
+                        </p>
+
+                        <p
+                            data-description
+                            i18n>
+                            Please use the supplied verification link that was sent to your email.
+                        </p>
+
+                        <a
+                            class="lc-filled-button lc-primary"
+                            data-action=""
+                            i18n
+                            mat-ripple
+                            routerLink="/login">
+                            Return to login
+                        </a>
+                    </lc-progress-complete-indicator>
+                }
+
+                @default {
+                    <lc-progress-complete-indicator
+                        [animated]="true"
+                        [success]="false">
+                        <p
+                            data-title
+                            i18n>
+                            An unknown error has occurred while processing your request
+                        </p>
+
+                        <p
+                            data-description
+                            i18n>
+                            Please try again later.
+                        </p>
+
+                        <a
+                            class="lc-filled-button lc-primary"
+                            data-action
+                            i18n
+                            mat-ripple
+                            routerLink="/login">
+                            Return to login
+                        </a>
+                    </lc-progress-complete-indicator>
+                }
+            }
+        </lc-carousel-item>
+    </lc-carousel>
+</lc-focus-box>

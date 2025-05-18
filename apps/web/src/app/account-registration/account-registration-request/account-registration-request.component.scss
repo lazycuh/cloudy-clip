@@ -1,0 +1,70 @@
+.account-registration-request {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+
+    .focus-box .progress-complete-indicator {
+        margin-top: -240px;
+    }
+}
+
+.account-registration-request__form-container {
+    .carousel-item {
+        display: flex;
+        height: initial;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+
+        &:first-of-type {
+            padding: 32px 70px;
+        }
+    }
+
+    .back-button {
+        align-self: flex-start;
+        margin-left: -40px;
+        margin-bottom: 40px;
+    }
+
+    .turnstile-form-field {
+        margin-top: -25px;
+    }
+}
+
+@media (max-width: 560px) {
+    .account-registration-request {
+        .carousel-item:first-of-type {
+            padding-left: 40px;
+            padding-right: 40px;
+        }
+
+        .back-button {
+            margin-left: -20px;
+        }
+    }
+}
+
+@media (max-width: 440px) {
+    .account-registration-request {
+        .carousel-item:last-of-type .progress-complete-indicator {
+            padding-left: 28px;
+            padding-right: 28px;
+        }
+    }
+}
+
+@media (max-width: 430px) {
+    .account-registration-request {
+        .carousel-item:first-of-type {
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+
+        .back-button {
+            margin-left: -12px;
+        }
+    }
+}

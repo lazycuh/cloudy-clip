@@ -1,0 +1,166 @@
+<a
+    fragment="plan-selection"
+    i18n
+    routerLink="/pricing">
+    Change plan
+</a>
+
+<button
+    i18n
+    (click)="_onOpenCancellationConfirmation(cancellationConfirmationContent)">
+    Cancel subscription
+</button>
+
+@let _subscription = subscription();
+
+<ng-template #cancellationConfirmationContent>
+    <p i18n>Your subscription will be canceled immediately and you will lose access to your created journals.</p>
+
+    @if (!_subscription.plan.isFreePlan) {
+        <p i18n>
+            We're also refunding approximately {{ _refundedAmount() | currency }} for the unused portion of your
+            subscription.
+        </p>
+    }
+
+    <lc-warning-box>
+        <ng-container
+            data-title
+            i18n>
+            Attention
+        </ng-container>
+
+        <ng-container i18n>
+            After 7 days, all your data will be permanently deleted unless the subscription is reactivated before that.
+        </ng-container>
+    </lc-warning-box>
+</ng-template>
+
+<div class="my-subscription__detail-row status-row">
+    <div class="my-subscription__detail-row__label section-label">
+        <lc-icon>
+            <svg:path
+                d="M200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-40q0-17 11.5-28.5T280-880q17 0 28.5 11.5T320-840v40h320v-40q0-17 11.5-28.5T680-880q17 0 28.5 11.5T720-840v40h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Zm280 240q-17 0-28.5-11.5T440-440q0-17 11.5-28.5T480-480q17 0 28.5 11.5T520-440q0 17-11.5 28.5T480-400Zm-160 0q-17 0-28.5-11.5T280-440q0-17 11.5-28.5T320-480q17 0 28.5 11.5T360-440q0 17-11.5 28.5T320-400Zm320 0q-17 0-28.5-11.5T600-440q0-17 11.5-28.5T640-480q17 0 28.5 11.5T680-440q0 17-11.5 28.5T640-400ZM480-240q-17 0-28.5-11.5T440-280q0-17 11.5-28.5T480-320q17 0 28.5 11.5T520-280q0 17-11.5 28.5T480-240Zm-160 0q-17 0-28.5-11.5T280-280q0-17 11.5-28.5T320-320q17 0 28.5 11.5T360-280q0 17-11.5 28.5T320-240Zm320 0q-17 0-28.5-11.5T600-280q0-17 11.5-28.5T640-320q17 0 28.5 11.5T680-280q0 17-11.5 28.5T640-240Z" />
+        </lc-icon>
+        <strong i18n>Status</strong>
+    </div>
+    <div
+        class="my-subscription__detail-row__value"
+        i18n>
+        Active
+    </div>
+</div>
+
+<div class="my-subscription__detail-row plan-name">
+    <div class="my-subscription__detail-row__label section-label">
+        <lc-icon>
+            <svg:path
+                d="M440-183v-274L200-596v274l240 139Zm80 0 240-139v-274L520-457v274Zm-80 92L160-252q-19-11-29.5-29T120-321v-318q0-22 10.5-40t29.5-29l280-161q19-11 40-11t40 11l280 161q19 11 29.5 29t10.5 40v318q0 22-10.5 40T800-252L520-91q-19 11-40 11t-40-11Zm200-528 77-44-237-137-78 45 238 136Zm-160 93 78-45-237-137-78 45 237 137Z" />
+        </lc-icon>
+        <strong i18n>Plan</strong>
+    </div>
+    <div class="my-subscription__detail-row__value">
+        {{ _subscription.plan | subscriptionLabel }}
+    </div>
+</div>
+
+@if (!_subscription.plan.isFreePlan) {
+    <div class="my-subscription__detail-row upcoming-payment">
+        <div class="my-subscription__detail-row__label section-label">
+            <lc-icon>
+                <svg:path
+                    d="M440-240v20q0 8 6 14t14 6h40q8 0 14-6t6-14v-20h40q17 0 28.5-11.5T600-280v-120q0-17-11.5-28.5T560-440H440v-40h120q17 0 28.5-11.5T600-520q0-17-11.5-28.5T560-560h-40v-20q0-8-6-14t-14-6h-40q-8 0-14 6t-6 14v20h-40q-17 0-28.5 11.5T360-520v120q0 17 11.5 28.5T400-360h120v40H400q-17 0-28.5 11.5T360-280q0 17 11.5 28.5T400-240h40ZM240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h360l200 200v520q0 33-23.5 56.5T720-80H240Zm0-80h480v-480H600q-17 0-28.5-11.5T560-680v-120H240v640Zm0-640v160-160 640-640Z" />
+            </lc-icon>
+            <strong i18n>Upcoming payment</strong>
+        </div>
+
+        <div class="my-subscription__detail-row__value">
+            @if (_isFetchingUpcomingPayment()) {
+                <lc-pulse-loader [pulsing]="true" />
+            } @else if (_upcomingPayment() === null) {
+                <lc-warning-box>
+                    <ng-container
+                        data-title
+                        i18n>
+                        Unable to retrieve your upcoming payment amount
+                    </ng-container>
+
+                    <ng-container i18n>
+                        Please try reloading your browser or contact us if the issue persists.
+                    </ng-container>
+
+                    <button
+                        class="lc-filled-button lc-primary"
+                        i18n
+                        mat-ripple
+                        (click)="_onReloadPage()">
+                        Reload page
+                    </button>
+
+                    <a
+                        class="lc-filled-button lc-primary"
+                        i18n
+                        mat-ripple
+                        target="_blank"
+                        [href]="_getSupportEmailLink()">
+                        Contact us
+                    </a>
+                </lc-warning-box>
+            } @else {
+                <div [@fade-in]>
+                    @let __upcomingPayment = _upcomingPayment()!;
+
+                    {{ __upcomingPayment.amountDue | parseCurrency | currency }}
+                    per
+                    {{ _subscription.plan.renewedIn | renewalInterval }}
+
+                    <lc-info-tooltip class="info-list-tooltip">
+                        <ul class="info-list">
+                            <li>
+                                <span
+                                    class="info-list__row-label"
+                                    i18n>
+                                    Subtotal:
+                                </span>
+                                {{ __upcomingPayment.subtotal | parseCurrency | currency }}
+                            </li>
+
+                            <li>
+                                <span
+                                    class="info-list__row-label"
+                                    i18n>
+                                    Tax:
+                                </span>
+                                {{ __upcomingPayment.tax | parseCurrency | currency }}
+
+                                @if (__upcomingPayment.tax !== '0') {
+                                    ({{ __upcomingPayment.taxPercentage }}%)
+                                }
+                            </li>
+
+                            @if (__upcomingPayment.discount !== '0') {
+                                <li>
+                                    <span
+                                        class="info-list__row-label"
+                                        i18n>
+                                        Discount:
+                                    </span>
+                                    {{ __upcomingPayment.discount | parseCurrency | currency }}
+                                </li>
+                            }
+                        </ul>
+                    </lc-info-tooltip>
+
+                    <br />
+                    <span
+                        i18n
+                        style="font-weight: bold; margin-top: 2px; display: inline-block">
+                        Due date:
+                    </span>
+                    &nbsp;
+                    {{ __upcomingPayment.dueDate | date: 'longDate' }}
+                </div>
+            }
+        </div>
+    </div>
+}

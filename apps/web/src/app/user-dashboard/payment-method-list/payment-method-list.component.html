@@ -1,0 +1,118 @@
+<header>
+    <h2
+        class="user-dashboard__section__title"
+        i18n>
+        Payment methods
+    </h2>
+</header>
+
+<div class="user-dashboard__section__content">
+    <button
+        i18n
+        (click)="_onOpenPageToAddPaymentMethod()">
+        Add payment method
+    </button>
+</div>
+
+@let __paymentMethods = _paymentMethods();
+
+@if (__paymentMethods === undefined) {
+    <lc-content-loading-indicator
+        appearance="card"
+        height="200px"
+        width="min(400px, 89vw)"
+        [fixedWidth]="true" />
+} @else if (__paymentMethods.length === 0) {
+    <lc-info-box>
+        <ng-container
+            data-title
+            i18n>
+            We have no records of your stored payment methods
+        </ng-container>
+
+        <ng-container i18n>If it is a mistake, please let us know.</ng-container>
+
+        <a
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            routerLink="/pricing">
+            Explore plans
+        </a>
+
+        <a
+            class="lc-filled-button lc-primary"
+            i18n
+            mat-ripple
+            target="_blank"
+            [href]="_getSupportEmailLink()">
+            Contact us
+        </a>
+    </lc-info-box>
+} @else {
+    <div class="payment-method-list__payment-method-container">
+        @for (paymentMethod of __paymentMethods; track paymentMethod.paymentMethodId || paymentMethod.isDefault) {
+            <div
+                class="payment-method-list__payment-method"
+                [class.is-default]="paymentMethod.isDefault">
+                @if (!paymentMethod.isDefault) {
+                    <div class="payment-method-list__payment-method__action-container">
+                        <button
+                            class="payment-method-list__payment-method__action"
+                            i18n
+                            type="button"
+                            (click)="_onSetPaymentMethodAsDefault(paymentMethod)">
+                            Set as default
+                        </button>
+                        •
+                        <button
+                            class="payment-method-list__payment-method__action"
+                            i18n
+                            type="button"
+                            (click)="_onRemovePaymentMethod(paymentMethod)">
+                            Remove
+                        </button>
+                    </div>
+                } @else {
+                    <div
+                        class="payment-method-list__payment-method__action-container"
+                        style="top: -2px; right: 16px">
+                        <button
+                            class="payment-method-list__payment-method__action"
+                            disabled
+                            i18n
+                            type="button">
+                            Remove
+                        </button>
+
+                        <lc-info-tooltip
+                            i18n
+                            style="transform: translateY(0.1px)">
+                            <!-- -->Default payment method cannot be removed<!-- -->
+                        </lc-info-tooltip>
+                    </div>
+                }
+                <div class="payment-method-list__payment-method__number">
+                    <span class="payment-method-list__payment-method__number__group">&times;&times;&times;&times;</span>
+                    <span class="payment-method-list__payment-method__number__group">&times;&times;&times;&times;</span>
+                    <span class="payment-method-list__payment-method__number__group">&times;&times;&times;&times;</span>
+                    <span class="payment-method-list__payment-method__number__group">
+                        {{ paymentMethod.last4 }}
+                    </span>
+                </div>
+                <div class="payment-method-list__payment-method__exp-and-brand">
+                    <div class="payment-method-list__payment-method__exp">
+                        {{ paymentMethod.expMonth }} / {{ paymentMethod.expYear }}
+                    </div>
+                    <div class="payment-method-list__payment-method__brand">
+                        <img
+                            height="40"
+                            width="40"
+                            [alt]="paymentMethod.brand + '\'s logo'"
+                            [src]="'/images/' + paymentMethod.brand + '.png'" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

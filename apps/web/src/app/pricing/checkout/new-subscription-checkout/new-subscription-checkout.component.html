@@ -1,0 +1,308 @@
+@let _selectedPlan = selectedPlan();
+@let _renewalIntervalLabel = _selectedPlan.renewedIn | renewalInterval;
+@let __discount = _discount();
+@let __tax = _tax();
+@let __amountDueToday = _amountDueToday() | currency;
+@let __amountDueRecurring = _amountDueRecurring() | currency;
+@let _isPaidPlan = !_selectedPlan.isFreePlan;
+
+<lc-focus-box>
+    <div class="lc-checkout__summary">
+        <header>
+            <h2 class="lc-checkout__summary__title">
+                <lc-back-button
+                    i18n
+                    [shouldShowConfirmation]="!_isBillingInfoFormInvalid()">
+                    Order summary
+                </lc-back-button>
+            </h2>
+        </header>
+        <div class="lc-checkout__summary__row plan-name-and-price">
+            <div class="lc-checkout__summary__row__label plan-name">
+                {{ _selectedPlan.displayName }}
+            </div>
+
+            <div class="lc-checkout__summary__row__value price-preview number-display">
+                {{ __amountDueToday }}
+            </div>
+        </div>
+        <div class="lc-checkout__summary__row monthly-price">
+            <div
+                class="lc-checkout__summary__row__value__monthly-price__renewal-interval number-display"
+                i18n>
+                then
+                {{ __amountDueRecurring }}
+                per
+                {{ _renewalIntervalLabel }}
+
+                <lc-info-tooltip>
+                    <!--  -->This is the estimated recurring total as of today. This price may change if your tax rates
+                    or applied discounts change in the future.<!-- -->
+                </lc-info-tooltip>
+            </div>
+        </div>
+
+        <div
+            class="lc-checkout__summary__row what-you-will-get"
+            i18n>
+            What you'll get:
+        </div>
+
+        <div class="lc-checkout__summary__row plan-entitlement-list">
+            <lc-entitlement-list [entitlements]="_selectedPlan.entitlements" />
+        </div>
+
+        @if (_isPaidPlan) {
+            <div class="lc-checkout__summary__row">
+                <div
+                    class="lc-checkout__summary__row__label"
+                    i18n>
+                    Subtotal
+                </div>
+
+                <div class="lc-checkout__summary__row__value number-display">
+                    {{ __amountDueToday }}
+                </div>
+            </div>
+
+            <!-- @let hasCoupon = _couponCodeValue().length > 0;
+            @let couponFormControl = _getCouponCodeFormControl();
+
+            <div
+                class="lc-checkout__summary__row coupon-redemption"
+                [class.has-coupon]="hasCoupon">
+                <div class="lc-checkout__summary__row__label">
+                    <button
+                        #couponCodeFormAnchor
+                        i18n
+                        class="lc-checkout__summary__row__add-coupon lc-button lc-primary"
+                        mat-ripple
+                        (click)="_onShowCouponCodeInput(couponCodeFormAnchor, couponCodeFormTemplate)">
+                        Redeem coupon
+                    </button>
+                </div>
+
+                <div class="lc-checkout__summary__row__value">
+                    <lc-truncated-text [content]="_couponCodeValue()" />
+                    @if (hasCoupon) {
+                        <button
+                            i18n
+                            class="remove-coupon"
+                            (click)="_onRemoveCoupon()">
+                            Remove
+                        </button>
+                    }
+                </div>
+
+                <ng-template #couponCodeFormTemplate>
+                    <lc-form
+                        formTitle=""
+                        [form]="_couponCodeForm">
+                        <lc-short-text-form-field
+                            autocomplete="billing one-time-code"
+                            label="Coupon code"
+                            type="text"
+                            [control]="couponFormControl">
+                            <svg:path
+                                d="M160-280v80h640v-80H160Zm0-440h88q-5-9-6.5-19t-1.5-21q0-50 35-85t85-35q30 0 55.5 15.5T460-826l20 26 20-26q18-24 44-39t56-15q50 0 85 35t35 85q0 11-1.5 21t-6.5 19h88q33 0 56.5 23.5T880-640v440q0 33-23.5 56.5T800-120H160q-33 0-56.5-23.5T80-200v-440q0-33 23.5-56.5T160-720Zm0 320h640v-240H596l60 82q10 14 8 29.5T648-503q-14 10-29.5 7.5T593-511L480-664 367-511q-10 13-25.5 15.5T312-503q-14-10-16.5-25.5T303-558l59-82H160v240Zm200-320q17 0 28.5-11.5T400-760q0-17-11.5-28.5T360-800q-17 0-28.5 11.5T320-760q0 17 11.5 28.5T360-720Zm240 0q17 0 28.5-11.5T640-760q0-17-11.5-28.5T600-800q-17 0-28.5 11.5T560-760q0 17 11.5 28.5T600-720Z" />
+                        </lc-short-text-form-field>
+
+                        <lc-action-container>
+                            <button
+                                i18n
+                                class="lc-filled-button lc-primary"
+                                mat-ripple
+                                [disabled]="couponFormControl.value.length === 0"
+                                (click)="_onApplyCouponCode()">
+                                Apply
+                            </button>
+                        </lc-action-container>
+                    </lc-form>
+                </ng-template>
+            </div> -->
+
+            @if (__discount !== '0.00') {
+                <div
+                    class="lc-checkout__summary__row discounted-value"
+                    [@discount]>
+                    <div
+                        class="lc-checkout__summary__row__label"
+                        i18n>
+                        Discount
+                    </div>
+
+                    <div class="lc-checkout__summary__row__value number-display">-{{ __discount | currency }}</div>
+                </div>
+            }
+
+            <div class="lc-checkout__summary__row sales-tax">
+                <div
+                    class="lc-checkout__summary__row__label"
+                    i18n>
+                    Tax
+                </div>
+
+                <div class="lc-checkout__summary__row__value number-display">
+                    @if (__tax === undefined) {
+                        <span
+                            class="tax-not-available-yet"
+                            i18n>
+                            Calculated at next step
+                        </span>
+                    } @else {
+                        {{ __tax | currency }}
+
+                        @if (__tax !== '0.00') {
+                            ({{ _taxPercentage() }}%)
+                        }
+                    }
+                </div>
+            </div>
+
+            <div class="lc-checkout__summary__row amount-due">
+                <div
+                    class="lc-checkout__summary__row__label"
+                    i18n>
+                    Due today
+                </div>
+
+                <div class="lc-checkout__summary__row__value number-display">
+                    {{ __amountDueToday }}
+                </div>
+            </div>
+
+            <p style="margin-top: 52px">
+                <a
+                    href="/policies/refund-policy"
+                    i18n
+                    target="_blank">
+                    Refund policy
+                </a>
+            </p>
+        }
+    </div>
+
+    <div class="lc-checkout__payment">
+        <lc-carousel>
+            <lc-carousel-item>
+                <header class="lc-checkout__payment__billing-address__title">
+                    @if (_isPaidPlan) {
+                        <h2 i18n>Please enter your billing details</h2>
+
+                        <span
+                            class="lc-checkout__payment__billing-address__subtitle"
+                            i18n>
+                            We collect this information to help combat fraud, and to keep your payment secure.
+                        </span>
+                    } @else {
+                        <h2 i18n>Please enter your details</h2>
+                    }
+                </header>
+
+                <lc-form
+                    formTitle=""
+                    [form]="_billingInfoForm">
+                    <lc-short-text-form-field
+                        autocomplete="cc-name"
+                        label="Full name"
+                        i18n-label
+                        type="text"
+                        [control]="_getBillingInfoFormField('fullName')">
+                        <svg:path
+                            d="M720-440q17 0 28.5-11.5T760-480q0-17-11.5-28.5T720-520H600q-17 0-28.5 11.5T560-480q0 17 11.5 28.5T600-440h120Zm0-120q17 0 28.5-11.5T760-600q0-17-11.5-28.5T720-640H600q-17 0-28.5 11.5T560-600q0 17 11.5 28.5T600-560h120ZM360-440q-36 0-65 6.5T244-413q-21 13-32 29.5T201-348q0 12 9 20t22 8h256q13 0 22-8.5t9-21.5q0-17-11-33t-32-30q-22-14-51-20.5t-65-6.5Zm0-40q33 0 56.5-23.5T440-560q0-33-23.5-56.5T360-640q-33 0-56.5 23.5T280-560q0 33 23.5 56.5T360-480ZM160-160q-33 0-56.5-23.5T80-240v-480q0-33 23.5-56.5T160-800h640q33 0 56.5 23.5T880-720v480q0 33-23.5 56.5T800-160H160Zm0-80h640v-480H160v480Zm0 0v-480 480Z" />
+                    </lc-short-text-form-field>
+
+                    <lc-select-form-field
+                        label="Country"
+                        i18n-label
+                        [control]="_getBillingInfoFormField('countryCode')"
+                        [options]="_countryOptions">
+                        <svg:path
+                            d="M480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm-40-82v-78q-33 0-56.5-23.5T360-320v-40L168-552q-3 18-5.5 36t-2.5 36q0 121 79.5 212T440-162Zm276-102q20-22 36-47.5t26.5-53q10.5-27.5 16-56.5t5.5-59q0-98-54.5-179T600-776v16q0 33-23.5 56.5T520-680h-80v80q0 17-11.5 28.5T400-560h-80v80h240q17 0 28.5 11.5T600-440v120h40q26 0 47 15.5t29 40.5Z" />
+                    </lc-select-form-field>
+                    <lc-short-text-form-field
+                        autocomplete="billing postal-code"
+                        label="Zip code/Postal code"
+                        i18n-label
+                        type="text"
+                        [control]="_getBillingInfoFormField('postalCode')">
+                        <svg:path
+                            d="M120-80q-17 0-28.5-11.5T80-120v-320q0-17 11.5-28.5T120-480h120v-160q0-100 70-170t170-70h160q100 0 170 70t70 170v520q0 17-11.5 28.5T840-80q-17 0-28.5-11.5T800-120v-80H640v80q0 17-11.5 28.5T600-80H120Zm520-200h160v-360q0-66-47-113t-113-47H480q-66 0-113 47t-47 113v160h280q17 0 28.5 11.5T640-440v160Zm-280-6 200-114H160l200 114ZM160-160h400v-170l-160 91q-9 5-19 8t-21 3q-11 0-21-3t-19-8l-160-91v170Zm0-240v26-1 54-9 170-170 9-54 1-26Zm280-160q-17 0-28.5-11.5T400-600q0-17 11.5-28.5T440-640h240q17 0 28.5 11.5T720-600q0 17-11.5 28.5T680-560H440Z" />
+                    </lc-short-text-form-field>
+
+                    <lc-turnstile-form-field
+                        action="collect-billing-address"
+                        [control]="_getBillingInfoFormField('turnstile')" />
+
+                    <lc-action-container>
+                        @if (_isPaidPlan) {
+                            <button
+                                aria-label="Continue to payment"
+                                i18n-aria-label
+                                class="lc-filled-button lc-primary"
+                                mat-ripple
+                                [disabled]="_isBillingInfoFormInvalid() || _shouldShowLoaderForPaidPlanCheckoutButton()"
+                                (click)="_onCheckOutPaidPlan()">
+                                <lc-pulse-loader
+                                    i18n
+                                    [pulsing]="_shouldShowLoaderForPaidPlanCheckoutButton()">
+                                    Continue to payment
+                                </lc-pulse-loader>
+                            </button>
+                        } @else {
+                            <button
+                                aria-label="Subscribe to selected plan"
+                                i18n-aria-label
+                                class="lc-filled-button lc-primary"
+                                mat-ripple
+                                [disabled]="_isBillingInfoFormInvalid() || _shouldShowLoaderForFreePlanCheckoutButton()"
+                                (click)="_onCheckOutFreePlan()">
+                                <lc-pulse-loader
+                                    i18n
+                                    [pulsing]="_shouldShowLoaderForFreePlanCheckoutButton()">
+                                    Subscribe
+                                </lc-pulse-loader>
+                            </button>
+                        }
+                    </lc-action-container>
+                </lc-form>
+            </lc-carousel-item>
+
+            <lc-carousel-item>
+                <form>
+                    <div class="lc-checkout__payment__collection"></div>
+
+                    @if (_isPaymentFormReady()) {
+                        <lc-action-container [@confirm-payment]>
+                            <button
+                                class="lc-button lc-primary"
+                                mat-ripple
+                                type="button"
+                                [disabled]="_isConfirmingPaymentRequestInProgress()"
+                                (click)="_onGoToBillingInfoScreen()">
+                                Back
+                            </button>
+
+                            <button
+                                aria-label="Confirm payment"
+                                i18n-aria-label
+                                class="lc-filled-button lc-primary"
+                                mat-ripple
+                                type="button"
+                                [disabled]="
+                                    _isConfirmingPaymentRequestInProgress() || _shouldDisableConfirmPaymentButton()
+                                "
+                                (click)="_onConfirmPayment($event)">
+                                <lc-pulse-loader
+                                    i18n
+                                    [pulsing]="_isConfirmingPaymentRequestInProgress()">
+                                    Confirm payment
+                                </lc-pulse-loader>
+                            </button>
+                        </lc-action-container>
+                    }
+                </form>
+            </lc-carousel-item>
+        </lc-carousel>
+    </div>
+</lc-focus-box>

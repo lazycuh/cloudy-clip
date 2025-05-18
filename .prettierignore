@@ -1,0 +1,5 @@
+dist
+build
+pnpm-lock.yaml
+.terser-cache.json
+.mangled-selectors.json

@@ -1,0 +1,184 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+@mixin divider() {
+    border-bottom: 1px solid #464646;
+    padding-bottom: 12px;
+}
+
+.lc-checkout {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    color: #fff;
+    font-size: lc.$default-font-size;
+
+    .focus-box {
+        min-height: 400px;
+        overflow: hidden;
+        width: initial;
+        max-width: 90vw;
+        flex-flow: row;
+        padding: 0;
+        height: initial;
+        max-height: initial;
+    }
+}
+
+.lc-checkout__summary,
+.lc-checkout__payment {
+    width: 450px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.lc-checkout__summary {
+    padding: 24px 36px;
+}
+
+.lc-checkout__summary__title {
+    margin-bottom: 16px;
+    font-size: #{lc.$default-font-size + 2};
+    font-weight: normal;
+    margin-top: 0;
+    color: lc.$text-color--default;
+}
+
+.lc-checkout__summary__row {
+    display: flex;
+    width: 100%;
+    margin-bottom: 12px;
+
+    &:not(.plan-name-and-price):not(.amount-due) {
+        align-items: center;
+    }
+}
+
+.plan-name-and-price {
+    font-size: #{lc.$default-font-size * 2};
+    color: #97def5;
+
+    .price-preview {
+        font-weight: normal;
+    }
+
+    .lc-checkout__summary__row__value {
+        font-size: #{lc.$default-font-size * 2} !important;
+    }
+}
+
+.lc-checkout__summary__row__label {
+    max-width: 128px;
+}
+
+.lc-checkout__summary__row__value {
+    margin-left: auto;
+    font-weight: bold;
+    width: 70%;
+    font-size: var(--default-font-size);
+    text-align: right;
+    position: relative;
+}
+
+.lc-checkout__summary__row__value__monthly-price__renewal-interval {
+    transform: translateY(-24px);
+    font-size: lc.$default-font-size;
+    color: #fff;
+    margin-left: auto;
+    white-space: nowrap;
+}
+
+.what-you-will-get {
+    font-weight: bold;
+    margin-bottom: 0;
+}
+
+.plan-entitlement-list {
+    margin-left: -2px;
+
+    &:not(:last-child) {
+        @include divider();
+    }
+}
+
+.discounted-value .lc-checkout__summary__row__value {
+    color: #90ee90;
+}
+
+.lc-checkout__summary__row__add-coupon {
+    left: -16px;
+    box-sizing: border-box;
+}
+
+.coupon-redemption {
+    &.has-coupon {
+        margin-bottom: 28px;
+    }
+
+    button {
+        --lc-button-text-color: #a4bfff;
+    }
+
+    .remove-coupon {
+        position: absolute;
+        top: 24px;
+        right: -4px;
+        color: lc.$link-text-color;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+.lc-checkout__coupon-code-form {
+    .form-field {
+        margin-bottom: 16px;
+    }
+
+    .error-indicator {
+        position: relative;
+    }
+
+    .lc-anchored-floating-box {
+        padding: 0 32px 12px;
+    }
+}
+
+.sales-tax {
+    @include divider();
+}
+
+.tax-not-available-yet {
+    font-weight: normal;
+    color: lc.$text-color--default;
+    opacity: 0.7;
+    font-size: #{lc.$default-font-size - 1};
+}
+
+.amount-due__renewal-interval {
+    color: lc.$text-color--subtitle;
+    font-size: #{lc.$default-font-size - 2};
+    font-weight: normal;
+}
+
+.amount-due .lc-checkout__summary__row__label {
+    position: relative;
+    transform: translateY(1px);
+}
+
+.payment-method-selection {
+    margin-bottom: lc.length(20);
+    margin-top: lc.length(10);
+}
+
+.add-payment-method {
+    position: absolute;
+    bottom: -28px;
+    right: -4px;
+    color: lc.$link-text-color;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}

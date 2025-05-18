@@ -1,0 +1,20 @@
+{
+  "name": "@lazycuh/http",
+  "version": "0.0.1",
+  "private": true,
+  "module": "./src",
+  "main": "./src",
+  "type": "module",
+  "scripts": {
+    "check-code-styles": "prettier --write --check \"**/(*.ts|*.json)\"",
+    "lint": "eslint \"src/**/*.ts\""
+  },
+  "dependencies": {
+    "@lazycuh/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@lazycuh/tsconfig-base": "workspace:*",
+    "@types/node": "^18.18.0",
+    "typescript": "^5.5.3"
+  }
+}

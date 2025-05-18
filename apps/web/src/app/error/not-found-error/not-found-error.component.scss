@@ -1,0 +1,43 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.not-found-error {
+    display: flex;
+    flex-flow: row-reverse;
+    position: relative;
+    justify-content: space-between;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    padding-top: 200px;
+}
+
+.not-found-error__image {
+    width: 700px;
+    position: relative;
+    right: 0;
+    z-index: 0;
+    margin-top: auto;
+}
+
+.not-found-error__text {
+    z-index: 1;
+    position: relative;
+    padding-left: 5vw;
+    color: #fff;
+
+    p {
+        font-size: #{lc.$default-font-size * 2.5};
+    }
+}
+
+body[data-current-route='/errors/not-found'] {
+    main {
+        flex-shrink: 0;
+        height: calc(100% - #{lc.$global-app-bar-height});
+    }
+
+    .site-footer footer {
+        margin-top: 0;
+    }
+}

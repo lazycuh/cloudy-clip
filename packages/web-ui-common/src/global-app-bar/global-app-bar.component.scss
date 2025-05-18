@@ -1,0 +1,129 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+@mixin hide-action-button-labels() {
+    .global-app-bar__action {
+        padding: 0;
+        width: 48px;
+        height: 48px;
+        min-width: auto;
+
+        .lc-button__label {
+            display: none;
+        }
+    }
+}
+
+@mixin column-layout() {
+    flex-flow: column;
+
+    .global-app-bar__app-name a {
+        align-items: center;
+        margin-left: 0;
+        margin-top: lc.length(5);
+        margin-bottom: lc.length(5);
+    }
+
+    .global-app-bar__action-container {
+        justify-content: center;
+    }
+}
+
+.global-app-bar {
+    display: flex;
+    position: relative;
+    flex-shrink: 0;
+    top: 0;
+    left: 0;
+    justify-content: flex-start;
+    align-items: center;
+    height: lc.$global-app-bar-height;
+    width: 100vw;
+    white-space: nowrap;
+    margin-bottom: lc.length(15);
+}
+
+.global-app-bar__app-name {
+    h1 {
+        background-image: linear-gradient(45deg, #90ee90, #ffa500);
+        margin: 0;
+        font-size: #{lc.$default-font-size * 1.25};
+    }
+
+    a {
+        display: flex;
+        align-items: center;
+        position: initial;
+        flex-flow: column;
+        align-items: flex-end;
+        width: 150px;
+        margin-left: 8px;
+
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.global-app-bar__app-logo {
+    width: 90px;
+    transform: translate(1px);
+}
+
+.global-app-bar__action-container {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    box-sizing: border-box;
+    padding-right: 10px;
+}
+
+.global-app-bar__action {
+    color: #89e2ff;
+    font-size: 16px !important;
+}
+
+body[data-current-route^='/pricing'] .view-pricing-action,
+body[data-current-route^='/login'] .log-in-action,
+body[data-current-route^='/my'] .log-in-action,
+body[data-current-route^='/my'] .go-to-dashboard-action {
+    display: none;
+}
+
+body[data-current-route='/'],
+body[data-current-route^='/checkout'],
+body[data-current-route^='/policies'] {
+    .user-is-logged-in {
+        @media (max-width: 530px) {
+            @include hide-action-button-labels();
+        }
+
+        @media (max-width: 350px) {
+            @include column-layout();
+        }
+    }
+}
+
+// Could have used .global-app-bar instead, but we wanted to add at least one instance of the class here
+// so that the selector mangler can pick it up
+body[data-current-route='/'] .user-is-not-logged-in,
+body[data-current-route^='/policies'] .global-app-bar,
+body[data-current-route^='/pricing'] .user-is-logged-in,
+body[data-current-route^='/my'] .user-is-logged-in {
+    @media (max-width: 450px) {
+        @include hide-action-button-labels();
+    }
+
+    @media (max-width: 300px) {
+        @include column-layout();
+    }
+}
+
+body[data-current-route^='/my'],
+body[data-current-route^='/policies'] {
+    .global-app-bar {
+        @media (max-width: 300px) {
+            margin-bottom: lc.length(30);
+        }
+    }
+}

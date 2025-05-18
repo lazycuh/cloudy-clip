@@ -1,0 +1,25 @@
+.truncated-text {
+    display: inline-flex;
+    white-space: nowrap;
+    align-items: center;
+    position: relative;
+    width: 100%;
+
+    &.text-too-long {
+        .info-tooltip {
+            display: inline-block;
+        }
+    }
+
+    .info-tooltip {
+        position: absolute;
+        right: 0;
+        display: none;
+    }
+}
+
+.truncated-text__original-text {
+    position: absolute;
+    visibility: hidden;
+    white-space: nowrap;
+}

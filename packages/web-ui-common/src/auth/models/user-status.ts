@@ -1,0 +1,1 @@
+export type UserStatus = 'UNVERIFIED' | 'ACTIVE' | 'BLOCKED' | 'INACTIVE' | 'PERMANENTLY_BLOCKED';

@@ -1,0 +1,21 @@
+.chip-form-field__error-indicator {
+    margin: 0;
+    padding: 0 10px;
+    transform: translateY(-23px);
+
+    &:empty {
+        display: none;
+    }
+
+    li {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    .mat-error p {
+        line-height: initial;
+        margin: 0;
+        font-size: small;
+    }
+}

@@ -1,0 +1,63 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.fetching-checkout-preview-loader {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+    height: 50vh;
+    width: 100vw;
+}
+
+.subscription-update-checkout {
+    .lc-checkout__summary {
+        width: min(600px, 98vw);
+        max-width: 100%;
+    }
+
+    .focus-box {
+        background-color: rgb(26, 26, 26);
+    }
+
+    .action-container {
+        margin-top: 32px;
+    }
+
+    .consent-checkbox {
+        margin-top: 32px;
+        text-align: justify;
+
+        @include lc.style-mdc-checkbox(#add, 15px, true);
+    }
+
+    button.menu__trigger {
+        min-width: 160px;
+    }
+
+    button[type='submit'] {
+        min-width: min(320px, 60vw);
+    }
+}
+
+.amount-due .refund-tooltip {
+    position: absolute;
+    transform: translate(0px, -10px);
+}
+
+@media (max-width: 430px) and (min-width: 356px) {
+    .subscription-update-checkout {
+        .lc-checkout__summary {
+            padding-right: 24px;
+            padding-left: 24px;
+        }
+    }
+}
+
+@media (max-width: 355px) {
+    .subscription-update-checkout {
+        .lc-checkout__summary {
+            padding-right: 16px;
+            padding-left: 16px;
+        }
+    }
+}

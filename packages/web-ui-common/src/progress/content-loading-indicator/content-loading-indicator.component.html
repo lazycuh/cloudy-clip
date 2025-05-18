@@ -1,0 +1,51 @@
+@let _appearance = appearance();
+@let _height = height();
+
+@if (_appearance !== 'list') {
+    @for (_width of _widths(); track $index) {
+        @let _isCardAppearance = _appearance === 'card';
+
+        <ngx-skeleton-loader
+            animation="progress-dark"
+            count="1"
+            [appearance]="_isCardAppearance ? 'line' : _appearance"
+            [theme]="{
+                'background-color': 'rgb(47, 51, 53)',
+                width: _width(),
+                height: _height,
+                'border-radius': !_isCardAppearance ? '4px' : '20px',
+                'margin-bottom': '12px'
+            }" />
+    }
+}
+<!-- } @else {
+    @for (_width of _widths(); track $index) {
+        <div
+            class="content-loading-indicator__list-wrapper"
+            style="display: flex; align-items: center; padding-right: 10px"
+            [style.width]="_width()">
+            <ngx-skeleton-loader
+                animation="progress-dark"
+                appearance="circle"
+                count="1"
+                [theme]="{
+                    'background-color': 'rgb(47, 51, 53)',
+                    'flex-shrink': '0',
+                    'margin-bottom': '0'
+                }" />
+            <ngx-skeleton-loader
+                animation="progress-dark"
+                appearance="line"
+                count="1"
+                [theme]="{
+                    'background-color': 'rgb(47, 51, 53)',
+                    'flex-shrink': '0',
+                    width: '100%',
+                    height: '10px',
+                    'border-radius': '50px',
+                    'margin-bottom': '0',
+                    'margin-top': '7px'
+                }" />
+        </div>
+    }
+} -->

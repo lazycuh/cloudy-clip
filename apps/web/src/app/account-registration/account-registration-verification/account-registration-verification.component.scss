@@ -1,0 +1,60 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.account-registration-verification {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 100%;
+
+    .focus-box {
+        margin-top: auto;
+        margin-bottom: auto;
+        transform: translateY(50px);
+        height: #{4px * 150};
+        width: 600px;
+    }
+
+    .carousel-item {
+        padding: 60px 25px;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.account-registration__wait-message {
+    font-size: #{lc.$default-font-size * 1.25};
+    margin-top: 0;
+    margin-bottom: 50px;
+    color: #fff;
+    text-align: center;
+}
+
+@media (max-height: 774px) {
+    .account-registration-verification {
+        .focus-box {
+            margin-top: -40px;
+            height: #{4px * 125};
+        }
+    }
+}
+
+@media (max-width: 530px) {
+    .account-registration-verification {
+        .progress-complete-indicator {
+            padding-left: 28px;
+            padding-right: 28px;
+        }
+    }
+}
+
+@media (max-width: 485px) {
+    .account-registration-verification {
+        .progress-complete-indicator {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+}

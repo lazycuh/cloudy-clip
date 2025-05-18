@@ -1,0 +1,54 @@
+---
+databaseChangeLog:
+  - changeSet:
+      id: 1.0.2
+      author: nhuy.van
+      changes:
+        - createTable:
+            tableName: tbl_tax_rate
+            columns:
+              - column:
+                  name: country_code
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: postal_code
+                  type: VARCHAR
+                  defaultValue: ''
+                  constraints:
+                    nullable: false
+              - column:
+                  name: tax_percentage
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+              - column:
+                  name: stripe_tax_rate_id
+                  type: VARCHAR
+                  constraints:
+                    nullable: false
+        - addPrimaryKey:
+            tableName: tbl_tax_rate
+            columnNames: country_code, postal_code
+            constraintName: pk__tax_rate__country_code_postal_code
+
+  # - changeSet:
+  #     id: 1.0.2-2
+  #     author: nhuy.van
+  #     changes:
+  #       - insert:
+  #           tableName: tbl_tax_rate
+  #           columns:
+  #             - column:
+  #                 name: country_code
+  #                 value: 'US'
+  #             - column:
+  #                 name: postal_code
+  #                 value: '99301'
+  #             - column:
+  #                 name: tax_percentage
+  #                 value: '8.9'
+  #             - column:
+  #                 name: stripe_tax_rate_id
+  #                 value: 'txr_1Q9cLFIWw5KeSeJEWQyI0GMY'

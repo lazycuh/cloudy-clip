@@ -1,0 +1,3 @@
+{
+  "extends": "@lazycuh/tsconfig-base/base"
+}

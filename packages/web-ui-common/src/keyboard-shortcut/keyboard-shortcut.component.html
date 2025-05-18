@@ -1,0 +1,7 @@
+@for (key of _keys(); track key) {
+    <div class="keyboard-shortcut__key key--{{ key }}">
+        <code>
+            <span>{{ _mapKey(key) }}</span>
+        </code>
+    </div>
+}

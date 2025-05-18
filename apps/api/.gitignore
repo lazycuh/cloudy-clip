@@ -1,0 +1,20 @@
+# macOS
+**/.DS_Store
+
+# IDE
+.vscode/
+.idea/
+
+# Dev build
+build/
+tmp/
+
+# Test
+*.out
+*.http
+
+.env
+!.env.*
+.db
+coverage.html
+__debug*

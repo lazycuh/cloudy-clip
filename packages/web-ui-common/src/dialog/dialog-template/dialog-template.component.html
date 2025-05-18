@@ -1,0 +1,33 @@
+<lc-backdrop
+    [visible]="_isOpen()"
+    (click)="close()" />
+
+<lc-focus-box>
+    <div class="dialog-template__title">{{ title() }}</div>
+
+    <div class="dialog-template__content">
+        <ng-container [ngTemplateOutlet]="content()" />
+    </div>
+
+    @let _consent = consent();
+
+    @if (_consent !== undefined) {
+        <lc-checkbox-form-field [control]="_consentCheckboxFormControl">
+            {{ _consent }}
+        </lc-checkbox-form-field>
+    }
+
+    <lc-action-container>
+        @for (button of buttons(); track button.label) {
+            <button
+                mat-ripple
+                [class]="button.class"
+                [disabled]="_isButtonDisabled(button)"
+                (click)="button.onClick()">
+                <lc-pulse-loader [pulsing]="_isButtonLoading(button)">
+                    {{ button.label }}
+                </lc-pulse-loader>
+            </button>
+        }
+    </lc-action-container>
+</lc-focus-box>

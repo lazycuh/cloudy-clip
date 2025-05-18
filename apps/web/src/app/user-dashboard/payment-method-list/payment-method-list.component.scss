@@ -1,0 +1,91 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.payment-method-list__payment-method-container {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.payment-method-list__payment-method {
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    border-radius: 20px;
+    background-color: #212121;
+    align-items: flex-start;
+    padding: 20px 36px;
+    padding-top: 80px;
+    width: min(400px, 89vw);
+    box-sizing: border-box;
+    height: 200px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    margin-right: 40px;
+
+    &.is-default::before {
+        content: 'Default';
+        position: absolute;
+        display: block;
+        width: 200px;
+        padding: 0px 10px;
+        background-color: #e9dddd;
+        color: #000;
+        text-align: center;
+        transform: rotate(-48deg);
+        left: -83px;
+        top: 13px;
+    }
+}
+
+.payment-method-list__payment-method__action-container {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.payment-method-list__payment-method__action:not(:disabled) {
+    color: lc.$link-text-color;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.payment-method-list__payment-method__action:disabled {
+    cursor: not-allowed;
+    color: #646464;
+}
+
+.payment-method-list__payment-method__number {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: #fff;
+}
+
+.payment-method-list__payment-method__number__group {
+    display: inline-flex;
+    font-size: 28px;
+}
+
+.payment-method-list__payment-method__exp-and-brand {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+@media (max-width: 744px) {
+    .user-dashboard__content {
+        .payment-method-list__payment-method-container {
+            justify-content: center;
+        }
+
+        .payment-method-list__payment-method {
+            margin-right: 0;
+        }
+    }
+}
