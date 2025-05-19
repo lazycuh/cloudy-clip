@@ -3,11 +3,19 @@ import { generateRandomString } from '@lazycuh/web-ui-common/utils/generate-rand
 
 export class ClipboardItem {
   readonly id = generateRandomString();
-  readonly timestamp = Date.now();
   readonly isPinned = signal(false);
+  readonly createdAt = Date.now();
+
+  pinnedAt = Date.now();
 
   constructor(
-    public readonly content: string,
-    public readonly type: 'text' | 'image' | 'url'
+    readonly content: string,
+    readonly type: 'text' | 'image' | 'url'
   ) {}
+
+  togglePin() {
+    this.isPinned.set(!this.isPinned());
+
+    this.pinnedAt = Date.now();
+  }
 }

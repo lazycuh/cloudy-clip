@@ -71,6 +71,8 @@ export class ClipboardHistoryComponent {
 
   private _storeClipboardItem(item: ClipboardItem) {
     this._clipboardItems.set([item, ...this._clipboardItems()]);
+
+    this._sortClipboardItems();
   }
 
   protected async _onClearClipboardHistory() {
@@ -84,7 +86,32 @@ export class ClipboardHistoryComponent {
   }
 
   protected _onPinOrUnpinClipboardItem(item: ClipboardItem) {
-    item.isPinned.set(!item.isPinned());
+    item.togglePin();
+
+    this._sortClipboardItems();
+  }
+
+  private _sortClipboardItems() {
+    this._clipboardItems.update(items => {
+      return items.sort((a, b) => {
+        if (!a.isPinned() && !b.isPinned()) {
+          // if a is created before, then a's `createdAt` is less than b's `createdAt`
+          // so we need to reverse the order
+          // to make the latest created item on top
+          return b.createdAt - a.createdAt;
+        }
+
+        if (a.isPinned() && !b.isPinned()) {
+          return -1;
+        }
+
+        if (!a.isPinned() && b.isPinned()) {
+          return 1;
+        }
+
+        return b.pinnedAt - a.pinnedAt;
+      });
+    });
   }
 
   protected async _onCopyClipboardItemToClipboard(item: ClipboardItem) {
