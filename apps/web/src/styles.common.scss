@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 @use '@lazycuh/web-ui-common' as lc;
-@use './assets/scss/_style-classes.scss';
+@use '@lazycuh/web-ui-common/theme';
 
 @font-face {
     font-family: 'YoMama';
