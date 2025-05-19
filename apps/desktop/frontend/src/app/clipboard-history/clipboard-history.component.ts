@@ -75,13 +75,21 @@ export class ClipboardHistoryComponent {
     this._sortClipboardItems();
   }
 
+  protected _canClearClipboardHistory() {
+    return this._getPinnedClipboardItems().length < this._clipboardItems().length;
+  }
+
+  private _getPinnedClipboardItems() {
+    return this._clipboardItems().filter(item => item.isPinned());
+  }
+
   protected async _onClearClipboardHistory() {
     const confirmed = await this._confirmationCaptureService.open({
       content: $localize`Are you sure you want to clear your clipboard history?`
     });
 
     if (confirmed) {
-      this._clipboardItems.set([]);
+      this._clipboardItems.set(this._getPinnedClipboardItems());
     }
   }
 

@@ -8,6 +8,7 @@
         <button
             class="lc-filled-button lc-accent clear-all"
             mat-ripple
+            [disabled]="!_canClearClipboardHistory()"
             (click)="_onClearClipboardHistory()">
             <lc-icon>
                 <svg:path
