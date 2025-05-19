@@ -38,7 +38,7 @@
     "@lazycuh/angular-anchored-floating-box": "^3.0.2",
     "@lazycuh/angular-confirmation-capture": "^2.0.0",
     "@lazycuh/angular-notification": "^2.0.1",
-    "@lazycuh/angular-tooltip": "^3.0.0",
+    "@lazycuh/angular-tooltip": "^3.0.1",
     "@lazycuh/http": "workspace:*",
     "@lazycuh/execute-until": "^3.0.1",
     "@lazycuh/logging": "workspace:*",
