@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     width="1024" height="1024"
+     viewBox="0 0 1024 1024">
+
+  <!-- Clipboard body -->
+  <rect x="256" y="176" width="512" height="672" rx="64" ry="64"
+        fill="#FFFFFF" stroke="#202848" stroke-width="48"/>
+
+  <!-- Clip at top -->
+  <rect x="352" y="128" width="320" height="160" rx="32" ry="32"
+        fill="#FFC043" stroke="#202848" stroke-width="48"/>
+  <circle cx="512" cy="160" r="56"
+          fill="#FFFFFF" stroke="#202848" stroke-width="48"/>
+
+  <!-- Checkmarks -->
+  <polyline points="336,368 400,440 496,328"
+            fill="none" stroke="#202848" stroke-width="48"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="336,528 400,600 496,488"
+            fill="none" stroke="#202848" stroke-width="48"
+            stroke-linecap="round" stroke-linejoin="round"/>
+  <polyline points="336,688 400,760 496,648"
+            fill="none" stroke="#202848" stroke-width="48"
+            stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Text lines -->
+  <line x1="544" y1="360" x2="768" y2="360"
+        stroke="#202848" stroke-width="48" stroke-linecap="round"/>
+  <line x1="544" y1="520" x2="768" y2="520"
+        stroke="#202848" stroke-width="48" stroke-linecap="round"/>
+  <line x1="544" y1="680" x2="656" y2="680"
+        stroke="#202848" stroke-width="48" stroke-linecap="round"/>
+
+  <!-- Cloud -->
+  <!-- <path d="M656,752
+           a112,112 0 0,0 -112,-112
+           a104,104 0 0,0 -100,64
+           a72,72   0 0,0 -136,44
+           a72,72   0 0,0 72,72
+           h312
+           a88,88   0 0,0 0,-176
+           z"
+        fill="#7FD6FF" stroke="#202848" stroke-width="48"/> -->
+</svg>

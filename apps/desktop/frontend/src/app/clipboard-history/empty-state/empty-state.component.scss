@@ -1,0 +1,34 @@
+@use '@lazycuh/web-ui-common' as lc;
+
+.empty-state {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(55, 65, 81);
+    background-image: linear-gradient(135deg, rgb(30, 41, 59) 0%, rgb(15, 23, 42) 100%);
+    border-radius: lc.pxToRem(12);
+    padding: lc.pxToRem(32);
+    width: 100%;
+    box-sizing: border-box;
+    width: 70%;
+    text-align: center;
+}
+
+.empty-state__clipboard-icon {
+    width: lc.pxToRem(96);
+    height: lc.pxToRem(96);
+    // background-color: rgba(172, 175, 184, 0.3);
+    background-color: rgba(30, 58, 138, 0.3);
+    border-radius: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0px #{lc.pxToRem(351)} #{lc.pxToRem(16)};
+
+    .lc-icon {
+        transform: scale(2);
+        color: rgb(96, 165, 250);
+    }
+}

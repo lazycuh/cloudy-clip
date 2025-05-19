@@ -1,154 +1,157 @@
-<div class="clipboard-history__toolbar">
-    <lc-search-box-form-field
-        label=""
-        placeholder="Search clipboard history..."
-        i18n-placeholder
-        [disabled]="_clipboardItems().length === 0" />
+@if (_clipboardItems().length > 0) {
+    <div class="clipboard-history__toolbar">
+        <lc-search-box-form-field
+            label=""
+            placeholder="Search clipboard history..."
+            i18n-placeholder />
 
-    <button
-        class="lc-filled-button lc-accent clear-all"
-        mat-ripple
-        [disabled]="_clipboardItems().length === 0"
-        (click)="_onClearClipboardHistory()">
-        <lc-icon>
-            <svg:path
-                d="M280-120q-33 0-56.5-23.5T200-200v-520q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h160q0-17 11.5-28.5T400-840h160q17 0 28.5 11.5T600-800h160q17 0 28.5 11.5T800-760q0 17-11.5 28.5T760-720v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM400-280q17 0 28.5-11.5T440-320v-280q0-17-11.5-28.5T400-640q-17 0-28.5 11.5T360-600v280q0 17 11.5 28.5T400-280Zm160 0q17 0 28.5-11.5T600-320v-280q0-17-11.5-28.5T560-640q-17 0-28.5 11.5T520-600v280q0 17 11.5 28.5T560-280ZM280-720v520-520Z" />
-        </lc-icon>
+        <button
+            class="lc-filled-button lc-accent clear-all"
+            mat-ripple
+            (click)="_onClearClipboardHistory()">
+            <lc-icon>
+                <svg:path
+                    d="M280-120q-33 0-56.5-23.5T200-200v-520q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h160q0-17 11.5-28.5T400-840h160q17 0 28.5 11.5T600-800h160q17 0 28.5 11.5T800-760q0 17-11.5 28.5T760-720v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM400-280q17 0 28.5-11.5T440-320v-280q0-17-11.5-28.5T400-640q-17 0-28.5 11.5T360-600v280q0 17 11.5 28.5T400-280Zm160 0q17 0 28.5-11.5T600-320v-280q0-17-11.5-28.5T560-640q-17 0-28.5 11.5T520-600v280q0 17 11.5 28.5T560-280ZM280-720v520-520Z" />
+            </lc-icon>
 
-        <span
-            class="lc-button__label"
-            i18n>
-            Clear all
-        </span>
-    </button>
+            <span
+                class="lc-button__label"
+                i18n>
+                Clear all
+            </span>
+        </button>
 
-    <button
-        class="lc-filled-button lc-accent pin-all"
-        mat-ripple
-        [disabled]="_clipboardItems().length === 0">
-        <lc-icon>
-            <svg:path
-                d="M640-760v280l68 68q6 6 9 13.5t3 15.5v23q0 17-11.5 28.5T680-320H520v234q0 17-11.5 28.5T480-46q-17 0-28.5-11.5T440-86v-234H280q-17 0-28.5-11.5T240-360v-23q0-8 3-15.5t9-13.5l68-68v-280q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760ZM354-400h252l-46-46v-314H400v314l-46 46Zm126 0Z" />
-        </lc-icon>
+        <button
+            class="lc-filled-button lc-accent pin-all"
+            mat-ripple>
+            <lc-icon>
+                <svg:path
+                    d="M640-760v280l68 68q6 6 9 13.5t3 15.5v23q0 17-11.5 28.5T680-320H520v234q0 17-11.5 28.5T480-46q-17 0-28.5-11.5T440-86v-234H280q-17 0-28.5-11.5T240-360v-23q0-8 3-15.5t9-13.5l68-68v-280q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760ZM354-400h252l-46-46v-314H400v314l-46 46Zm126 0Z" />
+            </lc-icon>
 
-        <span
-            class="lc-button__label"
-            i18n>
-            Pin all
-        </span>
-    </button>
-</div>
+            <span
+                class="lc-button__label"
+                i18n>
+                Pin all
+            </span>
+        </button>
+    </div>
 
-<ul class="clipboard-history">
-    @for (clipboardItem of _clipboardItems(); track clipboardItem.id) {
-        <li class="clipboard-history__item type--{{ clipboardItem.type }}">
-            <div class="clipboard-history__item__header">
-                <div class="clipboard-history__item__type-icon">
-                    @switch (clipboardItem.type) {
-                        @case ('text') {
+    <ul class="clipboard-history">
+        @for (clipboardItem of _clipboardItems(); track clipboardItem.id) {
+            <li class="clipboard-history__item type--{{ clipboardItem.type }}">
+                <div class="clipboard-history__item__header">
+                    <div class="clipboard-history__item__type-icon">
+                        @switch (clipboardItem.type) {
+                            @case ('text') {
+                                <lc-icon>
+                                    <svg:path
+                                        d="M420-680H260q-25 0-42.5-17.5T200-740q0-25 17.5-42.5T260-800h440q25 0 42.5 17.5T760-740q0 25-17.5 42.5T700-680H540v460q0 25-17.5 42.5T480-160q-25 0-42.5-17.5T420-220v-460Z" />
+                                </lc-icon>
+                            }
+
+                            @case ('image') {
+                                <lc-icon>
+                                    <svg:path
+                                        d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Zm80-80h400q12 0 18-11t-2-21L586-459q-6-8-16-8t-16 8L450-320l-74-99q-6-8-16-8t-16 8l-80 107q-8 10-2 21t18 11Zm60-280q25 0 42.5-17.5T400-620q0-25-17.5-42.5T340-680q-25 0-42.5 17.5T280-620q0 25 17.5 42.5T340-560Z" />
+                                </lc-icon>
+                            }
+
+                            @case ('url') {
+                                <lc-icon
+                                    style="width: 16px; height: 16px"
+                                    viewBox="0 0 16 16">
+                                    <svg:path
+                                        d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z" />
+                                </lc-icon>
+                            }
+                        }
+                    </div>
+
+                    <div class="clipboard-history__item__metadata-container">
+                        <div class="clipboard-history__item__metadata metadata--type">{{ clipboardItem.type }}</div>
+                        <div class="clipboard-history__item__metadata metadata--timestamp">
+                            <time>{{ clipboardItem.timestamp | date: 'longDate' }}</time>
+                            <span class="time-part-separator">•</span>
+                            <time>{{ clipboardItem.timestamp | date: 'hh:mm a' }}</time>
+                        </div>
+                    </div>
+
+                    <div class="clipboard-history__item__action-container">
+                        @let _isNotPinned = !clipboardItem.isPinned();
+                        <button
+                            class="lc-icon-button lc-accent"
+                            mat-ripple
+                            [lcTooltip]="_isNotPinned ? 'Pin to top' : 'Unpin'"
+                            i18n-lcTooltip
+                            [style.color]="_isNotPinned ? '' : 'yellow'"
+                            (click)="_onPinOrUnpinClipboardItem(clipboardItem)">
+                            @if (_isNotPinned) {
+                                <lc-icon>
+                                    <svg:path
+                                        d="M560-760H400v87L290-783q-5-5-7.5-11t-2.5-12q0-13 9-23.5t24-10.5h327q17 0 28.5 11.5T680-800q0 16-14.5 22.5T640-760v240q0 17-11.5 28.5T600-480q-17 0-28.5-11.5T560-520v-240ZM440-80v-240H296q-25 0-40-17.5T241-377q0-11 4.5-22t14.5-21l60-60v-46L84-764q-11-11-11.5-27.5T84-820q11-11 28-11t28 11l679 679q12 12 11.5 28.5T818-84q-12 11-28 11.5T762-84L526-320h-6v240q0 17-11.5 28.5T480-40q-17 0-28.5-11.5T440-80Zm-86-320h92l-44-44-2-2-46 46Zm126-193Zm-78 149Z" />
+                                </lc-icon>
+                            } @else {
+                                <lc-icon>
+                                    <svg:path
+                                        d="M640-760v280l68 68q6 6 9 13.5t3 15.5v23q0 17-11.5 28.5T680-320H520v234q0 17-11.5 28.5T480-46q-17 0-28.5-11.5T440-86v-234H280q-17 0-28.5-11.5T240-360v-23q0-8 3-15.5t9-13.5l68-68v-280q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760ZM354-400h252l-46-46v-314H400v314l-46 46Zm126 0Z" />
+                                </lc-icon>
+                            }
+                        </button>
+
+                        <button
+                            class="lc-icon-button lc-accent"
+                            lcTooltip="Copy"
+                            i18n-lcTooltip
+                            mat-ripple
+                            (click)="_onCopyClipboardItemToClipboard(clipboardItem)">
                             <lc-icon>
                                 <svg:path
-                                    d="M420-680H260q-25 0-42.5-17.5T200-740q0-25 17.5-42.5T260-800h440q25 0 42.5 17.5T760-740q0 25-17.5 42.5T700-680H540v460q0 25-17.5 42.5T480-160q-25 0-42.5-17.5T420-220v-460Z" />
+                                    d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-520q0-17 11.5-28.5T160-720q17 0 28.5 11.5T200-680v520h400q17 0 28.5 11.5T640-120q0 17-11.5 28.5T600-80H200Zm160-240v-480 480Z" />
                             </lc-icon>
-                        }
+                        </button>
 
-                        @case ('image') {
+                        <button
+                            class="lc-icon-button lc-accent"
+                            lcTooltip="Delete"
+                            i18n-lcTooltip
+                            mat-ripple
+                            (click)="_onDeleteClipboardItem(clipboardItem)">
                             <lc-icon>
                                 <svg:path
-                                    d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm0-80h560v-560H200v560Zm0 0v-560 560Zm80-80h400q12 0 18-11t-2-21L586-459q-6-8-16-8t-16 8L450-320l-74-99q-6-8-16-8t-16 8l-80 107q-8 10-2 21t18 11Zm60-280q25 0 42.5-17.5T400-620q0-25-17.5-42.5T340-680q-25 0-42.5 17.5T280-620q0 25 17.5 42.5T340-560Z" />
+                                    d="M280-120q-33 0-56.5-23.5T200-200v-520q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h160q0-17 11.5-28.5T400-840h160q17 0 28.5 11.5T600-800h160q17 0 28.5 11.5T800-760q0 17-11.5 28.5T760-720v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM400-280q17 0 28.5-11.5T440-320v-280q0-17-11.5-28.5T400-640q-17 0-28.5 11.5T360-600v280q0 17 11.5 28.5T400-280Zm160 0q17 0 28.5-11.5T600-320v-280q0-17-11.5-28.5T560-640q-17 0-28.5 11.5T520-600v280q0 17 11.5 28.5T560-280ZM280-720v520-520Z" />
                             </lc-icon>
-                        }
-
-                        @case ('url') {
-                            <lc-icon
-                                style="width: 16px; height: 16px"
-                                viewBox="0 0 16 16">
-                                <svg:path
-                                    d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z" />
-                            </lc-icon>
-                        }
-                    }
-                </div>
-
-                <div class="clipboard-history__item__metadata-container">
-                    <div class="clipboard-history__item__metadata metadata--type">{{ clipboardItem.type }}</div>
-                    <div class="clipboard-history__item__metadata metadata--timestamp">
-                        <time>{{ clipboardItem.timestamp | date: 'longDate' }}</time>
-                        <span class="time-part-separator">•</span>
-                        <time>{{ clipboardItem.timestamp | date: 'hh:mm a' }}</time>
+                        </button>
                     </div>
                 </div>
 
-                <div class="clipboard-history__item__action-container">
-                    @let _isNotPinned = !clipboardItem.isPinned();
-                    <button
-                        class="lc-icon-button lc-accent"
-                        mat-ripple
-                        [lcTooltip]="_isNotPinned ? 'Pin to top' : 'Unpin'"
-                        i18n-lcTooltip
-                        [style.color]="_isNotPinned ? '' : 'yellow'"
-                        (click)="_onPinOrUnpinClipboardItem(clipboardItem)">
-                        @if (_isNotPinned) {
-                            <lc-icon>
-                                <svg:path
-                                    d="M560-760H400v87L290-783q-5-5-7.5-11t-2.5-12q0-13 9-23.5t24-10.5h327q17 0 28.5 11.5T680-800q0 16-14.5 22.5T640-760v240q0 17-11.5 28.5T600-480q-17 0-28.5-11.5T560-520v-240ZM440-80v-240H296q-25 0-40-17.5T241-377q0-11 4.5-22t14.5-21l60-60v-46L84-764q-11-11-11.5-27.5T84-820q11-11 28-11t28 11l679 679q12 12 11.5 28.5T818-84q-12 11-28 11.5T762-84L526-320h-6v240q0 17-11.5 28.5T480-40q-17 0-28.5-11.5T440-80Zm-86-320h92l-44-44-2-2-46 46Zm126-193Zm-78 149Z" />
-                            </lc-icon>
-                        } @else {
-                            <lc-icon>
-                                <svg:path
-                                    d="M640-760v280l68 68q6 6 9 13.5t3 15.5v23q0 17-11.5 28.5T680-320H520v234q0 17-11.5 28.5T480-46q-17 0-28.5-11.5T440-86v-234H280q-17 0-28.5-11.5T240-360v-23q0-8 3-15.5t9-13.5l68-68v-280q-17 0-28.5-11.5T280-800q0-17 11.5-28.5T320-840h320q17 0 28.5 11.5T680-800q0 17-11.5 28.5T640-760ZM354-400h252l-46-46v-314H400v314l-46 46Zm126 0Z" />
-                            </lc-icon>
+                <div class="clipboard-history__item__content">
+                    @switch (clipboardItem.type) {
+                        @case ('text') {
+                            <lc-truncated-text [content]="clipboardItem.content" />
                         }
-                    </button>
 
-                    <button
-                        class="lc-icon-button lc-accent"
-                        lcTooltip="Copy"
-                        i18n-lcTooltip
-                        mat-ripple
-                        (click)="_onCopyClipboardItemToClipboard(clipboardItem)">
-                        <lc-icon>
-                            <svg:path
-                                d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-520q0-17 11.5-28.5T160-720q17 0 28.5 11.5T200-680v520h400q17 0 28.5 11.5T640-120q0 17-11.5 28.5T600-80H200Zm160-240v-480 480Z" />
-                        </lc-icon>
-                    </button>
+                        @case ('image') {
+                            <img
+                                alt="Clipboard image"
+                                [src]="clipboardItem.content" />
+                        }
 
-                    <button
-                        class="lc-icon-button lc-accent"
-                        lcTooltip="Delete"
-                        i18n-lcTooltip
-                        mat-ripple
-                        (click)="_onDeleteClipboardItem(clipboardItem)">
-                        <lc-icon>
-                            <svg:path
-                                d="M280-120q-33 0-56.5-23.5T200-200v-520q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h160q0-17 11.5-28.5T400-840h160q17 0 28.5 11.5T600-800h160q17 0 28.5 11.5T800-760q0 17-11.5 28.5T760-720v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM400-280q17 0 28.5-11.5T440-320v-280q0-17-11.5-28.5T400-640q-17 0-28.5 11.5T360-600v280q0 17 11.5 28.5T400-280Zm160 0q17 0 28.5-11.5T600-320v-280q0-17-11.5-28.5T560-640q-17 0-28.5 11.5T520-600v280q0 17 11.5 28.5T560-280ZM280-720v520-520Z" />
-                        </lc-icon>
-                    </button>
+                        @case ('url') {
+                            <a
+                                target="_blank"
+                                [href]="clipboardItem.content"
+                                (click)="_onOpenClipboardItemAsLink(clipboardItem)">
+                                {{ clipboardItem.content }}
+                            </a>
+                        }
+                    }
                 </div>
-            </div>
-
-            <div class="clipboard-history__item__content">
-                @switch (clipboardItem.type) {
-                    @case ('text') {
-                        <lc-truncated-text [content]="clipboardItem.content" />
-                    }
-
-                    @case ('image') {
-                        <img
-                            alt="Clipboard image"
-                            [src]="clipboardItem.content" />
-                    }
-
-                    @case ('url') {
-                        <a
-                            target="_blank"
-                            [href]="clipboardItem.content"
-                            (click)="_onOpenClipboardItemAsLink(clipboardItem)">
-                            {{ clipboardItem.content }}
-                        </a>
-                    }
-                }
-            </div>
-        </li>
-    }
-</ul>
+            </li>
+        }
+    </ul>
+} @else {
+    <div class="clipboard-history__empty-state-container">
+        <lc-empty-state />
+    </div>
+}

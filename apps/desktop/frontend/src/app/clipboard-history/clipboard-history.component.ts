@@ -12,6 +12,7 @@ import { isValidHyperlink } from '@lazycuh/web-ui-common/utils/is-valid-hyperlin
 import { GetLatestClipboardItem } from '@wails/bindings/App';
 import { BrowserOpenURL, ClipboardSetText } from '@wails/runtime/runtime';
 
+import { EmptyStateComponent } from './empty-state';
 import { ClipboardItem } from './models';
 
 @Component({
@@ -20,7 +21,15 @@ import { ClipboardItem } from './models';
   host: {
     class: 'clipboard-history'
   },
-  imports: [SearchBoxFormFieldComponent, IconComponent, MatRipple, DatePipe, TooltipDirective, TruncatedTextComponent],
+  imports: [
+    SearchBoxFormFieldComponent,
+    IconComponent,
+    MatRipple,
+    DatePipe,
+    TooltipDirective,
+    TruncatedTextComponent,
+    EmptyStateComponent
+  ],
   selector: 'lc-clipboard-history',
   styleUrl: './clipboard-history.component.scss',
   templateUrl: './clipboard-history.component.html'
