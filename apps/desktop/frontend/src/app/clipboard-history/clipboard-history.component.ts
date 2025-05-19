@@ -18,9 +18,6 @@ import { ClipboardItem } from './models';
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
-  host: {
-    class: 'clipboard-history'
-  },
   imports: [
     SearchBoxFormFieldComponent,
     IconComponent,
