@@ -8,7 +8,7 @@ import baseConfig from '../../../eslint.config.js';
  */
 export default tsEslint.config(
   {
-    ignores: ['.terser-cache.json', '.mangled-selectors.json']
+    ignores: ['.terser-cache.json', '.mangled-selectors.json', 'js-bindings']
   },
 
   {

@@ -180,6 +180,28 @@
     }
 }
 
+.lc-link-button {
+    @extend .lc-button;
+    border: 0 !important;
+    padding: 0 !important;
+    min-width: initial !important;
+    min-height: initial !important;
+    margin: 0 !important;
+    justify-content: flex-start;
+
+    --lc-button-bg-color: transparent;
+    --lc-button-bg-color--hover: transparent;
+    --lc-button-text-color: #{index.$link-text-color};
+    --lc-button-text-color--hover: #{index.$link-text-color};
+
+    &:not(:disabled):hover,
+    &:not(:disabled):active,
+    &:not(:disabled):focus {
+        background-color: transparent;
+        text-decoration: underline;
+    }
+}
+
 .text-with-gradient-background {
     background-image: linear-gradient(45deg, #90ee90, #ffa500);
     background-size: 100%;

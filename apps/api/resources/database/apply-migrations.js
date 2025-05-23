@@ -8,9 +8,9 @@ const liquibase = new Liquibase({
   ...POSTGRESQL_DEFAULT_CONFIG,
   changeLogFile: 'master.yaml',
   logLevel: 'off',
-  password: process.env.TRADE_TIMELINE_DATABASE_PASSWORD,
-  url: `jdbc:postgresql://${process.env.TRADE_TIMELINE_DATABASE_HOST}:${process.env.TRADE_TIMELINE_DATABASE_PORT}/${databaseName}`,
-  username: process.env.TRADE_TIMELINE_DATABASE_USERNAME,
+  password: process.env.CLOUDY_CLIP_DATABASE_PASSWORD,
+  url: `jdbc:postgresql://${process.env.CLOUDY_CLIP_DATABASE_HOST}:${process.env.CLOUDY_CLIP_DATABASE_PORT}/${databaseName}`,
+  username: process.env.CLOUDY_CLIP_DATABASE_USERNAME,
   searchPath: __dirname + '/migrations'
 });
 

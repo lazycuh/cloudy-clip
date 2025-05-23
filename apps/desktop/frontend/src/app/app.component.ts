@@ -3,6 +3,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { AnchoredFloatingBox } from '@lazycuh/angular-anchored-floating-box';
 import { ConfirmationCaptureService } from '@lazycuh/angular-confirmation-capture';
 import { NotificationService } from '@lazycuh/angular-notification';
+import { TooltipService } from '@lazycuh/angular-tooltip';
 import { Logger } from '@lazycuh/logging';
 import { ProgressService } from '@lazycuh/web-ui-common/progress';
 import { performScroll, scrollToTop } from '@lazycuh/web-ui-common/utils/scroller';
@@ -30,6 +31,7 @@ export class AppComponent {
     afterNextRender({
       write: () => {
         AnchoredFloatingBox.setDefaultTheme('dark');
+        TooltipService.setDefaultTheme('dark');
 
         ConfirmationCaptureService.setDefaultCancelButtonLabel($localize`Cancel`);
         ConfirmationCaptureService.setDefaultConfirmButtonLabel($localize`Confirm`);

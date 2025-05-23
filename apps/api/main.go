@@ -5,16 +5,16 @@ import (
 	"log"
 	"os"
 
-	"github.com/go-chi/chi/v5"
 	"github.com/cloudy-clip/api/cmd"
 	"github.com/cloudy-clip/api/internal/common/environment"
 	"github.com/cloudy-clip/api/internal/orchestrator"
+	"github.com/go-chi/chi/v5"
 
 	"github.com/joho/godotenv"
 )
 
 func main() {
-	executionProfile := os.Getenv("TRADE_TIMELINE_EXECUTION_PROFILE")
+	executionProfile := os.Getenv("CLOUDY_CLIP_EXECUTION_PROFILE")
 	envFileName := ".env." + executionProfile
 	err := godotenv.Load(envFileName)
 	if err != nil {

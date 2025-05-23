@@ -11,7 +11,7 @@
       "mode": "test",
       "program": "${relativeFileDirname}",
       "env": {
-        "TRADE_TIMELINE_EXECUTION_PROFILE": "test"
+        "CLOUDY_CLIP_EXECUTION_PROFILE": "test"
       },
       "showLog": true
     },
@@ -21,7 +21,7 @@
       "request": "launch",
       "mode": "debug",
       "env": {
-        "TRADE_TIMELINE_EXECUTION_PROFILE": "development"
+        "CLOUDY_CLIP_EXECUTION_PROFILE": "development"
       },
       "program": "${workspaceFolder}/apps/api/"
     },

@@ -90,6 +90,7 @@ body {
 
     .dark-theme {
         --anchored-floating-box-bg-color: rgb(55, 55, 55) !important;
+        --tooltip-bg-color: #444 !important;
     }
 }
 
@@ -132,6 +133,10 @@ a {
     &:hover {
         text-decoration: underline;
     }
+}
+
+.lc-tooltip {
+    max-width: 95vw !important;
 }
 
 .lc-notification.light a {

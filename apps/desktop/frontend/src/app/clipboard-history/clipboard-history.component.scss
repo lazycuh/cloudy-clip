@@ -57,7 +57,7 @@
     box-sizing: border-box;
     margin: 0.75rem 0px 0px;
 
-    &.type--text {
+    &.type--TEXT {
         .clipboard-history__item__type-icon {
             background-color: rgba(127, 29, 29, 0.3);
             color: rgb(248, 113, 113);
@@ -68,7 +68,7 @@
         }
     }
 
-    &.type--image {
+    &.type--IMAGE {
         .clipboard-history__item__type-icon {
             background-color: rgba(124, 45, 18, 0.3);
             color: rgb(251, 146, 60);
@@ -79,7 +79,7 @@
         }
     }
 
-    &.type--url {
+    &.type--URL {
         .clipboard-history__item__type-icon {
             background-color: rgba(88, 28, 135, 0.3);
             color: rgb(192, 132, 252);
@@ -87,6 +87,10 @@
 
         .metadata--type {
             color: rgb(192, 132, 252);
+        }
+
+        .clipboard-history__item__content a {
+            white-space: pre-line;
         }
     }
 }
@@ -139,6 +143,10 @@
 .clipboard-history__item__content {
     img {
         max-width: lc.pxToRem(200);
+    }
+
+    .lc-link-button {
+        width: 90%;
     }
 }
 

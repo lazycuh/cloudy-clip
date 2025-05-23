@@ -8,8 +8,8 @@ import { Logger } from '@lazycuh/logging';
 import { SearchBoxFormFieldComponent } from '@lazycuh/web-ui-common/form/search-box-form-field';
 import { IconComponent } from '@lazycuh/web-ui-common/icon';
 import { TruncatedTextComponent } from '@lazycuh/web-ui-common/truncated-text';
-import { isValidHyperlink } from '@lazycuh/web-ui-common/utils/is-valid-hyperlink';
 import { GetLatestClipboardItem } from '@wails/bindings/App';
+import { dto } from '@wails/models';
 import { BrowserOpenURL, ClipboardSetText } from '@wails/runtime/runtime';
 
 import { EmptyStateComponent } from './empty-state';
@@ -57,17 +57,13 @@ export class ClipboardHistoryComponent {
   private async _refreshClipboardHistory() {
     const clipboardItem = await GetLatestClipboardItem();
 
-    if (clipboardItem.Text !== '') {
-      this._storeClipboardItem(
-        new ClipboardItem(clipboardItem.Text, !isValidHyperlink(clipboardItem.Text) ? 'text' : 'url')
-      );
-    } else if (clipboardItem.Image !== '') {
-      this._storeClipboardItem(new ClipboardItem(clipboardItem.Image, 'image'));
+    if (clipboardItem.id !== '') {
+      this._storeClipboardItem(clipboardItem);
     }
   }
 
-  private _storeClipboardItem(item: ClipboardItem) {
-    this._clipboardItems.set([item, ...this._clipboardItems()]);
+  private _storeClipboardItem(item: dto.ClipboardItem) {
+    this._clipboardItems.set([new ClipboardItem(item), ...this._clipboardItems()]);
 
     this._sortClipboardItems();
   }
@@ -82,7 +78,7 @@ export class ClipboardHistoryComponent {
 
   protected async _onClearClipboardHistory() {
     const confirmed = await this._confirmationCaptureService.open({
-      content: $localize`Are you sure you want to clear your clipboard history?`
+      content: $localize`Are you sure you want to clear all unpinned items in your clipboard history?`
     });
 
     if (confirmed) {
@@ -120,7 +116,7 @@ export class ClipboardHistoryComponent {
   }
 
   protected async _onCopyClipboardItemToClipboard(item: ClipboardItem) {
-    if (item.type !== 'image') {
+    if (item.type !== 'IMAGE') {
       const copied = await ClipboardSetText(item.content);
 
       this._notificationService.open({

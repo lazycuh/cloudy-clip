@@ -8,8 +8,8 @@ await esbuild.build({
   format: 'esm',
   minify: true,
   define: {
-    __UPSTREAM__: JSON.stringify(process.env.TRADE_TIMELINE_UPSTREAM),
-    __ENVIRONMENT__: JSON.stringify(process.env.TRADE_TIMELINE_ENVIRONMENT),
-    __ACCESS_CONTROL_ALLOW_ORIGIN__: JSON.stringify(process.env.TRADE_TIMELINE_ACCESS_CONTROL_ALLOW_ORIGIN)
+    __UPSTREAM__: JSON.stringify(process.env.CLOUDY_CLIP_UPSTREAM),
+    __ENVIRONMENT__: JSON.stringify(process.env.CLOUDY_CLIP_ENVIRONMENT),
+    __ACCESS_CONTROL_ALLOW_ORIGIN__: JSON.stringify(process.env.CLOUDY_CLIP_ACCESS_CONTROL_ALLOW_ORIGIN)
   }
 });

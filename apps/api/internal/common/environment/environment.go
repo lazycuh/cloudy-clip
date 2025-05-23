@@ -70,7 +70,7 @@ var ResourcesDirectory = filepath.Join(ProjectRoot, "resources")
 
 func Initialize(executionProfile ExecutionProfile) {
 	err := env.ParseWithOptions(&Config, env.Options{
-		Prefix:          "TRADE_TIMELINE_",
+		Prefix:          "CLOUDY_CLIP_",
 		RequiredIfNoDef: true,
 	})
 	if err != nil {

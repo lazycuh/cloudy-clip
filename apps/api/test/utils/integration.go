@@ -10,15 +10,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-chi/chi/v5"
-	"github.com/h2non/gock"
-	_ "github.com/jackc/pgx/v5/stdlib"
-	"github.com/peterldowns/pgtestdb"
 	"github.com/cloudy-clip/api/internal/common/database"
 	"github.com/cloudy-clip/api/internal/common/environment"
 	"github.com/cloudy-clip/api/internal/orchestrator"
 	data "github.com/cloudy-clip/api/test"
 	"github.com/cloudy-clip/api/test/debug"
+	"github.com/go-chi/chi/v5"
+	"github.com/h2non/gock"
+	_ "github.com/jackc/pgx/v5/stdlib"
+	"github.com/peterldowns/pgtestdb"
 )
 
 func Integration(t *testing.T, testGroup func(testServer *httptest.Server)) {
@@ -59,7 +59,7 @@ func setupTestHttpServerAndDatabase(t *testing.T) *httptest.Server {
 	var once sync.Once
 
 	once.Do(func() {
-		executionProfile := environment.ExecutionProfile(os.Getenv("TRADE_TIMELINE_EXECUTION_PROFILE"))
+		executionProfile := environment.ExecutionProfile(os.Getenv("CLOUDY_CLIP_EXECUTION_PROFILE"))
 		loadEnvFileForExecutionProfile(executionProfile)
 		environment.Initialize(executionProfile)
 	})

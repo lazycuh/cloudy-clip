@@ -6,32 +6,32 @@ import (
 	"strconv"
 	"strings"
 
+	_billingModel "github.com/cloudy-clip/api/internal/billing/model"
+	_subscriptionModel "github.com/cloudy-clip/api/internal/subscription/model"
+	_taskModel "github.com/cloudy-clip/api/internal/task/model"
+	_userModel "github.com/cloudy-clip/api/internal/user/model"
 	"github.com/go-jet/jet/v2/generator/metadata"
 	"github.com/go-jet/jet/v2/generator/postgres"
 	"github.com/go-jet/jet/v2/generator/template"
 	jet "github.com/go-jet/jet/v2/postgres"
 	"github.com/iancoleman/strcase"
-	_billingModel "github.com/cloudy-clip/api/internal/billing/model"
-	_subscriptionModel "github.com/cloudy-clip/api/internal/subscription/model"
-	_taskModel "github.com/cloudy-clip/api/internal/task/model"
-	_userModel "github.com/cloudy-clip/api/internal/user/model"
 
 	_ "github.com/lib/pq"
 )
 
 func main() {
-	port, err := strconv.Atoi(os.Getenv("TRADE_TIMELINE_DATABASE_PORT"))
+	port, err := strconv.Atoi(os.Getenv("CLOUDY_CLIP_DATABASE_PORT"))
 	if err != nil {
 		panic(err)
 	}
 
 	dbConnection := postgres.DBConnection{
-		Host:       os.Getenv("TRADE_TIMELINE_DATABASE_HOST"),
+		Host:       os.Getenv("CLOUDY_CLIP_DATABASE_HOST"),
 		Port:       port,
-		User:       os.Getenv("TRADE_TIMELINE_DATABASE_USERNAME"),
-		Password:   os.Getenv("TRADE_TIMELINE_DATABASE_PASSWORD"),
+		User:       os.Getenv("CLOUDY_CLIP_DATABASE_USERNAME"),
+		Password:   os.Getenv("CLOUDY_CLIP_DATABASE_PASSWORD"),
 		SslMode:    "disable",
-		DBName:     os.Getenv("TRADE_TIMELINE_DATABASE_NAME"),
+		DBName:     os.Getenv("CLOUDY_CLIP_DATABASE_NAME"),
 		SchemaName: "public",
 	}
 
@@ -53,7 +53,6 @@ func main() {
 		template.Default(jet.Dialect).
 			UseSchema(func(schema metadata.Schema) template.Schema {
 				return template.DefaultSchema(schema).
-					UsePath("..").
 					UseSQLBuilder(
 						template.DefaultSQLBuilder().
 							UseTable(func(table metadata.Table) template.TableSQLBuilder {

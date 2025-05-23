@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "./scripts/build.sh",
-    "build:dev": "TRADE_TIMELINE_UPSTREAM='http://localhost:8282' TRADE_TIMELINE_ENVIRONMENT='development' TRADE_TIMELINE_ACCESS_CONTROL_ALLOW_ORIGIN='https://localhost:4300' node esbuild.config.js && cp dist/process-requests.js src/functions/[[api]].js",
+    "build:dev": "CLOUDY_CLIP_UPSTREAM='http://localhost:8282' CLOUDY_CLIP_ENVIRONMENT='development' CLOUDY_CLIP_ACCESS_CONTROL_ALLOW_ORIGIN='https://localhost:4300' node esbuild.config.js && cp dist/process-requests.js src/functions/[[api]].js",
     "release": "./scripts/deploy.sh",
     "check-code-styles": "prettier  --write --check \"**/(*.ts|*.json)\"",
     "lint": "eslint \"src/**/*.ts\"",
